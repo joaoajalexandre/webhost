@@ -13,7 +13,7 @@ session_start();
                     <li class="nav-item"><a class="nav-link active" href="index.php">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="#">Domínios</a></li>
                     <li class="nav-item"><a class="nav-link" href="hospedagem.php">Hospedagens</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Website</a></li>
+                    <li class="nav-item"><a class="nav-link" href="website.php">Website</a></li>
                     <li class="nav-item"><a class="nav-link" href="contactos.php">Contato</a></li>
                 </ul>
                 <ul class="navbar-nav">
