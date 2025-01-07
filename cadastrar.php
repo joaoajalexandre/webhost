@@ -14,6 +14,15 @@
 		<form method="post" action="processar_cadastro.php" enctype="multipart/form-data">
 			<h1 class="h3 text-center">Cadastro de Cliente</h1>
 			<div class="row p-3 rounded-3 shadow-lg">
+					<!-- Exibe a mensagem de erro, se houver -->
+					<?php if (isset($_SESSION['erro'])): ?>
+					<div class="col-sm-12 mt-3">
+						<div class="alert alert-danger text-center">
+							<?= $_SESSION['erro']; ?>
+						</div>
+					</div>
+					<?php unset($_SESSION['erro']); // Limpa a mensagem de erro após exibir ?>
+				<?php endif; ?>
 				<div class="col-sm-6 mt-3">
 					<label>Primeiro Nome</label>
 					<input type="text" name="nome" placeholder="Digite o teu primeiro nome" class="form-control" required>

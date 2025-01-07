@@ -27,7 +27,9 @@ if (isset($_POST['btnCadastrar'])) {
 	if ($conexao->query($sql) === TRUE) {
 		echo "<script>alert('Cadastro realizado com sucesso!');window.location.href='login.php';</script>";
 	} else {
-		echo "<script>alert('Erro ao cadastrar! Tente novamente.');window.history.back();</script>";
+        $_SESSION['erro'] = 'Credenciais inválidas, verifique e tente novamente!';
+        header("Location: cadastrar.php");
+        exit();
 	}
 }
 ?>
