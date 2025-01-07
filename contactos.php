@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-
+$usuario_id=$_SESSION['id_usuario'];
 ?>
 <!DOCTYPE html>
 <html lang="pt-pt">
@@ -19,7 +19,7 @@ session_start();
 include("header.php");
 ?>
     <section class="topo">
-        <div class="container-fluid"></div>
+        <h1>Contactos</h1>
     </section>
     <section class="py-3">
         <div class="container">

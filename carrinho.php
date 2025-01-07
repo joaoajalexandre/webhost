@@ -1,6 +1,8 @@
 <?php
 session_start();
 
+
+ 
 // Remover item do carrinho
 if (isset($_GET['remover'])) {
     $indice = $_GET['remover'];

@@ -1,85 +1,78 @@
-<?php 
-	include("conexao.php");
-	if(isset($_POST['btnLogin'])){
-		if (empty($_POST['email']) OR empty($_POST['passe'])) {
-			echo "<script>alert('Use o teu e-mail e palavra-passe cadastrado para fazer login!')</script>";
-		}
-		else{
-			$email = $_POST['email'];
-			$passe = md5($_POST['passe']);
-			$cmd = "SELECT * FROM tb_cliente WHERE email = '$email' AND passe = '$passe' ";
-			$loginExec = $conexao->query($cmd);
-			if ($loginExec->num_rows > 0) {
-
-				$logado = $loginExec->fetch_assoc();
-
-				if (!isset($_SESSION['logado'])) {
-					session_start();
-				}
-
-				$_SESSION['logado']['id_usuario'] = $logado['id_usuario'];
-				$_SESSION['logado']['nome'] = $logado['nome'];
-				$_SESSION['logado']['email'] = $logado['email'];
-
-			}
-			else{
-				echo "<script>alert('Credenciais invalida, verifica e tente novamente!')</script>";
-			}
-		}
-
-	}
-
- ?>
 <!DOCTYPE html>
 <html>
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Pagina de Login</title>
+	<title>Cadastro de Cliente</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="css/style.css">
-    <style type="text/css">
-    	body main.login{
-
-    	}
-    </style>
 </head>
-<body class="login d-flex align-items-center justify-content-center vh-100">
-	<main class="col-lg-4 m-auto">
-		<form method="post" class="">
-			<h1 class="h3 text-center">Sistema de Cadastro</h1>
+<body class="d-flex align-items-center justify-content-center vh-100">
+	<main class="col-lg-6 m-auto">
+		<form method="post" action="processar_cadastro.php" enctype="multipart/form-data">
+			<h1 class="h3 text-center">Cadastro de Cliente</h1>
 			<div class="row p-3 rounded-3 shadow-lg">
 				<div class="col-sm-6 mt-3">
 					<label>Primeiro Nome</label>
-					<input type="email" name="email" placeholder="Digite o teu primeiro nome" class="form-control">
+					<input type="text" name="nome" placeholder="Digite o teu primeiro nome" class="form-control" required>
 				</div>
 
 				<div class="col-sm-6 mt-3">
-					<label>Ultimo Nome</label>
-					<input type="email" name="email" placeholder="Digite o ultimo nome" class="form-control">
+					<label>Último Nome</label>
+					<input type="text" name="sobrenome" placeholder="Digite o último nome" class="form-control" required>
+				</div>
+
+				<div class="col-sm-6 mt-3">
+					<label>BI</label>
+					<input type="text" name="bi" placeholder="Digite o número do BI" class="form-control" required>
+				</div>
+
+				<div class="col-sm-6 mt-3">
+					<label>Nome da Empresa</label>
+					<input type="text" name="nome_empresa" placeholder="Nome da Empresa" class="form-control" required>
+				</div>
+
+				<div class="col-sm-6 mt-3">
+					<label>NIF da Empresa</label>
+					<input type="text" name="nif_empresa" placeholder="NIF da Empresa" class="form-control" required>
+				</div>
+
+				<div class="col-sm-6 mt-3">
+					<label>Província</label>
+					<input type="text" name="provincia" placeholder="Digite a Província" class="form-control" required>
+				</div>
+
+				<div class="col-sm-6 mt-3">
+					<label>Município</label>
+					<input type="text" name="municipio" placeholder="Digite o Município" class="form-control" required>
 				</div>
 
 				<div class="col-sm-12 mt-3">
-					<label>Telefone</label>
-					<input type="text" name="telefone" placeholder="Digite o teu contacto" class="form-control">
+					<label>Endereço</label>
+					<input type="text" name="endereco" placeholder="Digite o Endereço" class="form-control" required>
+				</div>
+
+				<div class="col-sm-12 mt-3">
+					<label>Arquivo do BI/NIF</label>
+					<input type="file" name="arquivo_bi_nif" class="form-control" required>
 				</div>
 
 				<div class="col-sm-6 mt-3">
 					<label>E-mail</label>
-					<input type="email" name="email" placeholder="Digite o teu email" class="form-control">
+					<input type="email" name="email" placeholder="Digite o teu email" class="form-control" required>
 				</div>
+				
 				<div class="col-sm-6 mt-3">
 					<label>Palavra-passe</label>
-					<input type="password" name="passe" placeholder="Digite a tua Palavra-passe" class="form-control">
+					<input type="password" name="passe" placeholder="Digite a tua Palavra-passe" class="form-control" required>
 				</div>
+
 				<div class="col-sm-12 mt-3">
-					<input type="submit" name="btnLogin" value="Entrar" class="btn btn-primary w-100">
+					<input type="submit" name="btnCadastrar" value="Cadastrar" class="btn btn-primary w-100">
 				</div>
-				<p class="my-2 text-center">Esqueceu a palavra-passe <a href="recuperar.php">Recuperar</a></p>
 			</div>
-				<p class="my-2 text-center">Não tens uma conta? <a href="cadstrar.php">Criar Agora</a></p>
 		</form>
 	</main>
 
