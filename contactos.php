@@ -1,7 +1,6 @@
 <?php
-session_start();
 
-$usuario_id=$_SESSION['id_usuario'];
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-pt">
