@@ -1,8 +1,13 @@
+<?php
+session_start();
+include("../conexao.php");
+
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Clientes</title>
+  <meta charset="utf-8">
+    <title>Vendas</title>
     <meta
       content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
       name="viewport"
@@ -48,7 +53,7 @@
         <div class="sidebar-logo">
           <!-- Logo Header -->
           <div class="logo-header" data-background-color="dark">
-            <a href="../index.html" class="logo">
+            <a href="../index.php" class="logo">
               <img
                 src="../../img/logo.png"
                 alt="navbar brand"
@@ -102,20 +107,19 @@
               </li>
               
               <li class="nav-item">
-                <a href="../tables/clientes.html">
+                <a href="../tables/clientes.php">
                   <i class="fas fa-file"></i>
                   <p>clientes</p>
                   <span class="badge badge-secondary"></span>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="../tables/dominios_comprados.html">
+                <a href="../tables/dominios_comprados.php">
                   <i class="fas fa-file"></i>
                   <p>vendas</p>
                   <span class="badge badge-secondary"></span>
                 </a>
               </li>
-             
             </ul>
           </div>
         </div>
@@ -508,7 +512,7 @@
         <div class="container">
           <div class="page-inner">
             <div class="page-header">
-              <h3 class="fw-bold mb-3">Clientes</h3>
+              <h3 class="fw-bold mb-3">Dominios</h3>
               <ul class="breadcrumbs mb-3">
                 <li class="nav-home">
                   <a href="#">
@@ -533,45 +537,69 @@
               <div class="col-md-12">
                 <div class="card">
                   <div class="card-header">
-                    <h4 class="card-title">Clientes</h4>
+                    <h4 class="card-title">Dominio Comprados</h4>
                   </div>
                   <div class="card-body">
                     <div class="table-responsive">
-                      <table
-                        id="basic-datatables"
-                        class="display table table-striped table-hover"
-                      >
-                        <thead>
-                          <tr>
-                            <th>Nome</th>
-                            <th>Sobrenome</th>
-                            <th>email</th>
-                            <th>BI</th>
-                            <th>Nome da Empresa</th>
-                            <th>NIF</th>
-                          </tr>
-                        </thead>
-                        <tfoot>
-                          <tr>
-                            <th>Nome</th>
-                            <th>Sobrenome</th>
-                            <th>email</th>
-                            <th>BI</th>
-                            <th>Nome da Empresa</th>
-                            <th>NIF</th>
-                          </tr>
-                        </tfoot>
-                        <tbody>
-                          <tr>
-                            <td>Marcelino</td>
-                            <td>Lufendo</td>
-                            <td>lufendomarelino@gmail.com</td>
-                            <td>67657567651</td>
-                            <td>BHM</td>
-                            <td>67876565765</td>
-                          </tr>
-                        </tbody>
-                      </table>
+                    <?php
+
+// Consulta SQL para unir as tabelas
+$query = "
+    SELECT 
+        tb_dominio_comprado.dominio AS dominio_comprado,
+        CONCAT(tb_cliente.nome, ' ', tb_cliente.sobrenome) AS cliente,
+        tb_dominio.preco AS preco,
+        tb_dominio_comprado.data AS data_compra
+    FROM tb_dominio_comprado
+    JOIN tb_cliente ON tb_dominio_comprado.id_cliente = tb_cliente.id_cliente
+    JOIN tb_dominio ON tb_dominio_comprado.dominio = tb_dominio.dominio
+";
+$stmt = $conn->prepare($query);
+$stmt->execute();
+
+// Obter os resultados
+$dominios_comprados = $stmt->fetchAll(PDO::FETCH_ASSOC);
+?>
+
+<table
+    id="basic-datatables"
+    class="display table table-striped table-hover"
+>
+    <thead>
+        <tr>
+            <th>Dominio</th>
+            <th>Cliente</th>
+            <th>Preço</th>
+            <th>Data</th>
+        </tr>
+    </thead>
+    <tfoot>
+        <tr>
+            <th>Dominio</th>
+            <th>Cliente</th>
+            <th>Preço</th>
+            <th>Data</th>
+        </tr>
+    </tfoot>
+    <tbody>
+        <?php
+        // Exibir os dados dinamicamente na tabela
+        if (!empty($dominios_comprados)) {
+            foreach ($dominios_comprados as $dominio) {
+                echo "<tr>";
+                echo "<td>{$dominio['dominio_comprado']}</td>";
+                echo "<td>{$dominio['cliente']}</td>";
+                echo "<td>{$dominio['preco']}</td>";
+                echo "<td>{$dominio['data_compra']}</td>";
+                echo "</tr>";
+            }
+        } else {
+            echo "<tr><td colspan='4'>Nenhum domínio comprado encontrado</td></tr>";
+        }
+        ?>
+    </tbody>
+</table>
+
                     </div>
                   </div>
                 </div>

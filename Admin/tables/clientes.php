@@ -1,8 +1,13 @@
+<?php
+session_start();
+include("../conexao.php");
+
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Vendas</title>
+  <meta charset="utf-8">
+    <title>Clientes</title>
     <meta
       content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
       name="viewport"
@@ -48,7 +53,7 @@
         <div class="sidebar-logo">
           <!-- Logo Header -->
           <div class="logo-header" data-background-color="dark">
-            <a href="../index.html" class="logo">
+            <a href="../index.php" class="logo">
               <img
                 src="../../img/logo.png"
                 alt="navbar brand"
@@ -102,19 +107,20 @@
               </li>
               
               <li class="nav-item">
-                <a href="../tables/clientes.html">
+                <a href="../tables/clientes.php">
                   <i class="fas fa-file"></i>
                   <p>clientes</p>
                   <span class="badge badge-secondary"></span>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="../tables/dominios_comprados.html">
+                <a href="../tables/dominios_comprados.php">
                   <i class="fas fa-file"></i>
                   <p>vendas</p>
                   <span class="badge badge-secondary"></span>
                 </a>
               </li>
+             
             </ul>
           </div>
         </div>
@@ -189,7 +195,7 @@
                       <div class="input-group">
                         <input
                           type="text"
-                          placeholder="Search ..."
+                          placeholder="pesquisar ..."
                           class="form-control"
                         />
                       </div>
@@ -507,7 +513,7 @@
         <div class="container">
           <div class="page-inner">
             <div class="page-header">
-              <h3 class="fw-bold mb-3">Dominios</h3>
+              <h3 class="fw-bold mb-3">Clientes</h3>
               <ul class="breadcrumbs mb-3">
                 <li class="nav-home">
                   <a href="#">
@@ -532,43 +538,67 @@
               <div class="col-md-12">
                 <div class="card">
                   <div class="card-header">
-                    <h4 class="card-title">Dominio Comprados</h4>
+                    <h4 class="card-title">Clientes</h4>
                   </div>
                   <div class="card-body">
                     <div class="table-responsive">
-                      <table
-                        id="basic-datatables"
-                        class="display table table-striped table-hover"
-                      >
-                        <thead>
-                          <tr>
-                            <th>Dominio</th>
-                            <th>Cliente</th>
-                            <th>Preço</th>
-                            <th>Data</th>
-                           
-                          </tr>
-                        </thead>
-                        <tfoot>
-                          <tr>
-                            <th>Dominio</th>
-                            <th>Cliente</th>
-                            <th>Preço</th>
-                            <th>Data</th>
-                            
-                          </tr>
-                        </tfoot>
-                        <tbody>
-                          <tr>
-                            <td>Tiger Nixon</td>
-                            <td>System Architect</td>
-                            
-                            <td>61</td>
-                            <td>2011/04/25</td>
-                            
-                          </tr>
-                        </tbody>
-                      </table>
+                    <?php
+
+// Buscar os dados da tabela tb_cliente
+$query = "SELECT nome, sobrenome, email, bi, nome_empresa, nif_empresa FROM tb_cliente";
+$stmt = $conn->prepare($query);
+$stmt->execute();
+
+// Verificar se existem resultados
+$clientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+?>
+
+<table
+    id="basic-datatables"
+    class="display table table-striped table-hover"
+>
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Sobrenome</th>
+            <th>Email</th>
+            <th>BI</th>
+            <th>Nome da Empresa</th>
+            <th>NIF</th>
+        </tr>
+    </thead>
+    <tfoot>
+        <tr>
+            <th>Nome</th>
+            <th>Sobrenome</th>
+            <th>Email</th>
+            <th>BI</th>
+            <th>Nome da Empresa</th>
+            <th>NIF</th>
+        </tr>
+    </tfoot>
+    <tbody>
+        <?php
+        // Exibir os dados dinamicamente
+        if (!empty($clientes)) {
+            foreach ($clientes as $cliente) {
+                echo "<tr>";
+                echo "<td>{$cliente['nome']}</td>";
+                echo "<td>{$cliente['sobrenome']}</td>";
+                echo "<td>{$cliente['email']}</td>";
+                echo "<td>{$cliente['bi']}</td>";
+                echo "<td>{$cliente['nome_empresa']}</td>";
+                echo "<td>{$cliente['nif_empresa']}</td>";
+                echo "</tr>";
+            }
+        } else {
+            echo "<tr><td colspan='6'>Nenhum cliente encontrado</td></tr>";
+        }
+        ?>
+    </tbody>
+</table>
+
                     </div>
                   </div>
                 </div>

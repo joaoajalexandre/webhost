@@ -1,7 +1,12 @@
+<?php
+session_start();
+include("conexao.php");
+
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta charset="utf-8">
     <title>Dashboard</title>
     <meta
       content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
@@ -48,7 +53,7 @@
         <div class="sidebar-logo">
           <!-- Logo Header -->
           <div class="logo-header" data-background-color="dark">
-            <a href="index.html" class="logo">
+            <a href="index.php" class="logo">
               <img
                 src="../img/logo.png"
                 alt="navbar brand"
@@ -102,14 +107,14 @@
               </li>
               
               <li class="nav-item">
-                <a href="./tables/clientes.html">
+                <a href="./tables/clientes.php">
                   <i class="fas fa-file"></i>
                   <p>clientes</p>
                   <span class="badge badge-secondary"></span>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="./tables/dominios_comprados.html">
+                <a href="./tables/dominios_comprados.php">
                   <i class="fas fa-file"></i>
                   <p>vendas</p>
                   <span class="badge badge-secondary"></span>
@@ -165,7 +170,7 @@
                   </div>
                   <input
                     type="text"
-                    placeholder="Search ..."
+                    placeholder="pesquisar ..."
                     class="form-control"
                   />
                 </div>
@@ -515,92 +520,94 @@
               </div>
               
             </div>
+            <?php
+          
+            // Consultas SQL
+            
+            // 1. Total de Clientes
+            $queryClientes = "SELECT COUNT(*) AS total_clientes FROM tb_cliente";
+            $stmtClientes = $conn->prepare($queryClientes);
+            $stmtClientes->execute();
+            $totalClientes = $stmtClientes->fetch(PDO::FETCH_ASSOC)['total_clientes'];
+            
+            // 2. Total de Vendas
+            $queryVendas = "SELECT SUM(total_compra) AS total_vendas FROM tb_compra";
+            $stmtVendas = $conn->prepare($queryVendas);
+            $stmtVendas->execute();
+            $totalVendas = $stmtVendas->fetch(PDO::FETCH_ASSOC)['total_vendas'];
+            
+            // 3. Vendas de Hoje
+            $queryVendasHoje = "SELECT SUM(total_compra) AS vendas_hoje FROM tb_compra WHERE DATE(data) = CURDATE()";
+            $stmtVendasHoje = $conn->prepare($queryVendasHoje);
+            $stmtVendasHoje->execute();
+            $vendasHoje = $stmtVendasHoje->fetch(PDO::FETCH_ASSOC)['vendas_hoje'];
+            ?>
+            
             <div class="row">
-              <div class="col-sm-6 col-md-3">
-                <div class="card card-stats card-round">
-                  <div class="card-body">
-                    <div class="row align-items-center">
-                      <div class="col-icon">
-                        <div
-                          class="icon-big text-center icon-primary bubble-shadow-small"
-                        >
-                          <i class="fas fa-users"></i>
+                <!-- Card 1: Clientes -->
+                <div class="col-sm-6 col-md-3">
+                    <div class="card card-stats card-round">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-icon">
+                                    <div class="icon-big text-center icon-primary bubble-shadow-small">
+                                        <i class="fas fa-users"></i>
+                                    </div>
+                                </div>
+                                <div class="col col-stats ms-3 ms-sm-0">
+                                    <div class="numbers">
+                                        <p class="card-category">Clientes</p>
+                                        <h4 class="card-title"><?php echo $totalClientes; ?></h4>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                      </div>
-                      <div class="col col-stats ms-3 ms-sm-0">
-                        <div class="numbers">
-                          <p class="card-category">Clientes</p>
-                          <h4 class="card-title">294</h4>
-                        </div>
-                      </div>
                     </div>
-                  </div>
                 </div>
-              </div>
-              <div class="col-sm-6 col-md-3">
-                <div class="card card-stats card-round">
-                  <div class="card-body">
-                    <div class="row align-items-center">
-                      <div class="col-icon">
-                        <div
-                          class="icon-big text-center icon-info bubble-shadow-small"
-                        >
-                          <i class="fas fa-user-check"></i>
+            
+                <!-- Card 2: Vendas Totais -->
+                <div class="col-sm-6 col-md-3">
+                    <div class="card card-stats card-round">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-icon">
+                                    <div class="icon-big text-center icon-success bubble-shadow-small">
+                                        <i class="fas fa-luggage-cart"></i>
+                                    </div>
+                                </div>
+                                <div class="col col-stats ms-3 ms-sm-0">
+                                    <div class="numbers">
+                                        <p class="card-category">Vendas</p>
+                                        <h4 class="card-title">AOA <?php echo number_format($totalVendas, 0, ',', '.'); ?></h4>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                      </div>
-                      <div class="col col-stats ms-3 ms-sm-0">
-                        <div class="numbers">
-                          <p class="card-category">Subscribers</p>
-                          <h4 class="card-title">1303</h4>
-                        </div>
-                      </div>
                     </div>
-                  </div>
                 </div>
-              </div>
-              <div class="col-sm-6 col-md-3">
-                <div class="card card-stats card-round">
-                  <div class="card-body">
-                    <div class="row align-items-center">
-                      <div class="col-icon">
-                        <div
-                          class="icon-big text-center icon-success bubble-shadow-small"
-                        >
-                          <i class="fas fa-luggage-cart"></i>
+            
+                <!-- Card 3: Vendas de Hoje -->
+                <div class="col-sm-6 col-md-3">
+                    <div class="card card-stats card-round">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-icon">
+                                    <div class="icon-big text-center icon-secondary bubble-shadow-small">
+                                        <i class="fas fa-luggage-cart"></i>
+                                    </div>
+                                </div>
+                                <div class="col col-stats ms-3 ms-sm-0">
+                                    <div class="numbers">
+                                        <p class="card-category">Vendas de Hoje</p>
+                                        <h4 class="card-title">AOA <?php echo number_format($vendasHoje, 0, ',', '.'); ?></h4>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                      </div>
-                      <div class="col col-stats ms-3 ms-sm-0">
-                        <div class="numbers">
-                          <p class="card-category">Vendas</p>
-                          <h4 class="card-title">AOA 1,345</h4>
-                        </div>
-                      </div>
                     </div>
-                  </div>
                 </div>
-              </div>
-              <div class="col-sm-6 col-md-3">
-                <div class="card card-stats card-round">
-                  <div class="card-body">
-                    <div class="row align-items-center">
-                      <div class="col-icon">
-                        <div
-                          class="icon-big text-center icon-secondary bubble-shadow-small"
-                        >
-                        <i class="fas fa-luggage-cart"></i>
-                        </div>
-                      </div>
-                      <div class="col col-stats ms-3 ms-sm-0">
-                        <div class="numbers">
-                          <p class="card-category">Vendas de Hoje</p>
-                          <h4 class="card-title">576</h4>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
+            
             <div class="row">
               <div class="col-md-13">
                 <div class="card card-round">

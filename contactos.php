@@ -8,7 +8,7 @@ session_start();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Itecma WebHost</title>
+    <title>Contactos</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -24,11 +24,11 @@ session_start();
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav me-auto">
-                        <li class="nav-item"><a class="nav-link active" href="#">Home</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="index.php">Home</a></li>
                         <li class="nav-item"><a class="nav-link" href="#">Domínios</a></li>
                         <li class="nav-item"><a class="nav-link" href="#">Hospedagens</a></li>
                         <li class="nav-item"><a class="nav-link" href="#">Website</a></li>
-                        <li class="nav-item"><a class="nav-link" href="contactos.php">Contato</a></li>
+                        <li class="nav-item"><a class="nav-link" href="contacto.php">Contato</a></li>
                     </ul>
                     <ul class="navbar-nav">
                         <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-cart"></i></a></li>
