@@ -24,19 +24,49 @@ include("header.php");
     <section class="py-3">
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-md-8">
-                    <h2 class="text-center mb-4">Pesquisar Domínio</h2>
-                    <form class="input-group shadow-sm" method="post" action="config-dominio.php">
-                        <span class="input-group-text bg-primary text-white">
-                            <i class="bi bi-search"></i>
-                        </span>
-                        <input class="form-control" type="search" placeholder="Digite o domínio que deseja pesquisar" aria-label="Pesquisar" name="pesquisarDominio">
-                        <button class="btn btn-primary" type="submit">Pesquisar</button>
-                    </form>
-                    <div class="zona-disponivel">
-                        <p>Zonas disponíveis: .AO, .EDU.AO, .ORG.AO, .CO.AO, .IT.AO</p>
+            <section class="py-3">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <h3 class="text-center mb-4">Entre em Contato</h3>
+                <form action="processar_contato.php" method="POST">
+                    <!-- Campo de Seleção de Motivo -->
+                    <div class="mb-3">
+                        <label for="motivo" class="form-label">Motivo do Contato</label>
+                        <select class="form-select" id="motivo" name="motivo" required>
+                            <option value="">Selecione um motivo</option>
+                            <option value="suporte">Suporte Técnico</option>
+                            <option value="vendas">Informações de Vendas</option>
+                            <option value="feedback">Feedback</option>
+                            <option value="outro">Outro</option>
+                        </select>
                     </div>
-                </div>
+                    
+                    <!-- Campo de Email -->
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Seu Email</label>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="exemplo@dominio.com" required>
+                    </div>
+                    
+                    <!-- Campo de Mensagem -->
+                    <div class="mb-3">
+                        <label for="mensagem" class="form-label">Sua Mensagem</label>
+                        <textarea class="form-control" id="mensagem" name="mensagem" rows="5" placeholder="Escreva aqui sua mensagem" required></textarea>
+                    </div>
+                    
+                    <!-- Botão de Envio -->
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">Enviar Mensagem</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <?php if (isset($erro)): ?>
+            <div class="alert alert-danger mt-3"><?= $erro ?></div>
+        <?php endif; ?>
+    </div>
+</section>
+
             </div>
             <?php if (isset($erro)): ?>
                 <div class="alert alert-danger mt-3"><?= $erro ?></div>
