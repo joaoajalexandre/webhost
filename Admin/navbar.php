@@ -64,8 +64,8 @@
                       <div
                         class="dropdown-title d-flex justify-content-between align-items-center"
                       >
-                        Messages
-                        <a href="#" class="small">Mark all as read</a>
+                        Mensagens
+                        <a href="#" class="small">Marcar todas como lidas</a>
                       </div>
                     </li>
                     <li>
