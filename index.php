@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-pt">
 <head>
@@ -7,14 +6,51 @@
     <title>Itecma WebHost</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        .card-domain {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+            width: 250px;
+            margin-bottom: 20px;
+        }
+        .card-domain:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        .card-body {
+            text-align: center;
+            padding: 20px;
+        }
+        .input-group {
+            max-width: 500px;
+            margin-bottom: 20px;
+            margin: 0 auto;
+        }
+        .zona-disponivel p {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+        .zona-disponivel {
+            text-align: center;
+        }
+        .card-deck {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .container {
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
 <?php
 include("header.php");
-
-
 ?>
     <section class="topo">
         <div class="container-fluid"></div>
@@ -32,7 +68,39 @@ include("header.php");
                         <button class="btn btn-primary" type="submit">Pesquisar</button>
                     </form>
                     <div class="zona-disponivel">
-                        <p>Zonas disponíveis: .AO, .EDU.AO, .ORG.AO, .CO.AO, .IT.AO</p>
+                        <h4 class="text-center mb-3">Zonas Disponíveis</h4>
+                        <div class="card-deck">
+                            <div class="card card-domain">
+                                <div class="card-body">
+                                    <h5 class="card-title">.AO</h5>
+                                    <p class="card-text">Domínio nacional de Angola</p>
+                                </div>
+                            </div>
+                            <div class="card card-domain">
+                                <div class="card-body">
+                                    <h5 class="card-title">.EDU.AO</h5>
+                                    <p class="card-text">Domínio educacional de Angola</p>
+                                </div>
+                            </div>
+                            <div class="card card-domain">
+                                <div class="card-body">
+                                    <h5 class="card-title">.ORG.AO</h5>
+                                    <p class="card-text">Domínio para organizações de Angola</p>
+                                </div>
+                            </div>
+                            <div class="card card-domain">
+                                <div class="card-body">
+                                    <h5 class="card-title">.CO.AO</h5>
+                                    <p class="card-text">Domínio comercial de Angola</p>
+                                </div>
+                            </div>
+                            <div class="card card-domain">
+                                <div class="card-body">
+                                    <h5 class="card-title">.IT.AO</h5>
+                                    <p class="card-text">Domínio para tecnologia e inovação em Angola</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -43,6 +111,5 @@ include("header.php");
     </section>
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 </body>
 </html>
