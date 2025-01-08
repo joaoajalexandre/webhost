@@ -14,7 +14,7 @@ include("./conexao.php");
     />
     <link
       rel="icon"
-      href="./img/logo.png"
+      href="../img/logo.png"
       type="image/x-icon"
     />
 
@@ -55,7 +55,7 @@ include("./conexao.php");
           <div class="logo-header" data-background-color="dark">
             <a href="./index.php" class="logo">
               <img
-                src="./img/logo.png"
+                src="../img/logo.png"
                 alt="navbar brand"
                 class="navbar-brand"
                 height="20"
@@ -177,13 +177,13 @@ include("./navbar.php");
                   <i class="icon-arrow-right"></i>
                 </li>
                 <li class="nav-item">
-                  <a href="#">Tables</a>
+                  <a href="#"></a>
                 </li>
                 <li class="separator">
                   <i class="icon-arrow-right"></i>
                 </li>
                 <li class="nav-item">
-                  <a href="#">Datatables</a>
+                  <a href="#"></a>
                 </li>
               </ul>
             </div>

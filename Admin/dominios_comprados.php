@@ -176,13 +176,13 @@ include("./navbar.php");
                   <i class="icon-arrow-right"></i>
                 </li>
                 <li class="nav-item">
-                  <a href="#">Tables</a>
+                  <a href="#"></a>
                 </li>
                 <li class="separator">
                   <i class="icon-arrow-right"></i>
                 </li>
                 <li class="nav-item">
-                  <a href="#">Datatables</a>
+                  <a href="#"></a>
                 </li>
               </ul>
             </div>
