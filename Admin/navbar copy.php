@@ -71,19 +71,65 @@
                     <li>
                       <div class="message-notif-scroll scrollbar-outer">
                         <div class="notif-center">
-                          <a href="#">
-                            <div class="notif-img">
-                              <img
-                                src="assets/img/jm_denis.jpg"
-                                alt="Img Profile"
-                              />
-                            </div>
-                            <div class="notif-content">
-                              <span class="subject">EMAIL@GMAIL.COM</span>
-                              <span class="block"> How are you ? </span>
-                              <span class="time">5 minutes ago</span>
-                            </div>
-                          </a>
+                        <?php
+// Conexão com o banco de dados
+include('conexao.php');
+
+// Consultar as mensagens
+$query = "
+    SELECT m.*, 
+           IFNULL(c.nome, m.email) AS nome, 
+           IFNULL(c.sobrenome, '') AS sobrenome,
+           c.email AS cliente_email
+      FROM tb_mensagens m
+      LEFT JOIN tb_cliente c ON m.id_cliente = c.id_cliente
+      ORDER BY m.data_envio DESC
+      LIMIT 5"; // Limitar para as 5 últimas mensagens
+$result = mysqli_query($conn, $query);
+
+while ($row = mysqli_fetch_assoc($result)) {
+    // Imagem padrão (se não houver imagem de perfil, será utilizada esta imagem)
+    $default_image = "assets/img/default-profile.jpg"; 
+
+    // Nome e sobrenome do cliente ou email caso o nome não esteja disponível
+    $nome = !empty($row['nome']) ? $row['nome'] : $row['email']; 
+    $sobrenome = $row['sobrenome'] ? $row['sobrenome'] : ''; 
+    $mensagem = $row['mensagem'];
+    $data_envio = $row['data_envio'];
+
+    // Calcular o tempo de envio (ex: 5 minutos atrás)
+    $timeAgo = strtotime($data_envio);
+    $timeAgo = time() - $timeAgo;
+    $minute = 60;
+    $hour = $minute * 60;
+    $day = $hour * 24;
+
+    if ($timeAgo < $minute) {
+        $timeDisplay = floor($timeAgo) . " segundos atrás";
+    } else if ($timeAgo < $hour) {
+        $timeDisplay = floor($timeAgo / $minute) . " minutos atrás";
+    } else if ($timeAgo < $day) {
+        $timeDisplay = floor($timeAgo / $hour) . " horas atrás";
+    } else {
+        $timeDisplay = floor($timeAgo / $day) . " dias atrás";
+    }
+?>
+
+  <a href="#">
+    <div class="notif-img">
+      <img src="<?php echo $default_image; ?>" alt="Img Profile" />
+    </div>
+    <div class="notif-content">
+      <span class="subject"><?php echo $nome . " " . $sobrenome; ?></span>
+      <span class="block"><?php echo $mensagem; ?></span>
+      <span class="time"><?php echo $timeDisplay; ?></span>
+    </div>
+  </a>
+
+<?php
+} // Fim do loop while
+?>
+
                           <a href="#">
                             <div class="notif-img">
                               <img

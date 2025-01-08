@@ -92,7 +92,7 @@ include("conexao.php");
                 <div class="collapse" id="dashboard">
                   <ul class="nav nav-collapse">
                     <li>
-                      <a href="index.html">
+                      <a href="index.php">
                         <span class="sub-item">Dashboard</span>
                       </a>
                     </li>
@@ -107,14 +107,14 @@ include("conexao.php");
               </li>
               
               <li class="nav-item">
-                <a href="./tables/clientes.php">
+                <a href="./clientes.php">
                   <i class="fas fa-file"></i>
                   <p>clientes</p>
                   <span class="badge badge-secondary"></span>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="./tables/dominios_comprados.php">
+                <a href="./dominios_comprados.php">
                   <i class="fas fa-file"></i>
                   <p>vendas</p>
                   <span class="badge badge-secondary"></span>
@@ -132,7 +132,7 @@ include("conexao.php");
           <div class="main-header-logo">
             <!-- Logo Header -->
             <div class="logo-header" data-background-color="dark">
-              <a href="index.html" class="logo">
+              <a href="index.php" class="logo">
                 <img
                   src="assets/img/kaiadmin/logo_light.svg"
                   alt="navbar brand"

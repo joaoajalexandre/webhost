@@ -1,25 +1,25 @@
 <?php
 session_start();
-include("../conexao.php");
+include("./conexao.php");
 
 ?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
   <meta charset="utf-8">
-    <title>Vendas</title>
+    <title>Clientes</title>
     <meta
       content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
       name="viewport"
     />
     <link
       rel="icon"
-      href="../../img/logo.png"
+      href="./img/logo.png"
       type="image/x-icon"
     />
 
     <!-- Fonts and icons -->
-    <script src="../assets/js/plugin/webfont/webfont.min.js"></script>
+    <script src="./assets/js/plugin/webfont/webfont.min.js"></script>
     <script>
       WebFont.load({
         google: { families: ["Public Sans:300,400,500,600,700"] },
@@ -30,7 +30,7 @@ include("../conexao.php");
             "Font Awesome 5 Brands",
             "simple-line-icons",
           ],
-          urls: ["../assets/css/fonts.min.css"],
+          urls: ["./assets/css/fonts.min.css"],
         },
         active: function () {
           sessionStorage.fonts = true;
@@ -39,12 +39,12 @@ include("../conexao.php");
     </script>
 
     <!-- CSS Files -->
-    <link rel="stylesheet" href="../assets/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="../assets/css/plugins.min.css" />
-    <link rel="stylesheet" href="../assets/css/kaiadmin.min.css" />
+    <link rel="stylesheet" href="./assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="./assets/css/plugins.min.css" />
+    <link rel="stylesheet" href="./assets/css/kaiadmin.min.css" />
 
     <!-- CSS Just for demo purpose, don't include it in your project -->
-    <link rel="stylesheet" href="../assets/css/demo.css" />
+    <link rel="stylesheet" href="./assets/css/demo.css" />
   </head>
   <body>
     <div class="wrapper">
@@ -53,9 +53,9 @@ include("../conexao.php");
         <div class="sidebar-logo">
           <!-- Logo Header -->
           <div class="logo-header" data-background-color="dark">
-            <a href="../index.php" class="logo">
+            <a href="./index.php" class="logo">
               <img
-                src="../../img/logo.png"
+                src="./img/logo.png"
                 alt="navbar brand"
                 class="navbar-brand"
                 height="20"
@@ -92,7 +92,7 @@ include("../conexao.php");
               <div class="collapse" id="dashboard">
                 <ul class="nav nav-collapse">
                   <li>
-                    <a href="../index.html">
+                    <a href="./index.php">
                       <span class="sub-item">Dashboard</span>
                     </a>
                     </li>
@@ -107,19 +107,20 @@ include("../conexao.php");
               </li>
               
               <li class="nav-item">
-                <a href="../tables/clientes.php">
+                <a href="./clientes.php">
                   <i class="fas fa-file"></i>
                   <p>clientes</p>
                   <span class="badge badge-secondary"></span>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="../tables/dominios_comprados.php">
+                <a href="./dominios_comprados.php">
                   <i class="fas fa-file"></i>
                   <p>vendas</p>
                   <span class="badge badge-secondary"></span>
                 </a>
               </li>
+             
             </ul>
           </div>
         </div>
@@ -131,9 +132,9 @@ include("../conexao.php");
           <div class="main-header-logo">
             <!-- Logo Header -->
             <div class="logo-header" data-background-color="dark">
-              <a href="../index.html" class="logo">
+              <a href="./index.php" class="logo">
                 <img
-                  src="../assets/img/kaiadmin/logo_light.svg"
+                  src="./assets/img/kaiadmin/logo_light.svg"
                   alt="navbar brand"
                   class="navbar-brand"
                   height="20"
@@ -156,7 +157,7 @@ include("../conexao.php");
           <!-- Navbar Header -->
           <?php
 
-include("../navbar.php");
+include("./navbar.php");
 
 ?>
             <!-- End Navbar -->
@@ -165,7 +166,7 @@ include("../navbar.php");
         <div class="container">
           <div class="page-inner">
             <div class="page-header">
-              <h3 class="fw-bold mb-3">Dominios</h3>
+              <h3 class="fw-bold mb-3">Clientes</h3>
               <ul class="breadcrumbs mb-3">
                 <li class="nav-home">
                   <a href="#">
@@ -190,28 +191,20 @@ include("../navbar.php");
               <div class="col-md-12">
                 <div class="card">
                   <div class="card-header">
-                    <h4 class="card-title">Dominio Comprados</h4>
+                    <h4 class="card-title">Clientes</h4>
                   </div>
                   <div class="card-body">
                     <div class="table-responsive">
                     <?php
 
-// Consulta SQL para unir as tabelas
-$query = "
-    SELECT 
-        tb_dominio_comprado.dominio AS dominio_comprado,
-        CONCAT(tb_cliente.nome, ' ', tb_cliente.sobrenome) AS cliente,
-        tb_dominio.preco AS preco,
-        tb_dominio_comprado.data AS data_compra
-    FROM tb_dominio_comprado
-    JOIN tb_cliente ON tb_dominio_comprado.id_cliente = tb_cliente.id_cliente
-    JOIN tb_dominio ON tb_dominio_comprado.dominio = tb_dominio.dominio
-";
+// Buscar os dados da tabela tb_cliente
+$query = "SELECT nome, sobrenome, email, bi, nome_empresa, nif_empresa FROM tb_cliente";
 $stmt = $conn->prepare($query);
 $stmt->execute();
 
-// Obter os resultados
-$dominios_comprados = $stmt->fetchAll(PDO::FETCH_ASSOC);
+// Verificar se existem resultados
+$clientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
 ?>
 
 <table
@@ -220,34 +213,40 @@ $dominios_comprados = $stmt->fetchAll(PDO::FETCH_ASSOC);
 >
     <thead>
         <tr>
-            <th>Dominio</th>
-            <th>Cliente</th>
-            <th>Preço</th>
-            <th>Data</th>
+            <th>Nome</th>
+            <th>Sobrenome</th>
+            <th>Email</th>
+            <th>BI</th>
+            <th>Nome da Empresa</th>
+            <th>NIF</th>
         </tr>
     </thead>
     <tfoot>
         <tr>
-            <th>Dominio</th>
-            <th>Cliente</th>
-            <th>Preço</th>
-            <th>Data</th>
+            <th>Nome</th>
+            <th>Sobrenome</th>
+            <th>Email</th>
+            <th>BI</th>
+            <th>Nome da Empresa</th>
+            <th>NIF</th>
         </tr>
     </tfoot>
     <tbody>
         <?php
-        // Exibir os dados dinamicamente na tabela
-        if (!empty($dominios_comprados)) {
-            foreach ($dominios_comprados as $dominio) {
+        // Exibir os dados dinamicamente
+        if (!empty($clientes)) {
+            foreach ($clientes as $cliente) {
                 echo "<tr>";
-                echo "<td>{$dominio['dominio_comprado']}</td>";
-                echo "<td>{$dominio['cliente']}</td>";
-                echo "<td>{$dominio['preco']}</td>";
-                echo "<td>{$dominio['data_compra']}</td>";
+                echo "<td>{$cliente['nome']}</td>";
+                echo "<td>{$cliente['sobrenome']}</td>";
+                echo "<td>{$cliente['email']}</td>";
+                echo "<td>{$cliente['bi']}</td>";
+                echo "<td>{$cliente['nome_empresa']}</td>";
+                echo "<td>{$cliente['nif_empresa']}</td>";
                 echo "</tr>";
             }
         } else {
-            echo "<tr><td colspan='4'>Nenhum domínio comprado encontrado</td></tr>";
+            echo "<tr><td colspan='6'>Nenhum cliente encontrado</td></tr>";
         }
         ?>
     </tbody>
@@ -490,18 +489,18 @@ $dominios_comprados = $stmt->fetchAll(PDO::FETCH_ASSOC);
       <!-- End Custom template -->
     </div>
     <!--   Core JS Files   -->
-    <script src="../assets/js/core/jquery-3.7.1.min.js"></script>
-    <script src="../assets/js/core/popper.min.js"></script>
-    <script src="../assets/js/core/bootstrap.min.js"></script>
+    <script src="./assets/js/core/jquery-3.7.1.min.js"></script>
+    <script src="./assets/js/core/popper.min.js"></script>
+    <script src="./assets/js/core/bootstrap.min.js"></script>
 
     <!-- jQuery Scrollbar -->
-    <script src="../assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+    <script src="./assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
     <!-- Datatables -->
-    <script src="../assets/js/plugin/datatables/datatables.min.js"></script>
+    <script src="./assets/js/plugin/datatables/datatables.min.js"></script>
     <!-- Kaiadmin JS -->
-    <script src="../assets/js/kaiadmin.min.js"></script>
+    <script src="./assets/js/kaiadmin.min.js"></script>
     <!-- Kaiadmin DEMO methods, don't include it in your project! -->
-    <script src="../assets/js/setting-demo2.js"></script>
+    <script src="./assets/js/setting-demo2.js"></script>
     <script>
       $(document).ready(function () {
         $("#basic-datatables").DataTable({});
