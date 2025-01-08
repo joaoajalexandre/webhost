@@ -58,7 +58,7 @@ include("header.php");
     <section class="py-3">
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-md-8">
+                <div class="col-md-12">
                     <h2 class="text-center mb-4">Pesquisar Domínio</h2>
                     <form class="input-group shadow-sm" method="post" action="config-dominio.php">
                         <span class="input-group-text bg-primary text-white">
