@@ -12,6 +12,7 @@ if (isset($_POST['btnCadastrar'])) {
 	$municipio = $_POST['municipio'];
 	$endereco = $_POST['endereco'];
 	$email = $_POST['email'];
+	$telefone = $_POST['telefone'];
 	$passe = md5($_POST['passe']); // Senha criptografada
 
 	// Tratamento do arquivo de BI/NIF

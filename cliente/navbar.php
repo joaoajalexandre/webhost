@@ -149,7 +149,7 @@
                   >
                     <div class="avatar-sm">
                       <img
-                        src="assets/img/profile.jpg"
+                        src="assets/img/user.png"
                         alt="..."
                         class="avatar-img rounded-circle"
                       />
@@ -165,7 +165,7 @@
                         <div class="user-box">
                           <div class="avatar-lg">
                             <img
-                              src="assets/img/profile.jpg"
+                              src="assets/img/user.png"
                               alt="image profile"
                               class="avatar-img rounded"
                             />
@@ -174,7 +174,7 @@
                             <h4><?php echo $_SESSION['logado']['nome']." ".$_SESSION['logado']['sobrenome']; ?></h4>
                             <p class="text-muted"><?php echo $_SESSION['logado']['email']; ?></p>
                             <a
-                              href="profile.html"
+                              href="perfil_cliente.php"
                               class="btn btn-xs btn-secondary btn-sm"
                               >Ver Perfil</a
                             >

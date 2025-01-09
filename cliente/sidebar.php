@@ -56,30 +56,30 @@
               </li>
               
               <li class="nav-item">
-                <a href="./clientes.php">
-                  <i class="fas fa-file"></i>
-                  <p>clientes</p>
+                <a href="meus_detalhe.php">
+                  <i class="fas fa-user"></i>
+                  <p>Minhas Informações</p>
                   <span class="badge badge-secondary"></span>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="./dominios_comprados.php">
                   <i class="fas fa-file"></i>
-                  <p>vendas</p>
+                  <p>Meus Serviços</p>
                   <span class="badge badge-secondary"></span>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="./dominios_comprados.php">
                   <i class="fas fa-file"></i>
-                  <p>Usuarios</p>
+                  <p>Dominios</p>
                   <span class="badge badge-secondary"></span>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="./dominios_comprados.php">
-                  <i class="fas fa-file"></i>
-                  <p>Serviços</p>
+                  <i class="fas fa-lock"></i>
+                  <p>Alterar Palavra-passe</p>
                   <span class="badge badge-secondary"></span>
                 </a>
               </li>

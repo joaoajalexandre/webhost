@@ -27,7 +27,7 @@ session_start();
                                 <?= $_SESSION['logado']['nome']; ?>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                                <li><a class="dropdown-item" href="#">Perfil</a></li>
+                                <li><a class="dropdown-item" href="cliente">Gestão do Cliente</a></li>
                                 <li><a class="dropdown-item" href="#">Configuração</a></li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" href="logout.php">Terminar Sessão</a></li>

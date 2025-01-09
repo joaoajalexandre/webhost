@@ -1,6 +1,40 @@
 <?php
 session_start();
-include("./conexao.php");
+include("../conexao.php");
+
+if(!isset($_SESSION['logado'])){
+  header("Location: ../login.php");
+}
+
+
+$id_cliente = $_SESSION['logado']['id_cliente'];
+$cmdCliente = "SELECT * FROM tb_cliente WHERE id_cliente = '$id_cliente' ";
+$queryCliente = $conexao->query($cmdCliente);
+$dadosCliente = $queryCliente->fetch_assoc();
+
+
+//Actualizar as informações do usuarios
+if (isset($_POST['btnActualizar'])) {
+  $nome = $_POST['nome'];
+  $sobrenome = $_POST['sobrenome'];
+  $bi = $_POST['bi'];
+  $nome_empresa = $_POST['nome_empresa'];
+  $nif_empresa = $_POST['nif_empresa'];
+  $provincia = $_POST['provincia'];
+  $municipio = $_POST['municipio'];
+  $endereco = $_POST['endereco'];
+  $email = $_POST['email'];
+
+
+  $cmd = "UPDATE tb_cliente SET nome='$nome', sobrenome='$sobrenome', bi='$bi', nome_empresa='$nome_empresa', nif_empresa='$nif_empresa', provincia='$provincia', municipio='$municipio', endereco='$endereco', email='$email' WHERE id_cliente = '$id_cliente' ";
+    $actualizarCliente = $conexao->query($cmd);
+    if ($actualizarCliente === true) {
+      echo "<script>alert('Informãções do usuario aditado com sucesso!')</script>";
+    }
+    else{
+      echo "<script>alert('Erro ao editar as Informãções do usuario!')</script>";
+    }
+}
 
 ?>
 <!DOCTYPE html>
@@ -84,112 +118,124 @@ include("./conexao.php");
           <!-- Navbar Header -->
           <?php
 
-include("./navbar.php");
+            include("./navbar.php");
 
-?>
+          ?>
             <!-- End Navbar -->
         </div>
-
+        <!-------------------------Inicio do container--------------------------->
         <div class="container">
           <div class="page-inner">
             <div class="page-header">
-              <h3 class="fw-bold mb-3">Clientes</h3>
+              <h3 class="fw-bold mb-3">Minhas Informações</h3>
               <ul class="breadcrumbs mb-3">
                 <li class="nav-home">
                   <a href="#">
-                    <i class="icon-home"></i>
+                    <i class="fa fa-home"></i>
                   </a>
                 </li>
                 <li class="separator">
                   <i class="icon-arrow-right"></i>
                 </li>
                 <li class="nav-item">
-                  <a href="#"></a>
+                  <a href="#">
+                    <i class="fa fa-user"></i>
+                  </a>
                 </li>
                 <li class="separator">
                   <i class="icon-arrow-right"></i>
                 </li>
                 <li class="nav-item">
-                  <a href="#"></a>
+                  <a href="#">
+                    <i class="fa fa-info"></i>
+                  </a>
                 </li>
               </ul>
             </div>
             <div class="row">
               <div class="col-md-12">
-                <div class="card">
-                  <div class="card-header">
-                    <h4 class="card-title">Clientes</h4>
-                  </div>
-                  <div class="card-body">
-                    <div class="table-responsive">
-                    <?php
+                <form method="post" class="row">
 
-// Buscar os dados da tabela tb_cliente
-$query = "SELECT nome, sobrenome, email, bi, nome_empresa, nif_empresa FROM tb_cliente";
-$stmt = $conn->prepare($query);
-$stmt->execute();
-
-// Verificar se existem resultados
-$clientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-?>
-
-<table
-    id="basic-datatables"
-    class="display table table-striped table-hover"
->
-    <thead>
-        <tr>
-            <th>Nome</th>
-            <th>Sobrenome</th>
-            <th>Email</th>
-            <th>BI</th>
-            <th>Nome da Empresa</th>
-            <th>NIF</th>
-        </tr>
-    </thead>
-    <tfoot>
-        <tr>
-            <th>Nome</th>
-            <th>Sobrenome</th>
-            <th>Email</th>
-            <th>BI</th>
-            <th>Nome da Empresa</th>
-            <th>NIF</th>
-        </tr>
-    </tfoot>
-    <tbody>
-        <?php
-        // Exibir os dados dinamicamente
-        if (!empty($clientes)) {
-            foreach ($clientes as $cliente) {
-                echo "<tr>";
-                echo "<td>{$cliente['nome']}</td>";
-                echo "<td>{$cliente['sobrenome']}</td>";
-                echo "<td>{$cliente['email']}</td>";
-                echo "<td>{$cliente['bi']}</td>";
-                echo "<td>{$cliente['nome_empresa']}</td>";
-                echo "<td>{$cliente['nif_empresa']}</td>";
-                echo "</tr>";
-            }
-        } else {
-            echo "<tr><td colspan='6'>Nenhum cliente encontrado</td></tr>";
-        }
-        ?>
-    </tbody>
-</table>
-
+                  <div class="card">
+                    <div class="card-header">
+                      <h4 class="card-title">Informações Pessoal</h4>
+                    </div>
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-md-6 mt-3">
+                          <label for="nome">Primeiro nome</label>
+                          <input type="text" name="nome" value="<?php echo $dadosCliente['nome']; ?>" class="form-control" id="nome">
+                        </div>
+                        <div class="col-md-6 mt-3">
+                          <label for="sobrenome">Ultimo nome</label>
+                          <input type="text" name="sobrenome" value="<?php echo $dadosCliente['sobrenome']; ?>" class="form-control" id="sobrenome">
+                        </div>
+                        <div class="col-md-4 mt-3">
+                          <label for="email">E-mail</label>
+                          <input type="text" name="email" value="<?php echo $dadosCliente['email']; ?>" class="form-control" id="email">
+                        </div>
+                        <div class="col-md-4 mt-3">
+                          <label for="telefone">Telefone</label>
+                          <input type="text" name="telefone" value="<?php echo $dadosCliente['telefone']; ?>" class="form-control" id="telefone">
+                        </div>
+                        <div class="col-md-4 mt-3">
+                          <label for="telefone">Nº do Bilhete</label>
+                          <input type="text" name="bi" value="<?php echo $dadosCliente['bi']; ?>" class="form-control" id="telefone">
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </div>
 
-             
+                  <div class="card">
+                    <div class="card-header">
+                      <h4 class="card-title">Endereço</h4>
+                    </div>
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-md-3 mt-3">
+                          <label for="provincia">Provincia</label>
+                          <input type="text" name="provincia" value="<?php echo $dadosCliente['provincia']; ?>" class="form-control" id="provincia">
+                        </div>
+                        <div class="col-md-3 mt-3">
+                          <label for="sobrenome">Municipio</label>
+                          <input type="text" name="municipio" value="<?php echo $dadosCliente['municipio']; ?>" class="form-control" id="municipio">
+                        </div>
+                        <div class="col-md-6 mt-3">
+                          <label for="endereco">Endereço</label>
+                          <input type="text" name="endereco" value="<?php echo $dadosCliente['endereco']; ?>" class="form-control" id="endereco">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
 
-              
+                  <div class="card">
+                    <div class="card-header">
+                      <h4 class="card-title">Informações da Empresa</h4>
+                    </div>
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-md-4 mt-3">
+                          <label for="nome">Empresa</label>
+                          <input type="text" name="nome_empresa" value="<?php echo $dadosCliente['nome_empresa']; ?>" class="form-control" id="nome">
+                        </div>
+                        <div class="col-md-4 mt-3">
+                          <label for="sobrenome">NIF da Empresa</label>
+                          <input type="text" name="nif_empresa" value="<?php echo $dadosCliente['nif_empresa']; ?>" class="form-control" id="sobrenome">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="">
+                    <input type="submit" name="btnActualizar" value="Actualizar" class="btn btn-primary fluid">
+                  </div>
+
+                </form>
+              </div>             
             </div>
           </div>
         </div>
+        <!-------------------------Final do container--------------------------->
 
         <footer class="footer">
           <div class="container-fluid d-flex justify-content-between">
