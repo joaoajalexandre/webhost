@@ -18,6 +18,7 @@ if (isset($_POST['btnLogin'])) {
 
             $_SESSION['logado']['id_cliente'] = $logado['id_cliente'];
             $_SESSION['logado']['nome'] = $logado['nome'];
+            $_SESSION['logado']['sobrenome'] = $logado['sobrenome'];
             $_SESSION['logado']['email'] = $logado['email'];
 
             // Redirecionar para a página inicial ou dashboard

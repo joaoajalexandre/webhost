@@ -1,0 +1,113 @@
+[33mcommit 1ec64c6e67eadcf36f163d9051d7e813fd4d10ae[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m
+Author: João AJ Alexandre Dev <joaoantoniojoaquimalexandre@gmail.com>
+Date:   Thu Jan 9 08:53:24 2025 +0100
+
+    Editar arquivo de login
+
+[33mcommit 26e7da46c964d08c8f5d82c1349af04c305d6e64[m
+Author: Marcelino Lufendo <lufendomarcelino07@gmail.com>
+Date:   Thu Jan 9 01:44:56 2025 +0100
+
+    usuarios e serviços
+
+[33mcommit 30bcf3b22b347d23d9fbbd0a832b2c31edd55465[m
+Author: João AJ Alexandre Dev <joaoantoniojoaquimalexandre@gmail.com>
+Date:   Wed Jan 8 10:45:27 2025 +0100
+
+    definir a margem do da sessão dos tipos de dominio na pagina inicial
+
+[33mcommit beb252db2cf62ce1a567a8788c80ff84e0faca82[m
+Author: Marcelino Lufendo <lufendomarcelino07@gmail.com>
+Date:   Wed Jan 8 02:53:25 2025 +0100
+
+    ajustes navbar
+
+[33mcommit a85431f7a3255d224938532ec21cc8f1d493845e[m
+Author: Marcelino Lufendo <lufendomarcelino07@gmail.com>
+Date:   Wed Jan 8 02:11:47 2025 +0100
+
+    lufendo
+
+[33mcommit 7eed72a9b6ca30b7bfb8e80bedfabb10442b43c1[m
+Author: Marcelino Lufendo <lufendomarcelino07@gmail.com>
+Date:   Wed Jan 8 02:08:07 2025 +0100
+
+    ajustes
+
+[33mcommit cfb1e179e1ce955aa3570bfcb123c614ae4922eb[m
+Author: Marcelino Lufendo <lufendomarcelino07@gmail.com>
+Date:   Wed Jan 8 01:06:13 2025 +0100
+
+    COMPONENTE NAVBAR
+
+[33mcommit cb9da4eb09959c85401e012286c6b317dec0a7c3[m
+Author: Marcelino Lufendo <lufendomarcelino07@gmail.com>
+Date:   Wed Jan 8 00:47:47 2025 +0100
+
+    webSite
+
+[33mcommit da807caffbbabeaf3417006dc7cdc32880c54453[m
+Author: Marcelino Lufendo <lufendomarcelino07@gmail.com>
+Date:   Wed Jan 8 00:26:51 2025 +0100
+
+    mensagem
+
+[33mcommit 403ed93eb7832f1ade8ca22bdec2251ec7e8a1a4[m
+Author: Marcelino Lufendo <lufendomarcelino07@gmail.com>
+Date:   Wed Jan 8 00:17:38 2025 +0100
+
+    pagina hospedagem
+
+[33mcommit 0835a792f75d960527cb4cbffc14ec0ee183ae49[m
+Author: Marcelino Lufendo <lufendomarcelino07@gmail.com>
+Date:   Tue Jan 7 23:59:21 2025 +0100
+
+    logout
+
+[33mcommit 6573d5d76941b5ee8bfe8c7dfe4575ee7771e29d[m
+Author: Marcelino Lufendo <lufendomarcelino07@gmail.com>
+Date:   Tue Jan 7 23:47:45 2025 +0100
+
+    ajuste no cadastrar
+
+[33mcommit a7dae15a5217e1ca5cc818d297e1a11d3c8707f6[m
+Author: Marcelino Lufendo <lufendomarcelino07@gmail.com>
+Date:   Tue Jan 7 23:41:47 2025 +0100
+
+    ajuste do login
+
+[33mcommit ed4b4af89cd7b3d1d6764f7c168335c6ce1d95d2[m
+Author: Marcelino Lufendo <lufendomarcelino07@gmail.com>
+Date:   Tue Jan 7 23:23:48 2025 +0100
+
+    cadastro
+
+[33mcommit b9a1fed07adfe4b4618a8bc8a7cc879a30a5987d[m
+Author: Marcelino Lufendo <lufendomarcelino07@gmail.com>
+Date:   Tue Jan 7 23:01:55 2025 +0100
+
+    formulario de contacto
+
+[33mcommit a2772a5a4c12d0b6fd9879498e1423c3f4f14475[m
+Author: Marcelino Lufendo <lufendomarcelino07@gmail.com>
+Date:   Tue Jan 7 22:53:23 2025 +0100
+
+    componentes
+
+[33mcommit e51cd5fa7c70a8c5b9cac232a5d062b1ecf5245c[m
+Author: Marcelino Lufendo <lufendomarcelino07@gmail.com>
+Date:   Tue Jan 7 22:49:07 2025 +0100
+
+    Admi e cliente
+
+[33mcommit 679086e2c6c0d34b01b766f550a8abe5d8ef5945[m
+Author: Marcelino Lufendo <lufendomarcelino07@gmail.com>
+Date:   Tue Jan 7 19:58:00 2025 +0100
+
+    Admin
+
+[33mcommit 52a74dcddde197e7850c29414d3145ab0143d441[m
+Author: João AJ Alexandre Dev <joaoantoniojoaquimalexandre@gmail.com>
+Date:   Tue Jan 7 16:05:32 2025 +0100
+
+    Initial commit
