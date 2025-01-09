@@ -27,7 +27,7 @@ session_start();
 							<?= $_SESSION['erro']; ?>
 						</div>
 					</div>
-					<?php unset($_SESSION['erro']); // Limpa a mensagem de erro após exibir ?>
+					<?php unset($_SESSION['erro']); // Limpa a mensagem de erro após exibir  ?>
 				<?php endif; ?>
 
 				<div class="col-sm-12 mt-3">
