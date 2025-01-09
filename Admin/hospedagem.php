@@ -119,6 +119,7 @@ include("./navbar.php");
                 <div class="card">
                   <div class="card-header">
                     <h4 class="card-title">Hospedagem</h4>
+                    <button>+</button>
                   </div>
                   <div class="card-body">
                     <div class="table-responsive">
@@ -144,6 +145,7 @@ $hospedagens = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <th>Preço Anual</th>
             <th>Status</th>
             <th>Data</th>
+            <th>Ação</th>
         </tr>
     </thead>
     <tfoot>
@@ -153,6 +155,7 @@ $hospedagens = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <th>Preço Anual</th>
             <th>Status</th>
             <th>Data</th>
+            <th>Ação</th>
         </tr>
     </tfoot>
     <tbody>
@@ -166,10 +169,15 @@ $hospedagens = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 echo "<td>{$hospedagem['preco_anual']}</td>";
                 echo "<td>{$hospedagem['status']}</td>";
                 echo "<td>{$hospedagem['data_criacao']}</td>";
+                echo '<td>
+                    <a href="">ver</a>
+                    <a href="">editar</a>
+                    <a href="">eliminar</a>
+                </td>';
                 echo "</tr>";
             }
         } else {
-            echo "<tr><td colspan='5'>Nenhuma Hospedagem encontrada</td></tr>";
+            echo "<tr><td colspan='6'>Nenhuma Hospedagem encontrada</td></tr>";
         }
         ?>
     </tbody>
