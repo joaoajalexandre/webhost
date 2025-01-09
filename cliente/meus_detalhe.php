@@ -24,9 +24,10 @@ if (isset($_POST['btnActualizar'])) {
   $municipio = $_POST['municipio'];
   $endereco = $_POST['endereco'];
   $email = $_POST['email'];
+  $telefone = $_POST['telefone'];
 
 
-  $cmd = "UPDATE tb_cliente SET nome='$nome', sobrenome='$sobrenome', bi='$bi', nome_empresa='$nome_empresa', nif_empresa='$nif_empresa', provincia='$provincia', municipio='$municipio', endereco='$endereco', email='$email' WHERE id_cliente = '$id_cliente' ";
+  $cmd = "UPDATE tb_cliente SET nome='$nome', sobrenome='$sobrenome', bi='$bi', nome_empresa='$nome_empresa', nif_empresa='$nif_empresa', provincia='$provincia', municipio='$municipio', endereco='$endereco', email='$email', telefone='$telefone' WHERE id_cliente = '$id_cliente' ";
     $actualizarCliente = $conexao->query($cmd);
     if ($actualizarCliente === true) {
       echo "<script>alert('Informãções do usuario aditado com sucesso!')</script>";

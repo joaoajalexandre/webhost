@@ -22,8 +22,8 @@ if (isset($_POST['btnCadastrar'])) {
 	move_uploaded_file($arquivo_temp, $destino);
 
 	// Inserção no banco de dados
-	$sql = "INSERT INTO tb_cliente (nome, sobrenome, bi, nome_empresa, nif_empresa, provincia, municipio, endereco, arquivo_bi_nif, email, passe)
-			VALUES ('$nome', '$sobrenome', '$bi', '$nome_empresa', '$nif_empresa', '$provincia', '$municipio', '$endereco', '$arquivo_bi_nif', '$email', '$passe')";
+	$sql = "INSERT INTO tb_cliente (nome, sobrenome, bi, nome_empresa, nif_empresa, provincia, municipio, endereco, arquivo_bi_nif, email,telefone, passe)
+			VALUES ('$nome', '$sobrenome', '$bi', '$nome_empresa', '$nif_empresa', '$provincia', '$municipio', '$endereco', '$arquivo_bi_nif', '$email','$telefone', '$passe')";
 
 	if ($conexao->query($sql) === TRUE) {
 		echo "<script>alert('Cadastro realizado com sucesso!');window.location.href='login.php';</script>";
