@@ -7,7 +7,7 @@ include("./conexao.php");
 <html lang="en">
   <head>
   <meta charset="utf-8">
-    <title>Usuarios</title>
+    <title>Email</title>
     <meta
       content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
       name="viewport"
@@ -93,7 +93,7 @@ include("./navbar.php");
         <div class="container">
           <div class="page-inner">
             <div class="page-header">
-              <h3 class="fw-bold mb-3">Usuarios</h3>
+              <h3 class="fw-bold mb-3">Email</h3>
               <ul class="breadcrumbs mb-3">
                 <li class="nav-home">
                   <a href="#">
@@ -118,20 +118,19 @@ include("./navbar.php");
               <div class="col-md-12">
                 <div class="card">
                   <div class="card-header">
-                    <h4 class="card-title">Usuarios</h4>
+                    <h4 class="card-title">Serviços de Email</h4>
                   </div>
                   <div class="card-body">
                     <div class="table-responsive">
                     <?php
 
-// Buscar os dados da tabela tb_usuario
-$query = "SELECT nome, telefone, tipo, status, data_criacao FROM usuarios";
+// Consulta SQL para unir as tabelas
+$query = "SELECT nome_servico, limite_contas_email, preco_mensal, preco_anual, status, data_criacao FROM servicos_email";
 $stmt = $conn->prepare($query);
 $stmt->execute();
 
-// Verificar se existem resultados
-$usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
+// Obter os resultados
+$emails = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <table
@@ -140,50 +139,48 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
 >
     <thead>
         <tr>
-            <th>Nome</th>
-            <th>Telefone</th>
-            <th>Nivel de Acesso</th>
+            <th>Nome do Serviço</th>
+            <th>Limite de Contas</th>
+            <th>Preço Mensal</th>
+            <th>Preço Anual</th>
             <th>Status</th>
-            <th>Data da Criação</th>
+            <th>Data</th>
         </tr>
     </thead>
     <tfoot>
         <tr>
-            <th>Nome</th>
-            <th>Telefone</th>
-            <th>Nivel de Acesso</th>
+            <th>Nome do Serviço</th>
+            <th>Limite de Contas</th>
+            <th>Preço Mensal</th>
+            <th>Preço Anual</th>
             <th>Status</th>
-            <th>Data da Criação</th>
+            <th>Data</th>
         </tr>
     </tfoot>
     <tbody>
         <?php
-        // Exibir os dados dinamicamente
-        if (!empty($usuarios)) {
-            foreach ($usuarios as $cliente) {
+        // Exibir os dados dinamicamente na tabela
+        if (!empty($emails)) {
+            foreach ($emails as $email) {
                 echo "<tr>";
-                echo "<td>{$usuario['nome']}</td>";
-                echo "<td>{$usuario['telefone']}</td>";
-                echo "<td>{$usuario['tipo']}</td>";
-                echo "<td>{$usuario['status']}</td>";
-                echo "<td>{$usuario['data_criacao']}</td>";
+                echo "<td>{$email['nome_servico']}</td>";
+                echo "<td>{$email['limite_contas_email']}</td>";
+                echo "<td>{$email['preco_mensal']}</td>";
+                echo "<td>{$email['preco_anual']}</td>";
+                echo "<td>{$email['status']}</td>";
+                echo "<td>{$email['data_criacao']}</td>";
                 echo "</tr>";
             }
         } else {
-            echo "<tr><td colspan='5'>Nenhum usuario encontrado</td></tr>";
+            echo "<tr><td colspan='6'>Nenhum Plano de Email encontrado</td></tr>";
         }
         ?>
     </tbody>
 </table>
-
                     </div>
                   </div>
                 </div>
-              </div>
-
-             
-
-              
+              </div>       
             </div>
           </div>
         </div>

@@ -70,16 +70,23 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="./dominios_comprados.php">
+                <a href="./usuarios.php">
                   <i class="fas fa-file"></i>
                   <p>Usuarios</p>
                   <span class="badge badge-secondary"></span>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="./dominios_comprados.php">
+                <a href="./hospedagem.php">
                   <i class="fas fa-file"></i>
-                  <p>Serviços</p>
+                  <p>Hospedagem</p>
+                  <span class="badge badge-secondary"></span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="./email.php">
+                  <i class="fas fa-file"></i>
+                  <p>Email</p>
                   <span class="badge badge-secondary"></span>
                 </a>
               </li>
