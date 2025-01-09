@@ -1,13 +1,41 @@
 <?php
 session_start();
-include("./conexao.php");
+include("../conexao.php");
+
+if(!isset($_SESSION['logado'])){
+  header("Location: ../login.php");
+}
+
+
+$id_cliente = $_SESSION['logado']['id_cliente'];
+$cmdCliente = "SELECT * FROM tb_cliente WHERE id_cliente = '$id_cliente' ";
+$queryCliente = $conexao->query($cmdCliente);
+$dadosCliente = $queryCliente->fetch_assoc();
+
+
+//Actualizar as informações do usuarios
+if (isset($_POST['btnActualizar'])) {
+  $passe = $_POST['passe'];
+  $sobrenome = $_POST['sobrenome'];
+  $bi = $_POST['bi'];;
+
+
+  $cmd = "UPDATE tb_cliente SET passe='$passe' ";
+    $queryPasse = $conexao->query($cmd);
+    if ($queryPasse === true) {
+      echo "<script>alert('Palavra-passe alterada com sucesso!')</script>";
+    }
+    else{
+      echo "<script>alert('Erro ao alterar a palavra-passe!')</script>";
+    }
+}
 
 ?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
   <meta charset="utf-8">
-    <title>Vendas</title>
+    <title>Clientes</title>
     <meta
       content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
       name="viewport"
@@ -84,114 +112,75 @@ include("./conexao.php");
           <!-- Navbar Header -->
           <?php
 
-include("./navbar.php");
+            include("./navbar.php");
 
-?>
+          ?>
             <!-- End Navbar -->
         </div>
-
+        <!-------------------------Inicio do container--------------------------->
         <div class="container">
           <div class="page-inner">
             <div class="page-header">
-              <h3 class="fw-bold mb-3">Dominios</h3>
+              <h3 class="fw-bold mb-3">Minhas Informações</h3>
               <ul class="breadcrumbs mb-3">
                 <li class="nav-home">
                   <a href="#">
-                    <i class="icon-home"></i>
+                    <i class="fa fa-home"></i>
                   </a>
                 </li>
                 <li class="separator">
                   <i class="icon-arrow-right"></i>
                 </li>
                 <li class="nav-item">
-                  <a href="#"></a>
+                  <a href="#">
+                    <i class="fa fa-user"></i>
+                  </a>
                 </li>
                 <li class="separator">
                   <i class="icon-arrow-right"></i>
                 </li>
                 <li class="nav-item">
-                  <a href="#"></a>
+                  <a href="#">
+                    <i class="fa fa-info"></i>
+                  </a>
                 </li>
               </ul>
             </div>
             <div class="row">
               <div class="col-md-12">
-                <div class="card">
-                  <div class="card-header">
-                    <h4 class="card-title">Dominio Comprados</h4>
-                  </div>
-                  <div class="card-body">
-                    <div class="table-responsive">
-                    <?php
+                <form method="post" class="row">
 
-// Consulta SQL para unir as tabelas
-$query = "
-    SELECT 
-        tb_dominio_comprado.dominio AS dominio_comprado,
-        CONCAT(tb_cliente.nome, ' ', tb_cliente.sobrenome) AS cliente,
-        tb_dominio.preco AS preco,
-        tb_dominio_comprado.data AS data_compra
-    FROM tb_dominio_comprado
-    JOIN tb_cliente ON tb_dominio_comprado.id_cliente = tb_cliente.id_cliente
-    JOIN tb_dominio ON tb_dominio_comprado.dominio = tb_dominio.dominio
-";
-$stmt = $conn->prepare($query);
-$stmt->execute();
-
-// Obter os resultados
-$dominios_comprados = $stmt->fetchAll(PDO::FETCH_ASSOC);
-?>
-
-<table
-    id="basic-datatables"
-    class="display table table-striped table-hover"
->
-    <thead>
-        <tr>
-            <th>Dominio</th>
-            <th>Cliente</th>
-            <th>Preço</th>
-            <th>Data</th>
-        </tr>
-    </thead>
-    <tfoot>
-        <tr>
-            <th>Dominio</th>
-            <th>Cliente</th>
-            <th>Preço</th>
-            <th>Data</th>
-        </tr>
-    </tfoot>
-    <tbody>
-        <?php
-        // Exibir os dados dinamicamente na tabela
-        if (!empty($dominios_comprados)) {
-            foreach ($dominios_comprados as $dominio) {
-                echo "<tr>";
-                echo "<td>{$dominio['dominio_comprado']}</td>";
-                echo "<td>{$dominio['cliente']}</td>";
-                echo "<td>{$dominio['preco']}</td>";
-                echo "<td>{$dominio['data_compra']}</td>";
-                echo "</tr>";
-            }
-        } else {
-            echo "<tr><td colspan='4'>Nenhum domínio comprado encontrado</td></tr>";
-        }
-        ?>
-    </tbody>
-</table>
-
+                  <div class="card">
+                    <div class="card-header">
+                      <h4 class="card-title">Informações Pessoal</h4>
+                    </div>
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-md-4 mt-3">
+                          <label for="telefone">Palavra-passe Actual</label>
+                          <input type="password" name="telefone" placeholder="Digite a Palavra-passe Antiga" class="form-control" id="passeActual">
+                        </div>
+                        <div class="col-md-4 mt-3">
+                          <label for="telefone">Nº do Bilhete</label>
+                          <input type="password" name="passeNova" placeholder="Crie uma nova Palavra-passe" class="form-control" id="telefone">
+                        </div>
+                        <div class="col-md-4 mt-3">
+                          <label for="telefone">Confirma a Palavra-passe</label>
+                          <input type="password" name="passeConfirmar" placeholder="Confirma a Palavra-passe criada" class="form-control" id="passeConfirmar">
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </div>
+                  <div class="">
+                    <input type="submit" name="btnActualizar" value="Actualizar" class="btn btn-primary fluid">
+                  </div>
 
-             
-
-              
+                </form>
+              </div>             
             </div>
           </div>
         </div>
+        <!-------------------------Final do container--------------------------->
 
         <footer class="footer">
           <div class="container-fluid d-flex justify-content-between">

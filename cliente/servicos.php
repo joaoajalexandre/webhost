@@ -4,7 +4,7 @@ include("./conexao.php");
 
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-pt">
   <head>
   <meta charset="utf-8">
     <title>Vendas</title>

@@ -77,7 +77,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="./dominios_comprados.php">
+                <a href="alter_passe.php">
                   <i class="fas fa-lock"></i>
                   <p>Alterar Palavra-passe</p>
                   <span class="badge badge-secondary"></span>
