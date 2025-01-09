@@ -20,6 +20,7 @@ include("./conexao.php");
 
     <!-- Fonts and icons -->
     <script src="./assets/js/plugin/webfont/webfont.min.js"></script>
+    <script src="./assets/js/script_modal.js"></script>
     <script>
       WebFont.load({
         google: { families: ["Public Sans:300,400,500,600,700"] },
@@ -42,11 +43,18 @@ include("./conexao.php");
     <link rel="stylesheet" href="./assets/css/bootstrap.min.css" />
     <link rel="stylesheet" href="./assets/css/plugins.min.css" />
     <link rel="stylesheet" href="./assets/css/kaiadmin.min.css" />
+    <link rel="stylesheet" href="./assets/css/style_modal.css" />
 
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link rel="stylesheet" href="./assets/css/demo.css" />
   </head>
   <body>
+  <?php
+
+include("./modal_hospedagem.php");
+
+
+?>
     <div class="wrapper">
       <!-- Sidebar -->
       <?php
@@ -119,7 +127,8 @@ include("./navbar.php");
                 <div class="card">
                   <div class="card-header">
                     <h4 class="card-title">Hospedagem</h4>
-                    <button>+</button>
+                   <!-- Botão que abre o modal -->
+                          <button id="openModal">+</button>
                   </div>
                   <div class="card-body">
                     <div class="table-responsive">
