@@ -178,11 +178,17 @@ $hospedagens = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 echo "<td>{$hospedagem['preco_anual']}</td>";
                 echo "<td>{$hospedagem['status']}</td>";
                 echo "<td>{$hospedagem['data_criacao']}</td>";
-                echo '<td>
-                    <a href="">ver</a>
-                    <a href="">editar</a>
-                    <a href="">eliminar</a>
-                </td>';
+                echo '<td style="display:flex;width:70px; justify-content:space-around">
+        <a href="ver.php?id=' . $cliente['id_cliente'] . '"  aria-label="Ver Detalhes">
+            <i class="fa fa-eye"></i>
+        </a>
+        <a href="editar.php?id=' . $cliente['id_cliente'] . '"  aria-label="Editar">
+            <i class="fa fa-edit"></i>
+        </a>
+        <a href="eliminar.php?id=' . $cliente['id_cliente'] . '"  aria-label="Eliminar" onclick="return confirm(\'Tem certeza que deseja eliminar este item?\');">
+            <i class="fa fa-trash"></i>
+        </a>
+      </td>';
                 echo "</tr>";
             }
         } else {

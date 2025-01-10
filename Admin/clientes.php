@@ -4,7 +4,7 @@ include("./conexao.php");
 
 
 // Buscar os dados da tabela tb_cliente
-$query = "SELECT nome, sobrenome, email, bi, nome_empresa, nif_empresa FROM tb_cliente";
+$query = "SELECT id_cliente, nome, sobrenome, email, bi, nome_empresa, nif_empresa FROM tb_cliente";
 $stmt = $conn->prepare($query);
 $stmt->execute();
 
@@ -164,6 +164,7 @@ include("./navbar.php");
         // Exibir os dados dinamicamente
         if (!empty($clientes)) {
             foreach ($clientes as $cliente) {
+              
                 echo "<tr>";
                 echo "<td>{$cliente['nome']}</td>";
                 echo "<td>{$cliente['sobrenome']}</td>";
@@ -171,11 +172,18 @@ include("./navbar.php");
                 echo "<td>{$cliente['bi']}</td>";
                 echo "<td>{$cliente['nome_empresa']}</td>";
                 echo "<td>{$cliente['nif_empresa']}</td>";
-                echo '<td>
-                    <a href="">ver</a>
-                    <a href="">editar</a>
-                    <a href="">eliminar</a>
-                </td>';
+                echo '<td style="display:flex;width:70px; justify-content:space-around">
+        <a href="ver.php?id=' . $cliente['id_cliente'] . '"  aria-label="Ver Detalhes">
+            <i class="fa fa-eye"></i>
+        </a>
+        <a href="editar.php?id=' . $cliente['id_cliente'] . '"  aria-label="Editar">
+            <i class="fa fa-edit"></i>
+        </a>
+        <a href="eliminar.php?id=' . $cliente['id_cliente'] . '"  aria-label="Eliminar" onclick="return confirm(\'Tem certeza que deseja eliminar este item?\');">
+            <i class="fa fa-trash"></i>
+        </a>
+      </td>';
+
                 echo "</tr>";
             }
         } else {

@@ -155,6 +155,7 @@ $dominios_comprados = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <th>Cliente</th>
             <th>Preço</th>
             <th>Data</th>
+            <th>Ação</th>
         </tr>
     </thead>
     <tfoot>
@@ -163,6 +164,7 @@ $dominios_comprados = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <th>Cliente</th>
             <th>Preço</th>
             <th>Data</th>
+            <th>Ação</th>
         </tr>
     </tfoot>
     <tbody>
@@ -175,6 +177,17 @@ $dominios_comprados = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 echo "<td>{$dominio['cliente']}</td>";
                 echo "<td>{$dominio['preco']}</td>";
                 echo "<td>{$dominio['data_compra']}</td>";
+                echo '<td style="display:flex;width:70px; justify-content:space-around">
+                <a href="ver.php?id=' . $cliente['id_cliente'] . '"  aria-label="Ver Detalhes">
+                    <i class="fa fa-eye"></i>
+                </a>
+                <a href="editar.php?id=' . $cliente['id_cliente'] . '"  aria-label="Editar">
+                    <i class="fa fa-edit"></i>
+                </a>
+                <a href="eliminar.php?id=' . $cliente['id_cliente'] . '"  aria-label="Eliminar" onclick="return confirm(\'Tem certeza que deseja eliminar este item?\');">
+                    <i class="fa fa-trash"></i>
+                </a>
+              </td>';
                 echo "</tr>";
             }
         } else {
