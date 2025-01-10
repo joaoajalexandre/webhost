@@ -130,6 +130,8 @@ include("./navbar.php");
                 <div class="card">
                   <div class="card-header">
                     <h4 class="card-title">Clientes</h4>
+                    <!-- Botão que abre o modal -->
+                    <button id="openModal">+</button>
                   </div>
                   <div class="card-body">
                     <div class="table-responsive">
@@ -227,6 +229,40 @@ include("./navbar.php");
         </footer>
       </div>
     </div>
+
+    
+<!-- Modal formulario -->
+<div id="modalForm" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Cadastro de Plano de Hospedagem</h2>
+        <form id="formPlanoHospedagem">
+            <label for="nome_plano">Nome do Plano:</label><br>
+            <input type="text" id="nome_plano" name="nome_plano" required><br><br>
+
+            <label for="descricao">Descrição:</label><br>
+            <textarea id="descricao" name="descricao"></textarea><br><br>
+
+            <label for="preco_mensal">Preço Mensal:</label><br>
+            <input type="number" step="0.01" id="preco_mensal" name="preco_mensal" required><br><br>
+
+            <label for="preco_anual">Preço Anual:</label><br>
+            <input type="number" step="0.01" id="preco_anual" name="preco_anual"><br><br>
+
+            <label for="recursos">Recursos:</label><br>
+            <textarea id="recursos" name="recursos"></textarea><br><br>
+
+            <label for="status">Status:</label><br>
+            <select id="status" name="status" required>
+                <option value="ativo">Ativo</option>
+                <option value="inativo">Inativo</option>
+            </select><br><br>
+
+            <input type="submit" value="Salvar">
+        </form>
+    </div>
+</div>
+
     <!--   Core JS Files   -->
     <script src="./assets/js/core/jquery-3.7.1.min.js"></script>
     <script src="./assets/js/core/popper.min.js"></script>
@@ -297,62 +333,53 @@ include("./navbar.php");
         });
       });
     </script>
-     <script>
-      $(document).ready(function () {
-        $("#basic-datatables").DataTable({});
+      <script>
+       // Abrir o modal
+ var modal = document.getElementById("modalForm");
+ var btn = document.getElementById("openModal");
+ var span = document.getElementsByClassName("close")[0];
 
-        $("#multi-filter-select").DataTable({
-          pageLength: 5,
-          initComplete: function () {
-            this.api()
-              .columns()
-              .every(function () {
-                var column = this;
-                var select = $(
-                  '<select class="form-select"><option value=""></option></select>'
-                )
-                  .appendTo($(column.footer()).empty())
-                  .on("change", function () {
-                    var val = $.fn.dataTable.util.escapeRegex($(this).val());
+ btn.onclick = function() {
+     modal.style.display = "block";
+ }
 
-                    column
-                      .search(val ? "^" + val + "$" : "", true, false)
-                      .draw();
-                  });
+ // Fechar o modal quando clicar no 'x'
+ span.onclick = function() {
+     modal.style.display = "none";
+ }
 
-                column
-                  .data()
-                  .unique()
-                  .sort()
-                  .each(function (d, j) {
-                    select.append(
-                      '<option value="' + d + '">' + d + "</option>"
-                    );
-                  });
-              });
-          },
-        });
+ // Fechar o modal quando clicar fora da janela
+ window.onclick = function(event) {
+     if (event.target == modal) {
+         modal.style.display = "none";
+     }
+ }
 
-        // Add Row
-        $("#add-row").DataTable({
-          pageLength: 5,
-        });
+ // Enviar o formulário (aqui você pode fazer uma requisição para o backend em PHP, por exemplo)
+ document.getElementById("formPlanoHospedagem").onsubmit = function(event) {
+     event.preventDefault(); // Evitar o reload da página
 
-        var action =
-          '<td> <div class="form-button-action"> <button type="button" data-bs-toggle="tooltip" title="" class="btn btn-link btn-primary btn-lg" data-original-title="Edit Task"> <i class="fa fa-edit"></i> </button> <button type="button" data-bs-toggle="tooltip" title="" class="btn btn-link btn-danger" data-original-title="Remove"> <i class="fa fa-times"></i> </button> </div> </td>';
+     // Capturar os dados do formulário
+     var nome_plano = document.getElementById("nome_plano").value;
+     var descricao = document.getElementById("descricao").value;
+     var preco_mensal = document.getElementById("preco_mensal").value;
+     var preco_anual = document.getElementById("preco_anual").value;
+     var recursos = document.getElementById("recursos").value;
+     var status = document.getElementById("status").value;
 
-        $("#addRowButton").click(function () {
-          $("#add-row")
-            .dataTable()
-            .fnAddData([
-              $("#addName").val(),
-              $("#addPosition").val(),
-              $("#addOffice").val(),
-              action,
-            ]);
-          $("#addRowModal").modal("hide");
-        });
-      });
+     // Aqui você pode fazer uma requisição AJAX ou fetch para salvar os dados no backend
+     console.log({
+         nome_plano,
+         descricao,
+         preco_mensal,
+         preco_anual,
+         recursos,
+         status
+     });
+
+     // Fechar o modal após salvar os dados
+     modal.style.display = "none";
+ }
     </script>
   </body>
 </html>
