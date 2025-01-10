@@ -1,35 +1,51 @@
 <?php
-session_start();
-include("../conexao.php");
+  session_start();
+  include("../conexao.php");
 
-if(!isset($_SESSION['logado'])){
-  header("Location: ../login.php");
-}
-
-
-$id_cliente = $_SESSION['logado']['id_cliente'];
-$cmdCliente = "SELECT * FROM tb_cliente WHERE id_cliente = '$id_cliente' ";
-$queryCliente = $conexao->query($cmdCliente);
-$dadosCliente = $queryCliente->fetch_assoc();
+  if(!isset($_SESSION['logado'])){
+    header("Location: ../login.php");
+  }
 
 
-//Actualizar as informações do usuarios
-if (isset($_POST['btnActualizar'])) {
-  $passe = $_POST['passe'];
-  $sobrenome = $_POST['sobrenome'];
-  $bi = $_POST['bi'];;
 
 
-  $cmd = "UPDATE tb_cliente SET passe='$passe' ";
-    $queryPasse = $conexao->query($cmd);
-    if ($queryPasse === true) {
-      echo "<script>alert('Palavra-passe alterada com sucesso!')</script>";
+
+  //Actualizar as informações do usuarios
+  if (isset($_POST['btnActualizar'])) {
+
+    $passe = $_POST['passe'];
+    $passeNova = $_POST['passeNova'];
+    $passeConfirmar = $_POST['passeConfirmar'];
+    if(empty($passe) OR empty($passe) OR empty($passeConfirmar)){
+        echo "<script>alert('Para alterar a palavra-passe tens que prencher todos os campos')</script>";
     }
     else{
-      echo "<script>alert('Erro ao alterar a palavra-passe!')</script>";
-    }
-}
 
+      if ($passeNova !== $passeConfirmar) {
+            echo "<script>alert('A nova palavra-passe passe e a palavra-passe criado não são iguais, verifica e tente novamente')</script>";
+        }
+        else{
+
+          $id_cliente = $_SESSION['logado']['id_cliente'];
+          $cmdCliente = "SELECT * FROM tb_cliente WHERE passe = '$passe' ";
+          $queryCliente = $conexao->query($cmdCliente);
+          $dadosCliente = $queryCliente->fetch_assoc();
+          if ($dadosCliente > 0) {
+            $cmd = "UPDATE tb_cliente SET passe='$passeNova' WHERE id_cliente = '$id_cliente' ";
+            $queryPasse = $conexao->query($cmd);
+            if ($queryPasse === true) {
+                echo "<script>alert('palavra-passe passe alterado com sucesso!')</script>";
+            }
+            else{
+              echo "<script>alert('Erro ao alterar a palavra-passe!')</script>";
+            }
+          }
+          else{
+            echo "<script>alert('Usuario não encontrado')</script>";
+          }
+        }
+    }
+  }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -158,10 +174,10 @@ if (isset($_POST['btnActualizar'])) {
                       <div class="row">
                         <div class="col-md-4 mt-3">
                           <label for="telefone">Palavra-passe Actual</label>
-                          <input type="password" name="telefone" placeholder="Digite a Palavra-passe Antiga" class="form-control" id="passeActual">
+                          <input type="password" name="passe" placeholder="Digite a Palavra-passe Antiga" class="form-control" id="passeActual">
                         </div>
                         <div class="col-md-4 mt-3">
-                          <label for="telefone">Nº do Bilhete</label>
+                          <label for="telefone">Nova Palavra-passe</label>
                           <input type="password" name="passeNova" placeholder="Crie uma nova Palavra-passe" class="form-control" id="telefone">
                         </div>
                         <div class="col-md-4 mt-3">
