@@ -145,6 +145,7 @@ include("./navbar.php");
             <th>BI</th>
             <th>Nome da Empresa</th>
             <th>NIF</th>
+            <th>NIF</th>
         </tr>
     </thead>
     <tfoot>
@@ -155,6 +156,7 @@ include("./navbar.php");
             <th>BI</th>
             <th>Nome da Empresa</th>
             <th>NIF</th>
+            <th>Ação</th>
         </tr>
     </tfoot>
     <tbody>
@@ -169,6 +171,11 @@ include("./navbar.php");
                 echo "<td>{$cliente['bi']}</td>";
                 echo "<td>{$cliente['nome_empresa']}</td>";
                 echo "<td>{$cliente['nif_empresa']}</td>";
+                echo '<td>
+                    <a href="">ver</a>
+                    <a href="">editar</a>
+                    <a href="">eliminar</a>
+                </td>';
                 echo "</tr>";
             }
         } else {
