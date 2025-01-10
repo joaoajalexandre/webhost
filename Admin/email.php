@@ -7,7 +7,7 @@ include("./conexao.php");
 <html lang="en">
   <head>
   <meta charset="utf-8">
-    <title>Vendas</title>
+    <title>Email</title>
     <meta
       content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
       name="viewport"
@@ -93,7 +93,7 @@ include("./navbar.php");
         <div class="container">
           <div class="page-inner">
             <div class="page-header">
-              <h3 class="fw-bold mb-3">Dominios</h3>
+              <h3 class="fw-bold mb-3">Email</h3>
               <ul class="breadcrumbs mb-3">
                 <li class="nav-home">
                   <a href="#">
@@ -118,28 +118,19 @@ include("./navbar.php");
               <div class="col-md-12">
                 <div class="card">
                   <div class="card-header">
-                    <h4 class="card-title">Dominio Comprados</h4>
+                    <h4 class="card-title">Serviços de Email</h4>
                   </div>
                   <div class="card-body">
                     <div class="table-responsive">
                     <?php
 
 // Consulta SQL para unir as tabelas
-$query = "
-    SELECT 
-        tb_dominio_comprado.dominio AS dominio_comprado,
-        CONCAT(tb_cliente.nome, ' ', tb_cliente.sobrenome) AS cliente,
-        tb_dominio.preco AS preco,
-        tb_dominio_comprado.data AS data_compra
-    FROM tb_dominio_comprado
-    JOIN tb_cliente ON tb_dominio_comprado.id_cliente = tb_cliente.id_cliente
-    JOIN tb_dominio ON tb_dominio_comprado.dominio = tb_dominio.dominio
-";
+$query = "SELECT nome_servico, limite_contas_email, preco_mensal, preco_anual, status, data_criacao FROM servicos_email";
 $stmt = $conn->prepare($query);
 $stmt->execute();
 
 // Obter os resultados
-$dominios_comprados = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$emails = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <table
@@ -148,47 +139,48 @@ $dominios_comprados = $stmt->fetchAll(PDO::FETCH_ASSOC);
 >
     <thead>
         <tr>
-            <th>Dominio</th>
-            <th>Cliente</th>
-            <th>Preço</th>
+            <th>Nome do Serviço</th>
+            <th>Limite de Contas</th>
+            <th>Preço Mensal</th>
+            <th>Preço Anual</th>
+            <th>Status</th>
             <th>Data</th>
         </tr>
     </thead>
     <tfoot>
         <tr>
-            <th>Dominio</th>
-            <th>Cliente</th>
-            <th>Preço</th>
+            <th>Nome do Serviço</th>
+            <th>Limite de Contas</th>
+            <th>Preço Mensal</th>
+            <th>Preço Anual</th>
+            <th>Status</th>
             <th>Data</th>
         </tr>
     </tfoot>
     <tbody>
         <?php
         // Exibir os dados dinamicamente na tabela
-        if (!empty($dominios_comprados)) {
-            foreach ($dominios_comprados as $dominio) {
+        if (!empty($emails)) {
+            foreach ($emails as $email) {
                 echo "<tr>";
-                echo "<td>{$dominio['dominio_comprado']}</td>";
-                echo "<td>{$dominio['cliente']}</td>";
-                echo "<td>{$dominio['preco']}</td>";
-                echo "<td>{$dominio['data_compra']}</td>";
+                echo "<td>{$email['nome_servico']}</td>";
+                echo "<td>{$email['limite_contas_email']}</td>";
+                echo "<td>{$email['preco_mensal']}</td>";
+                echo "<td>{$email['preco_anual']}</td>";
+                echo "<td>{$email['status']}</td>";
+                echo "<td>{$email['data_criacao']}</td>";
                 echo "</tr>";
             }
         } else {
-            echo "<tr><td colspan='4'>Nenhum domínio comprado encontrado</td></tr>";
+            echo "<tr><td colspan='6'>Nenhum Plano de Email encontrado</td></tr>";
         }
         ?>
     </tbody>
 </table>
-
                     </div>
                   </div>
                 </div>
-              </div>
-
-             
-
-              
+              </div>       
             </div>
           </div>
         </div>

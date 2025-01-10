@@ -7,7 +7,7 @@ include("./conexao.php");
 <html lang="en">
   <head>
   <meta charset="utf-8">
-    <title>Usuarios</title>
+    <title>Hospedagem</title>
     <meta
       content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
       name="viewport"
@@ -20,6 +20,7 @@ include("./conexao.php");
 
     <!-- Fonts and icons -->
     <script src="./assets/js/plugin/webfont/webfont.min.js"></script>
+    <script src="./assets/js/script_modal.js"></script>
     <script>
       WebFont.load({
         google: { families: ["Public Sans:300,400,500,600,700"] },
@@ -42,11 +43,18 @@ include("./conexao.php");
     <link rel="stylesheet" href="./assets/css/bootstrap.min.css" />
     <link rel="stylesheet" href="./assets/css/plugins.min.css" />
     <link rel="stylesheet" href="./assets/css/kaiadmin.min.css" />
+    <link rel="stylesheet" href="./assets/css/style_modal.css" />
 
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link rel="stylesheet" href="./assets/css/demo.css" />
   </head>
   <body>
+  <?php
+
+include("./modal_hospedagem.php");
+
+
+?>
     <div class="wrapper">
       <!-- Sidebar -->
       <?php
@@ -93,7 +101,7 @@ include("./navbar.php");
         <div class="container">
           <div class="page-inner">
             <div class="page-header">
-              <h3 class="fw-bold mb-3">Usuarios</h3>
+              <h3 class="fw-bold mb-3">Hospedagem</h3>
               <ul class="breadcrumbs mb-3">
                 <li class="nav-home">
                   <a href="#">
@@ -118,20 +126,21 @@ include("./navbar.php");
               <div class="col-md-12">
                 <div class="card">
                   <div class="card-header">
-                    <h4 class="card-title">Usuarios</h4>
+                    <h4 class="card-title">Hospedagem</h4>
+                   <!-- Botão que abre o modal -->
+                          <button id="openModal">+</button>
                   </div>
                   <div class="card-body">
                     <div class="table-responsive">
                     <?php
 
-// Buscar os dados da tabela tb_usuario
-$query = "SELECT nome, telefone, tipo, status, data_criacao FROM usuarios";
+// Consulta SQL para unir as tabelas
+$query = "SELECT nome_plano, preco_mensal, preco_anual, status, data_criacao FROM planos_hospedagem";
 $stmt = $conn->prepare($query);
 $stmt->execute();
 
-// Verificar se existem resultados
-$usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
+// Obter os resultados
+$hospedagens = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <table
@@ -140,50 +149,52 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
 >
     <thead>
         <tr>
-            <th>Nome</th>
-            <th>Telefone</th>
-            <th>Nivel de Acesso</th>
+            <th>Plano</th>
+            <th>Preço Mensal</th>
+            <th>Preço Anual</th>
             <th>Status</th>
-            <th>Data da Criação</th>
+            <th>Data</th>
+            <th>Ação</th>
         </tr>
     </thead>
     <tfoot>
         <tr>
-            <th>Nome</th>
-            <th>Telefone</th>
-            <th>Nivel de Acesso</th>
+            <th>Plano</th>
+            <th>Preço Mensal</th>
+            <th>Preço Anual</th>
             <th>Status</th>
-            <th>Data da Criação</th>
+            <th>Data</th>
+            <th>Ação</th>
         </tr>
     </tfoot>
     <tbody>
         <?php
-        // Exibir os dados dinamicamente
-        if (!empty($usuarios)) {
-            foreach ($usuarios as $cliente) {
+        // Exibir os dados dinamicamente na tabela
+        if (!empty($hospedagens)) {
+            foreach ($hospedagens as $hospedagem) {
                 echo "<tr>";
-                echo "<td>{$usuario['nome']}</td>";
-                echo "<td>{$usuario['telefone']}</td>";
-                echo "<td>{$usuario['tipo']}</td>";
-                echo "<td>{$usuario['status']}</td>";
-                echo "<td>{$usuario['data_criacao']}</td>";
+                echo "<td>{$hospedagem['nome_plano']}</td>";
+                echo "<td>{$hospedagem['preco_mensal']}</td>";
+                echo "<td>{$hospedagem['preco_anual']}</td>";
+                echo "<td>{$hospedagem['status']}</td>";
+                echo "<td>{$hospedagem['data_criacao']}</td>";
+                echo '<td>
+                    <a href="">ver</a>
+                    <a href="">editar</a>
+                    <a href="">eliminar</a>
+                </td>';
                 echo "</tr>";
             }
         } else {
-            echo "<tr><td colspan='5'>Nenhum usuario encontrado</td></tr>";
+            echo "<tr><td colspan='6'>Nenhuma Hospedagem encontrada</td></tr>";
         }
         ?>
     </tbody>
 </table>
-
                     </div>
                   </div>
                 </div>
-              </div>
-
-             
-
-              
+              </div>       
             </div>
           </div>
         </div>
