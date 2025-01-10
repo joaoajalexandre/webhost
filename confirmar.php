@@ -58,7 +58,7 @@
                 $endereco = $_POST['endereco'];
                 $passe = md5($_POST['passe']);
 
-                $queryUsuario = "INSERT INTO tb_cliente(nome, sobrenome, email, bi, nome_empresa, nif_empresa, provincia, municipio, endereco, arquivo_bi_nif, passe) VALUES('$nome', '$sobrenome', '$email', '$bi', '$nome_empresa', '$nif_empresa', '$provincia', '$municipio', '$endereco', '$arquivo_bi_nif', '$passe')";
+                $queryUsuario = "INSERT INTO tb_cliente(nome, sobrenome, email,telefone, bi, nome_empresa, nif_empresa, provincia, municipio, endereco, arquivo_bi_nif, passe) VALUES('$nome', '$sobrenome', '$email','$telefone' '$bi', '$nome_empresa', '$nif_empresa', '$provincia', '$municipio', '$endereco', '$arquivo_bi_nif', '$passe')";
                 $cadastrarUsuario = $conexao->query($queryUsuario);
                 if($cadastrarUsuario === true){
                     $ultimoId_usuario = $conexao->insert_id;
