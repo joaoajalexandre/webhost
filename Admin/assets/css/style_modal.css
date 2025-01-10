@@ -1,35 +1,91 @@
-
 /* Estilos para o modal */
 .modal {
-    display: none; /* Esconder o modal inicialmente */
-    position: fixed;
-    z-index: 1;
+    display: none; /* Oculto por padrão */
+    position: fixed; /* Posicionado de forma fixa em relação à tela */
+    z-index: 1; /* Garantir que o modal fique acima do conteúdo */
     left: 0;
     top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.4); /* Fundo preto com opacidade */
-}
-
-.modal-content {
-    background-color: #fff;
-    margin: 10% auto;
+    width: 100%; /* Largura total da tela */
+    height: 100%; /* Altura total da tela */
+    background-color: rgba(0, 0, 0, 0.5); /* Fundo com um pouco de opacidade */
+  }
+  
+  /* Estilos para o conteúdo do modal */
+  .modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* Espaçamento para centralizar */
     padding: 20px;
     border: 1px solid #888;
-    width: 50%;
-}
-
-.close {
+    width: 50%; /* Largura do modal */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 10px; /* Bordas arredondadas */
+    animation: fadeIn 0.3s ease-in-out; /* Efeito de transição */
+  }
+  
+  /* Animação para o efeito de fade in */
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  /* Botão de fechar */
+  .close {
     color: #aaa;
     float: right;
     font-size: 28px;
     font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-    color: black;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: #000;
     text-decoration: none;
     cursor: pointer;
-}
+  }
+  
+  /* Estilos para o formulário */
+  #formPlanoHospedagem label {
+    font-weight: bold;
+    font-size: 14px;
+    color: #333;
+  }
+  
+  #formPlanoHospedagem input[type="text"],
+  #formPlanoHospedagem input[type="number"],
+  #formPlanoHospedagem textarea,
+  #formPlanoHospedagem select {
+    width: 100%;
+    padding: 8px;
+    margin: 8px 0 16px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 16px;
+  }
+  
+  /* Estilos para o botão salvar */
+  #formPlanoHospedagem input[type="submit"] {
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  #formPlanoHospedagem input[type="submit"]:hover {
+    background-color: #45a049;
+  }
+  
+  /* Adiciona um efeito hover nos campos do formulário */
+  #formPlanoHospedagem input[type="text"]:hover,
+  #formPlanoHospedagem input[type="number"]:hover,
+  #formPlanoHospedagem textarea:hover,
+  #formPlanoHospedagem select:hover {
+    border-color: #555;
+  }
+  
