@@ -144,7 +144,7 @@ $hospedagens = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <table
-    id="basic-datatables"
+  id="basic-datatables"
     class="display table table-striped table-hover"
 >
     <thead>

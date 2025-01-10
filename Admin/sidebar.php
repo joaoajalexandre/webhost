@@ -63,7 +63,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="./dominios_comprados.php">
+                <a href="./vendas.php">
                   <i class="fas fa-file"></i>
                   <p>vendas</p>
                   <span class="badge badge-secondary"></span>

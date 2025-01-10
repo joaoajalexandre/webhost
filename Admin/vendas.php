@@ -126,12 +126,12 @@ include("./navbar.php");
                     <?php
 
 // Consulta SQL para unir as tabelas
-$query = "SELECT ";
+$query = "SELECT id_compra_servico, id_cliente, tipo_servico, estado, quantidade, total_compra, metodo_pagamento, data_compra FROM tb_compra_servico";
 $stmt = $conn->prepare($query);
 $stmt->execute();
 
 // Obter os resultados
-$dominios_comprados = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$vendas = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <table
@@ -140,18 +140,22 @@ $dominios_comprados = $stmt->fetchAll(PDO::FETCH_ASSOC);
 >
     <thead>
         <tr>
-            <th>Dominio</th>
             <th>Cliente</th>
-            <th>Preço</th>
+            <th>Serviço</th>
+            <th>quantidade</th>
+            <th>total da compra</th>
+            <th>Estado</th>
             <th>Data</th>
             <th>Ação</th>
         </tr>
     </thead>
     <tfoot>
         <tr>
-            <th>Dominio</th>
             <th>Cliente</th>
-            <th>Preço</th>
+            <th>Serviço</th>
+            <th>quantidade</th>
+            <th>total da compra</th>
+            <th>Estado</th>
             <th>Data</th>
             <th>Ação</th>
         </tr>
@@ -159,28 +163,30 @@ $dominios_comprados = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <tbody>
         <?php
         // Exibir os dados dinamicamente na tabela
-        if (!empty($dominios_comprados)) {
-            foreach ($dominios_comprados as $dominio) {
+        if (!empty($vendas)) {
+            foreach ($vendas as $venda) {
                 echo "<tr>";
-                echo "<td>{$dominio['dominio_comprado']}</td>";
-                echo "<td>{$dominio['cliente']}</td>";
-                echo "<td>{$dominio['preco']}</td>";
-                echo "<td>{$dominio['data_compra']}</td>";
+                echo "<td>{$venda['id_cliente']}</td>";
+                echo "<td>{$venda['tipo_servico']}</td>";
+                echo "<td>{$venda['quantidade']}</td>";
+                echo "<td>{$venda['total_compra']}</td>";
+                echo "<td>{$venda['estado']}</td>";
+                echo "<td>{$venda['data_compra']}</td>";
                 echo '<td style="display:flex;width:70px; justify-content:space-around">
-                <a href="ver.php?id=' . $cliente['id_cliente'] . '"  aria-label="Ver Detalhes">
+                <a href="ver.php?id=' . $venda['id_compra_servico'] . '"  aria-label="Ver Detalhes">
                     <i class="fa fa-eye"></i>
                 </a>
-                <a href="editar.php?id=' . $cliente['id_cliente'] . '"  aria-label="Editar">
+                <a href="editar.php?id=' . $venda['id_compra_servico'] . '"  aria-label="Editar">
                     <i class="fa fa-edit"></i>
                 </a>
-                <a href="eliminar.php?id=' . $cliente['id_cliente'] . '"  aria-label="Eliminar" onclick="return confirm(\'Tem certeza que deseja eliminar este item?\');">
+                <a href="eliminar.php?id=' . $venda['id_compra_servico'] . '"  aria-label="Eliminar" onclick="return confirm(\'Tem certeza que deseja eliminar este item?\');">
                     <i class="fa fa-trash"></i>
                 </a>
               </td>';
                 echo "</tr>";
             }
         } else {
-            echo "<tr><td colspan='5'>Nenhum domínio comprado encontrado</td></tr>";
+            echo "<tr><td colspan='7'>Nenhuma Venda encontrado</td></tr>";
         }
         ?>
     </tbody>
