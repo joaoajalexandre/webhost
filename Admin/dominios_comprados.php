@@ -191,7 +191,7 @@ $dominios_comprados = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 echo "</tr>";
             }
         } else {
-            echo "<tr><td colspan='4'>Nenhum domínio comprado encontrado</td></tr>";
+            echo "<tr><td colspan='5'>Nenhum domínio comprado encontrado</td></tr>";
         }
         ?>
     </tbody>

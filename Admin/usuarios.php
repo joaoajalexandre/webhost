@@ -186,7 +186,7 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 echo "</tr>";
             }
         } else {
-            echo "<tr><td colspan='5'>Nenhum usuario encontrado</td></tr>";
+            echo "<tr><td colspan='6'>Nenhum usuario encontrado</td></tr>";
         }
         ?>
     </tbody>

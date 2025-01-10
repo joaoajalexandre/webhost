@@ -7,7 +7,7 @@ include("./conexao.php");
 <html lang="en">
   <head>
   <meta charset="utf-8">
-    <title>Email</title>
+    <title>Vendas</title>
     <meta
       content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
       name="viewport"
@@ -94,7 +94,7 @@ include("./navbar.php");
         <div class="container">
           <div class="page-inner">
             <div class="page-header">
-              <h3 class="fw-bold mb-3">Email</h3>
+              <h3 class="fw-bold mb-3">Vendas</h3>
               <ul class="breadcrumbs mb-3">
                 <li class="nav-home">
                   <a href="#">
@@ -119,21 +119,19 @@ include("./navbar.php");
               <div class="col-md-12">
                 <div class="card">
                   <div class="card-header">
-                    <h4 class="card-title">Serviços de Email</h4>
-                    <!-- Botão que abre o modal -->
-                    <button id="openModal">+</button>
+                    <h4 class="card-title">Vendas</h4>
                   </div>
                   <div class="card-body">
                     <div class="table-responsive">
                     <?php
 
 // Consulta SQL para unir as tabelas
-$query = "SELECT nome_servico, limite_contas_email, preco_mensal, preco_anual, status, data_criacao FROM servicos_email";
+$query = "SELECT ";
 $stmt = $conn->prepare($query);
 $stmt->execute();
 
 // Obter os resultados
-$emails = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$dominios_comprados = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <table
@@ -142,22 +140,18 @@ $emails = $stmt->fetchAll(PDO::FETCH_ASSOC);
 >
     <thead>
         <tr>
-            <th>Nome do Serviço</th>
-            <th>Limite de Contas</th>
-            <th>Preço Mensal</th>
-            <th>Preço Anual</th>
-            <th>Status</th>
+            <th>Dominio</th>
+            <th>Cliente</th>
+            <th>Preço</th>
             <th>Data</th>
             <th>Ação</th>
         </tr>
     </thead>
     <tfoot>
         <tr>
-            <th>Nome do Serviço</th>
-            <th>Limite de Contas</th>
-            <th>Preço Mensal</th>
-            <th>Preço Anual</th>
-            <th>Status</th>
+            <th>Dominio</th>
+            <th>Cliente</th>
+            <th>Preço</th>
             <th>Data</th>
             <th>Ação</th>
         </tr>
@@ -165,15 +159,13 @@ $emails = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <tbody>
         <?php
         // Exibir os dados dinamicamente na tabela
-        if (!empty($emails)) {
-            foreach ($emails as $email) {
+        if (!empty($dominios_comprados)) {
+            foreach ($dominios_comprados as $dominio) {
                 echo "<tr>";
-                echo "<td>{$email['nome_servico']}</td>";
-                echo "<td>{$email['limite_contas_email']}</td>";
-                echo "<td>{$email['preco_mensal']}</td>";
-                echo "<td>{$email['preco_anual']}</td>";
-                echo "<td>{$email['status']}</td>";
-                echo "<td>{$email['data_criacao']}</td>";
+                echo "<td>{$dominio['dominio_comprado']}</td>";
+                echo "<td>{$dominio['cliente']}</td>";
+                echo "<td>{$dominio['preco']}</td>";
+                echo "<td>{$dominio['data_compra']}</td>";
                 echo '<td style="display:flex;width:70px; justify-content:space-around">
                 <a href="ver.php?id=' . $cliente['id_cliente'] . '"  aria-label="Ver Detalhes">
                     <i class="fa fa-eye"></i>
@@ -188,15 +180,20 @@ $emails = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 echo "</tr>";
             }
         } else {
-            echo "<tr><td colspan='7'>Nenhum Plano de Email encontrado</td></tr>";
+            echo "<tr><td colspan='5'>Nenhum domínio comprado encontrado</td></tr>";
         }
         ?>
     </tbody>
 </table>
+
                     </div>
                   </div>
                 </div>
-              </div>       
+              </div>
+
+             
+
+              
             </div>
           </div>
         </div>
@@ -234,7 +231,6 @@ $emails = $stmt->fetchAll(PDO::FETCH_ASSOC);
       
       <!-- End Custom template -->
     </div>
-
 
 
     
@@ -340,7 +336,7 @@ $emails = $stmt->fetchAll(PDO::FETCH_ASSOC);
         });
       });
     </script>
-      <script>
+     <script>
        // Abrir o modal
  var modal = document.getElementById("modalForm");
  var btn = document.getElementById("openModal");
