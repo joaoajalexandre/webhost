@@ -37,7 +37,7 @@
                       <div class="input-group">
                         <input
                           type="text"
-                          placeholder="Search ..."
+                          placeholder="pesquisar ..."
                           class="form-control"
                         />
                       </div>

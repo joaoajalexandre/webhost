@@ -145,7 +145,7 @@ include("./navbar.php");
             <th>BI</th>
             <th>Nome da Empresa</th>
             <th>NIF</th>
-            <th>NIF</th>
+            <th>Ação</th>
         </tr>
     </thead>
     <tfoot>
