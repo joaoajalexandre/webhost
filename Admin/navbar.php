@@ -1,3 +1,39 @@
+<?php
+// Conectar ao banco de dados com PDO
+include("conexao.php");
+
+try {
+    // Consulta para pegar a última mensagem
+    $sql = "SELECT nome, mensagem, TIMESTAMPDIFF(MINUTE, data_envio, NOW()) AS minutos_atras 
+            FROM tb_mensagens 
+            ORDER BY data_envio DESC 
+            LIMIT 1";
+
+    // Preparar a consulta
+    $stmt = $conn->prepare($sql);
+
+    // Executar a consulta
+    $stmt->execute();
+
+    // Verificar se há resultados
+    if ($stmt->rowCount() > 0) {
+        // Se houver resultado, busca a última mensagem
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $nome = $row['nome'];
+        $mensagem = $row['mensagem'];
+        $minutos_atras = $row['minutos_atras'];
+    } else {
+        // Caso não haja mensagens
+        $nome = "N/A";
+        $mensagem = "Nenhuma mensagem recebida.";
+        $minutos_atras = 0;
+    }
+
+} catch (PDOException $e) {
+    // Caso haja erro na execução da consulta
+    echo "Erro: " . $e->getMessage();
+}
+?>
 <nav
             class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom">
             <div class="container-fluid">
@@ -79,9 +115,9 @@
                               />
                             </div>
                             <div class="notif-content">
-                              <span class="subject">Marcelino</span>
-                              <span class="block"> O que é dominio </span>
-                              <span class="time">5 minutos atrás</span>
+                              <span class="subject"><?php echo htmlspecialchars($nome); ?></span>
+                              <span class="block"><?php echo htmlspecialchars($mensagem); ?></span>
+                              <span class="time"><?php echo $minutos_atras; ?> minutos atrás</span>
                             </div>
                           </a>
                           
