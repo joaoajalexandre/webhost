@@ -89,7 +89,7 @@
                       </div>
                     </li>
                     <li>
-                      <a class="see-all" href="javascript:void(0);"
+                      <a class="see-all" href="mensagens.php"
                         >Ver todas as mensagens<i class="fa fa-angle-right"></i>
                       </a>
                     </li>
@@ -148,11 +148,10 @@
                     aria-expanded="false"
                   >
                     <div class="avatar-sm">
-                      <img
-                        src="assets/img/profile.jpg"
-                        alt="..."
-                        class="avatar-img rounded-circle"
-                      />
+                    <span
+                            class="avatar-title rounded-circle border border-white"
+                            >ML</span
+                          >
                     </div>
                     <span class="profile-username">
                      
@@ -164,11 +163,10 @@
                       <li>
                         <div class="user-box">
                           <div class="avatar-lg">
-                            <img
-                              src="assets/img/profile.jpg"
-                              alt="image profile"
-                              class="avatar-img rounded"
-                            />
+                          <span
+                            class="avatar-title rounded-circle border border-white"
+                            >CF</span
+                          >
                           </div>
                           <div class="u-text">
                             <h4>Usuario</h4>
