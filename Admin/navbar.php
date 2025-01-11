@@ -34,6 +34,24 @@ try {
     echo "Erro: " . $e->getMessage();
 }
 ?>
+<?php
+// Exemplo de valor para minutos_atras, que vem da consulta SQL
+$minutos_atras = 120; // Exemplo, substitua pelo valor real da consulta
+
+// Lógica para calcular o tempo
+if ($minutos_atras < 60) {
+    // Menos de uma hora
+    $tempo = $minutos_atras . " minutos atrás";
+} elseif ($minutos_atras >= 60 && $minutos_atras < 1440) {
+    // Menos de um dia (1440 minutos)
+    $horas = floor($minutos_atras / 60);
+    $tempo = $horas . " horas atrás";
+} else {
+    // Mais de um dia
+    $dias = floor($minutos_atras / 1440);
+    $tempo = $dias . " dias atrás";
+}
+?>
 <nav
             class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom">
             <div class="container-fluid">
@@ -117,7 +135,7 @@ try {
                             <div class="notif-content">
                               <span class="subject"><?php echo htmlspecialchars($nome); ?></span>
                               <span class="block"><?php echo htmlspecialchars($mensagem); ?></span>
-                              <span class="time"><?php echo $minutos_atras; ?> minutos atrás</span>
+                              <span class="time"><?php echo $tempo; ?></span>
                             </div>
                           </a>
                           
