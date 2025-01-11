@@ -181,10 +181,11 @@ $emails = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <a href="editar.php?id=' . $email['id'] . '"  aria-label="Editar">
                     <i class="fa fa-edit"></i>
                 </a>
-                <a href="eliminar.php?id=' . $email['id'] . '"  aria-label="Eliminar" onclick="return confirm(\'Tem certeza que deseja eliminar este item?\');">
+                <a href="javascript:void(0);" aria-label="Eliminar" onclick="abrirModal(' . $email['id'] . ');">
                     <i class="fa fa-trash"></i>
                 </a>
               </td>';
+        
                 echo "</tr>";
             }
         } else {
@@ -234,6 +235,75 @@ $emails = $stmt->fetchAll(PDO::FETCH_ASSOC);
       
       <!-- End Custom template -->
     </div>
+    <style>
+  /* Estilo geral do modal */
+.modal {
+    display: none; /* Esconde o modal por padrão */
+    position: fixed; /* Mantém o modal fixo na tela */
+    z-index: 1; /* Garante que o modal apareça acima de outros elementos */
+    left: 0;
+    top: 0;
+    width: 100%; /* Largura total da tela */
+    height: 100%; /* Altura total da tela */
+    overflow: auto; /* Adiciona rolagem se o conteúdo for maior que a tela */
+    background-color: rgba(0, 0, 0, 0.5); /* Fundo escurecido com transparência */
+}
+
+/* Estilo do conteúdo dentro do modal */
+.modal-content {
+    background-color: #f4f4f4;
+    margin: 10% auto; /* Centraliza o modal verticalmente e horizontalmente */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 40%; /* Largura do modal (você pode ajustar conforme necessário) */
+    border-radius: 8px; /* Bordas arredondadas */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+}
+
+/* Estilo do botão de fechar */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Estilo dos inputs e textarea dentro do formulário */
+input[type="text"], input[type="number"], textarea, select {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+/* Estilo do botão de salvar */
+input[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+input[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+</style>
 
 
 
@@ -293,6 +363,68 @@ $emails = $stmt->fetchAll(PDO::FETCH_ASSOC);
     });
 </script>
 
+<!-- Modal de Confirmação -->
+<div id="modalConfirmar" class="modal2" style="display:none;">
+    <div class="modal-content">
+        <h2>Confirmar Exclusão</h2>
+        <p>Tem certeza que deseja eliminar este item?</p>
+        <button id="confirmarExclusao">Sim, Eliminar</button>
+        <button id="cancelarExclusao">Cancelar</button>
+    </div>
+</div>
+
+<!-- CSS para estilizar o modal -->
+<style>
+    .modal2 {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.4);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .modal-content {
+        background-color: white;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+
+    button {
+        margin: 5px;
+    }
+</style>
+<script>
+  // Função para abrir o modal de confirmação
+function abrirModal(id) {
+    const modal = document.getElementById('modalConfirmar');
+    modal.style.display = 'flex';
+
+    // Quando o usuário clicar no botão "Sim, Eliminar"
+    document.getElementById('confirmarExclusao').onclick = function() {
+        // Redirecionar para a página de eliminação
+        window.location.href = 'eliminar_email.php?id=' + id;
+    };
+
+    // Quando o usuário clicar no botão "Cancelar"
+    document.getElementById('cancelarExclusao').onclick = function() {
+        modal.style.display = 'none';
+    };
+}
+
+// Fechar o modal se clicar fora do conteúdo
+window.onclick = function(event) {
+    const modal = document.getElementById('modalConfirmar');
+    if (event.target == modal) {
+        modal.style.display = 'none';
+    }
+};
+
+</script>
 
     <!--   Core JS Files   -->
     <script src="./assets/js/core/jquery-3.7.1.min.js"></script>
