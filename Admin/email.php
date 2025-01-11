@@ -128,7 +128,7 @@ include("./navbar.php");
                     <?php
 
 // Consulta SQL para unir as tabelas
-$query = "SELECT nome_servico, limite_contas_email, preco_mensal, preco_anual, status, data_criacao FROM servicos_email";
+$query = "SELECT id, nome_servico, limite_contas_email, preco_mensal, preco_anual, status, data_criacao FROM servicos_email";
 $stmt = $conn->prepare($query);
 $stmt->execute();
 
@@ -175,13 +175,13 @@ $emails = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 echo "<td>{$email['status']}</td>";
                 echo "<td>{$email['data_criacao']}</td>";
                 echo '<td style="display:flex;width:70px; justify-content:space-around">
-                <a href="ver.php?id=' . $email['id_cliente'] . '"  aria-label="Ver Detalhes">
+                <a href="ver.php?id=' . $email['id'] . '"  aria-label="Ver Detalhes">
                     <i class="fa fa-eye"></i>
                 </a>
-                <a href="editar.php?id=' . $email['id_cliente'] . '"  aria-label="Editar">
+                <a href="editar.php?id=' . $email['id'] . '"  aria-label="Editar">
                     <i class="fa fa-edit"></i>
                 </a>
-                <a href="eliminar.php?id=' . $email['id_cliente'] . '"  aria-label="Eliminar" onclick="return confirm(\'Tem certeza que deseja eliminar este item?\');">
+                <a href="eliminar.php?id=' . $email['id'] . '"  aria-label="Eliminar" onclick="return confirm(\'Tem certeza que deseja eliminar este item?\');">
                     <i class="fa fa-trash"></i>
                 </a>
               </td>';
@@ -237,27 +237,26 @@ $emails = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 
 
-    
-<!-- Modal formulario -->
+ <!-- Modal formulário -->
 <div id="modalForm" class="modal">
     <div class="modal-content">
         <span class="close">&times;</span>
-        <h2>Cadastro de Plano de Hospedagem</h2>
-        <form id="formPlanoHospedagem">
-            <label for="nome_plano">Nome do Plano:</label><br>
-            <input type="text" id="nome_plano" name="nome_plano" required><br><br>
+        <h2>Cadastro de Serviço de Email</h2>
+        <form id="formServicoEmail">
+            <label for="nome_servico">Nome do Serviço:</label><br>
+            <input type="text" id="nome_servico" name="nome_servico" required><br><br>
 
             <label for="descricao">Descrição:</label><br>
             <textarea id="descricao" name="descricao"></textarea><br><br>
+
+            <label for="limite_contas_email">Limite de Contas de Email:</label><br>
+            <input type="number" id="limite_contas_email" name="limite_contas_email"><br><br>
 
             <label for="preco_mensal">Preço Mensal:</label><br>
             <input type="number" step="0.01" id="preco_mensal" name="preco_mensal" required><br><br>
 
             <label for="preco_anual">Preço Anual:</label><br>
             <input type="number" step="0.01" id="preco_anual" name="preco_anual"><br><br>
-
-            <label for="recursos">Recursos:</label><br>
-            <textarea id="recursos" name="recursos"></textarea><br><br>
 
             <label for="status">Status:</label><br>
             <select id="status" name="status" required>
@@ -269,6 +268,31 @@ $emails = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </form>
     </div>
 </div>
+
+<!-- JavaScript para manipular o envio do formulário -->
+<script>
+    document.getElementById('formServicoEmail').addEventListener('submit', function (e) {
+        e.preventDefault(); // Evita o reload da página
+
+        const formData = new FormData(this);
+
+        // Enviar os dados via fetch
+        fetch('processa_servico_email.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.text())
+        .then(data => {
+            alert('Serviço de Email salvo com sucesso!');
+            document.getElementById('modalForm').style.display = 'none';
+        })
+        .catch(error => {
+            console.error('Erro:', error);
+            alert('Ocorreu um erro ao salvar o serviço de email.');
+        });
+    });
+</script>
+
 
     <!--   Core JS Files   -->
     <script src="./assets/js/core/jquery-3.7.1.min.js"></script>

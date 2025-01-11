@@ -135,7 +135,7 @@ include("./navbar.php");
                     <?php
 
 // Consulta SQL para unir as tabelas
-$query = "SELECT nome_plano, preco_mensal, preco_anual, status, data_criacao FROM planos_hospedagem";
+$query = "SELECT id, nome_plano, preco_mensal, preco_anual, status, data_criacao FROM planos_hospedagem";
 $stmt = $conn->prepare($query);
 $stmt->execute();
 
@@ -179,13 +179,13 @@ $hospedagens = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 echo "<td>{$hospedagem['status']}</td>";
                 echo "<td>{$hospedagem['data_criacao']}</td>";
                 echo '<td style="display:flex;width:70px; justify-content:space-around">
-        <a href="ver.php?id=' . $hospedagem['id_cliente'] . '"  aria-label="Ver Detalhes">
+        <a href="ver.php?id=' . $hospedagem['id'] . '"  aria-label="Ver Detalhes">
             <i class="fa fa-eye"></i>
         </a>
-        <a href="editar.php?id=' . $hospedagem['id_cliente'] . '"  aria-label="Editar">
+        <a href="editar.php?id=' . $hospedagem['id'] . '"  aria-label="Editar">
             <i class="fa fa-edit"></i>
         </a>
-        <a href="eliminar.php?id=' . $hospedagem['id_cliente'] . '"  aria-label="Eliminar" onclick="return confirm(\'Tem certeza que deseja eliminar este item?\');">
+        <a href="eliminar.php?id=' . $hospedagem['id'] . '"  aria-label="Eliminar" onclick="return confirm(\'Tem certeza que deseja eliminar este item?\');">
             <i class="fa fa-trash"></i>
         </a>
       </td>';
@@ -284,6 +284,30 @@ $hospedagens = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <script src="./assets/js/kaiadmin.min.js"></script>
     <!-- Kaiadmin DEMO methods, don't include it in your project! -->
     <script src="./assets/js/setting-demo2.js"></script>
+    <!-- JavaScript para manipular o envio do formulário -->
+<script>
+    document.getElementById('formPlanoHospedagem').addEventListener('submit', function (e) {
+        e.preventDefault(); // Evita o reload da página
+
+        const formData = new FormData(this);
+
+        // Enviar os dados via fetch
+        fetch('processa_plano.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.text())
+        .then(data => {
+            alert('Plano salvo com sucesso!');
+            // Fechar o modal (você pode adicionar mais lógica aqui)
+            document.getElementById('modalForm').style.display = 'none';
+        })
+        .catch(error => {
+            console.error('Erro:', error);
+            alert('Ocorreu um erro ao salvar o plano.');
+        });
+    });
+</script>
     <script>
       $(document).ready(function () {
         $("#basic-datatables").DataTable({});
