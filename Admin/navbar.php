@@ -183,7 +183,7 @@
                       </li>
                       <li>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Perfil</a>
+                        <a class="dropdown-item" href="perfil.php">Perfil</a>
                         
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="#">Definições da conta</a>

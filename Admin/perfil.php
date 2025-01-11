@@ -113,7 +113,7 @@ include("./navbar.php");
                     <div class="user-profile text-center">
                       <div class="name">Nome</div>
                       <div class="job">Função</div>
-                      <div class="desc">email</div>
+                      <div class="desc">email@gmail.com</div>
                       <div class="social-media">
                         <a
                           class="btn btn-info btn-twitter btn-sm btn-link"
