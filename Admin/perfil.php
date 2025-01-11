@@ -93,7 +93,80 @@ include("./navbar.php");
           <div class="page-inner">
            
             <div class="row">
-              
+            <div class="col-md-13">
+                <div class="card card-profile">
+                  <div
+                    class="card-header"
+                    style="background-image: url('assets/img/blogpost.jpg')"
+                  >
+                    <div class="profile-picture">
+                      <div class="avatar avatar-xl">
+                        <img
+                          src="assets/img/profile.jpg"
+                          alt="..."
+                          class="avatar-img rounded-circle"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <div class="user-profile text-center">
+                      <div class="name">Nome</div>
+                      <div class="job">Função</div>
+                      <div class="desc">email</div>
+                      <div class="social-media">
+                        <a
+                          class="btn btn-info btn-twitter btn-sm btn-link"
+                          href="#"
+                        >
+                          <span class="btn-label just-icon"
+                            ><i class="icon-social-twitter"></i>
+                          </span>
+                        </a>
+                        <a
+                          class="btn btn-primary btn-sm btn-link"
+                          rel="publisher"
+                          href="#"
+                        >
+                          <span class="btn-label just-icon"
+                            ><i class="icon-social-facebook"></i>
+                          </span>
+                        </a>
+                        <a
+                          class="btn btn-danger btn-sm btn-link"
+                          rel="publisher"
+                          href="#"
+                        >
+                          <span class="btn-label just-icon"
+                            ><i class="icon-social-instagram"></i>
+                          </span>
+                        </a>
+                      </div>
+                      <div class="view-profile">
+                        <a href="#" class="btn btn-secondary w-100"
+                          >Editar Perfil</a
+                        >
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-footer">
+                    <div class="row user-stats text-center">
+                      <div class="col">
+                        <div class="number">957354682</div>
+                        <div class="title">Telefone</div>
+                      </div>
+                      <div class="col">
+                        <div class="number">25</div>
+                        <div class="title">Idade</div>
+                      </div>
+                      <div class="col">
+                        <div class="number">Masculino</div>
+                        <div class="title">Genero</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
               </div>
 
              
