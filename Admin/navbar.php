@@ -174,7 +174,7 @@
                             <h4>Usuario</h4>
                             <p class="text-muted">email@exemplo.com</p>
                             <a
-                              href="profile.html"
+                              href="perfil.php"
                               class="btn btn-xs btn-secondary btn-sm"
                               >Ver Perfil</a
                             >
