@@ -133,10 +133,41 @@ if ($minutos_atras < 60) {
                               />
                             </div>
                             <div class="notif-content">
-                              <span class="subject"><?php echo htmlspecialchars($nome); ?></span>
-                              <span class="block"><?php echo htmlspecialchars($mensagem); ?></span>
-                              <span class="time"><?php echo $tempo; ?></span>
-                            </div>
+  <span class="subject"><?php echo htmlspecialchars($nome); ?></span>
+  
+  <!-- Verifica se a mensagem é maior que 100 caracteres -->
+  <?php if (strlen($mensagem) > 20): ?>
+      <!-- Exibe a versão encurtada -->
+      <span class="block">
+          <?php echo htmlspecialchars(substr($mensagem, 0, 20)); ?>...
+          <span class="full-msg block" style="display: none;"><?php echo htmlspecialchars($mensagem); ?></span>
+          
+      </span>
+  <?php else: ?>
+      <!-- Exibe a mensagem completa se for pequena -->
+      <span class="block"><?php echo htmlspecialchars($mensagem); ?></span>
+  <?php endif; ?>
+  
+  <span class="time"><?php echo $tempo; ?></span>
+</div>
+
+<script>
+  function toggleMessage(link) {
+    const fullMsg = link.previousElementSibling.querySelector('.full-msg');
+    const shortMsg = link.previousElementSibling.querySelector('.short-msg');
+    
+    if (fullMsg.style.display === 'none') {
+      fullMsg.style.display = 'inline';
+      shortMsg.style.display = 'none';
+      link.textContent = 'Ler menos';
+    } else {
+      fullMsg.style.display = 'none';
+      shortMsg.style.display = 'inline';
+      link.textContent = 'Ler mais';
+    }
+  }
+</script>
+
                           </a>
                           
                         </div>
