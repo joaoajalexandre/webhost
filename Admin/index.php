@@ -190,37 +190,34 @@ include("navbar.php");
             </div>
             
             <div class="row">
-              <div class="col-md-13">
-                <div class="card card-round">
-                  <div class="card-header">
-                    <div class="card-head-row">
-                      <div class="card-title">Estatisticas</div>
-                      <div class="card-tools">
-                        <a
-                          href="#"
-                          class="btn btn-label-success btn-round btn-sm me-2"
-                        >
-                          <span class="btn-label">
-                            <i class="fa fa-pencil"></i>
-                          </span>
-                          Export
-                        </a>
-                        <a href="#" class="btn btn-label-info btn-round btn-sm">
-                          <span class="btn-label">
-                            <i class="fa fa-print"></i>
-                          </span>
-                          Print
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="card-body">
-                    <div class="chart-container">
-                      <canvas id="barChart"></canvas>
-                    </div>
-                  </div>
-                </div>
-              </div>
+            <div class="col-md-13">
+  <div class="card card-round">
+    <div class="card-header">
+      <div class="card-head-row">
+        <div class="card-title">Estatísticas</div>
+        <div class="card-tools">
+          <a href="#" class="btn btn-label-success btn-round btn-sm me-2">
+            <span class="btn-label">
+              <i class="fa fa-pencil"></i>
+            </span>
+            Export
+          </a>
+          <a href="#" class="btn btn-label-info btn-round btn-sm">
+            <span class="btn-label">
+              <i class="fa fa-print"></i>
+            </span>
+            Print
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="chart-container">
+        <canvas id="barChart"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
             </div>
           </div>
         </div>
@@ -263,6 +260,9 @@ include("navbar.php");
     <script src="assets/js/core/popper.min.js"></script>
     <script src="assets/js/core/bootstrap.min.js"></script>
 
+    <!-- Adicionando Chart.js via CDN -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <!-- jQuery Scrollbar -->
     <script src="assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
 
@@ -294,34 +294,33 @@ include("navbar.php");
     <!-- Kaiadmin DEMO methods, don't include it in your project! -->
     <script src="assets/js/setting-demo.js"></script>
     <script src="assets/js/demo.js"></script>
+
     <script>
-      $("#lineChart").sparkline([102, 109, 120, 99, 110, 105, 115], {
-        type: "line",
-        height: "70",
-        width: "100%",
-        lineWidth: "2",
-        lineColor: "#177dff",
-        fillColor: "rgba(23, 125, 255, 0.14)",
-      });
+  // Criando o gráfico de barras com Chart.js
+  var ctx = document.getElementById('barChart').getContext('2d');
+  var barChart = new Chart(ctx, {
+    type: 'bar', // Tipo do gráfico
+    data: {
+      labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho'], // Rótulos dos eixos X
+      datasets: [{
+        label: 'Vendas',
+        data: [12, 19, 3, 5, 2, 3], // Dados do gráfico
+        backgroundColor: 'rgba(75, 192, 192, 0.2)', // Cor de fundo das barras
+        borderColor: 'rgba(75, 192, 192, 1)', // Cor da borda das barras
+        borderWidth: 1
+      }]
+    },
+    options: {
+      responsive: true, // Gráfico responsivo
+      scales: {
+        y: {
+          beginAtZero: true // Inicia o eixo Y a partir de zero
+        }
+      }
+    }
+  });
+</script>
 
-      $("#lineChart2").sparkline([99, 125, 122, 105, 110, 124, 115], {
-        type: "line",
-        height: "70",
-        width: "100%",
-        lineWidth: "2",
-        lineColor: "#f3545d",
-        fillColor: "rgba(243, 84, 93, .14)",
-      });
-
-      $("#lineChart3").sparkline([105, 103, 123, 100, 95, 105, 115], {
-        type: "line",
-        height: "70",
-        width: "100%",
-        lineWidth: "2",
-        lineColor: "#ffa534",
-        fillColor: "rgba(255, 165, 52, .14)",
-      });
-    </script>
    
   </body>
 </html>
