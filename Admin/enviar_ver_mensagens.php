@@ -2,8 +2,8 @@
 include("conexao.php");
 
     // Verifica se o POST contém o id_cliente
-    if (isset($_POST['id_cliente'])) {
-      $id_cliente = $_POST['id_cliente'];
+    if (isset($_GET['id_cliente'])) {
+      $id_cliente = $_GET['id_cliente'];
 
         // Consulta SQL para buscar as mensagens do cliente
         $sql = "SELECT m.mensagem, m.data_envio, m.entidade, c.nome 
