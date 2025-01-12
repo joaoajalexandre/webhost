@@ -5,7 +5,7 @@ include("conexao.php");
 
 try {
     // Consulta para pegar as mensagens
-    $sql = "SELECT nome, mensagem, TIMESTAMPDIFF(MINUTE, data_envio, NOW()) AS minutos_atras 
+    $sql = "SELECT id_cliente, nome, mensagem, TIMESTAMPDIFF(MINUTE, data_envio, NOW()) AS minutos_atras 
             FROM tb_mensagens 
             ORDER BY data_envio DESC";
 
@@ -162,9 +162,13 @@ include("./navbar.php");
                     <div class="status"><?php echo htmlspecialchars($mensagem['mensagem']); ?></div>
                 <?php endif; ?>
             </div>
-            <button class="btn btn-icon btn-link op-8 me-1">
-                <a href="enviar_ver_mensagens.php"><i class="far fa-envelope"></i></a>
-            </button>
+            <form action="enviar_ver_mensagens.php" method="get" style="display:inline;">
+    <input type="hidden" name="id_cliente" value="<?php echo htmlspecialchars($mensagem['id_cliente']); ?>" />
+    <button type="submit" class="btn btn-icon btn-link op-8 me-1">
+        <i class="far fa-envelope"></i>
+    </button>
+</form>
+
             <button class="btn btn-icon btn-link btn-danger op-8">
                 <i class="fas fa-ban"></i>
             </button>
