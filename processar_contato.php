@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $id_cliente = $_SESSION['logado']['id_cliente'];
 
         // Consulta o nome e o email do cliente na tabela clientes
-        $sql = "SELECT nome, email FROM clientes WHERE id = ?";
+        $sql = "SELECT nome, email FROM tb_cliente WHERE id_cliente = ?";
         $stmt = $conexao->prepare($sql);
         $stmt->bind_param("i", $id_cliente);
         $stmt->execute();
