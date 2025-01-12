@@ -1,32 +1,4 @@
-<?php
-session_start();
-// Conectar ao banco de dados com PDO
-include("conexao.php");
 
-try {
-    // Consulta para pegar as mensagens
-    $sql = "SELECT nome, mensagem, TIMESTAMPDIFF(MINUTE, data_envio, NOW()) AS minutos_atras 
-            FROM tb_mensagens 
-            ORDER BY data_envio DESC";
-
-    // Preparar a consulta
-    $stmt = $conn->prepare($sql);
-
-    // Executar a consulta
-    $stmt->execute();
-
-    // Verificar se há resultados
-    if ($stmt->rowCount() > 0) {
-        $mensagens = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    } else {
-        $mensagens = [];
-    }
-
-} catch (PDOException $e) {
-    // Caso haja erro na execução da consulta
-    echo "Erro: " . $e->getMessage();
-}
-?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -118,81 +90,64 @@ include("./navbar.php");
           <div class="page-inner">
            
             <div class="row">
-            <div class="col-md-10">
-  <div class="card card-round">
-    <div class="card-body">
-      <div class="card-head-row card-tools-still-right">
-        <div class="card-title">Mensagens</div>
-        <div class="card-tools">
-          <div class="dropdown">
-            <button class="btn btn-icon btn-clean me-0" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <i class="fas fa-ellipsis-h"></i>
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <a class="dropdown-item" href="#">Action</a>
-              <a class="dropdown-item" href="#">Another action</a>
-              <a class="dropdown-item" href="#">Something else here</a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="card-list py-4">
-    <?php foreach ($mensagens as $mensagem): ?>
-        <div class="item-list">
-            <div class="avatar">
-                <!-- Avatar é baseado nas iniciais ou imagem -->
-                <span class="avatar-title rounded-circle border border-white">
-                    <?php echo strtoupper(substr($mensagem['nome'], 0, 2)); ?>
-                </span>
-            </div>
-            <div class="info-user ms-3">
-                <div class="username"><?php echo htmlspecialchars($mensagem['nome']); ?></div>
-
-                <!-- Verifica se a mensagem é maior que 100 caracteres -->
-                <?php if (strlen($mensagem['mensagem']) > 100): ?>
-                    <!-- Exibe a versão encurtada -->
-                    <div class="status">
-                        <span class="short-msg"><?php echo htmlspecialchars(substr($mensagem['mensagem'], 0, 100)); ?>...</span>
-                        <span class="full-msg" style="display: none;"><?php echo htmlspecialchars($mensagem['mensagem']); ?></span>
-                        <a href="#" class="read-more" onclick="toggleMessage(this); return false;">Ler mais</a>
+            <div class="col-md-12">
+                <ul class="timeline">
+                  <li>
+                    <div class="timeline-badge">
+                      <i class="far fa-paper-plane"></i>
                     </div>
-                <?php else: ?>
-                    <!-- Exibe a mensagem completa se for pequena -->
-                    <div class="status"><?php echo htmlspecialchars($mensagem['mensagem']); ?></div>
-                <?php endif; ?>
+                    <div class="timeline-panel">
+                      <div class="timeline-heading">
+                        <h4 class="timeline-title">Mussum ipsum cacilds1</h4>
+                        <p>
+                          <small class="text-muted"
+                            ><i class="far fa-paper-plane"></i> 11 hours ago via
+                            Twitter</small
+                          >
+                        </p>
+                      </div>
+                      <div class="timeline-body">
+                        <p>
+                          Far far away, behind the word mountains, far from the
+                          countries Vokalia and Consonantia, there live the
+                          blind texts.
+                        </p>
+                      </div>
+                    </div>
+                  </li>
+                  <li class="timeline-inverted">
+                    <div class="timeline-badge warning">
+                      <i class="far fa-bell"></i>
+                    </div>
+                    <div class="timeline-panel">
+                      <div class="timeline-heading">
+                        <h4 class="timeline-title">Mussum ipsum cacilds2</h4>
+                      </div>
+                      <div class="timeline-body">
+                        <p>
+                          Far far away, behind the word mountains, far from the
+                          countries Vokalia and Consonantia, there live the
+                          blind texts.
+                        </p>
+                      </div>
+                    </div>
+                  </li>
+                 
+                </ul>
+                <div class="form-group">
+                          <div class="input-icon">
+                            <input
+                              type="text"
+                              class="form-control"
+                              placeholder="mensagem..."
+                            />
+                            <span class="input-icon-addon">
+                              <i class="far fa-paper-plane"></i>
+                            </span>
+                          </div>
+                        </div>
+              </div>
             </div>
-            <button class="btn btn-icon btn-link op-8 me-1">
-                <a href="enviar_ver_mensagens.php"><i class="far fa-envelope"></i></a>
-            </button>
-            <button class="btn btn-icon btn-link btn-danger op-8">
-                <i class="fas fa-ban"></i>
-            </button>
-        </div>
-    <?php endforeach; ?>
-</div>
-
-<script>
-    function toggleMessage(link) {
-        var shortMsg = link.parentElement.querySelector('.short-msg');
-        var fullMsg = link.parentElement.querySelector('.full-msg');
-
-        if (shortMsg.style.display === "none") {
-            shortMsg.style.display = "inline";
-            fullMsg.style.display = "none";
-            link.innerHTML = "Ler mais";
-        } else {
-            shortMsg.style.display = "none";
-            fullMsg.style.display = "inline";
-            link.innerHTML = "Ler menos";
-        }
-    }
-</script>
-
-    </div>
-  </div>
-</div>
-        </div>
 
         <footer class="footer">
           <div class="container-fluid d-flex justify-content-between">
