@@ -1,4 +1,38 @@
+<?php
+include("conexao.php");
 
+    // Verifica se o POST contém o id_cliente
+    if (isset($_POST['id_cliente'])) {
+      $id_cliente = $_POST['id_cliente'];
+
+        // Consulta SQL para buscar as mensagens do cliente
+        $sql = "SELECT m.mensagem, m.data_envio, m.entidade, c.nome 
+                FROM tb_mensagens m
+                JOIN tb_cliente c ON m.id_cliente = c.id_cliente
+                WHERE m.id_cliente = :id_cliente
+                ORDER BY m.data_envio DESC";
+
+        // Prepara a consulta
+        $stmt = $conn->prepare($sql);
+
+        // Vincula o parâmetro id_cliente
+        $stmt->bindParam(':id_cliente', $id_cliente, PDO::PARAM_INT);
+
+        // Executa a consulta
+        $stmt->execute();
+
+        // Obtém o resultado
+        $mensagens = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    } else {
+        die("ID do cliente não fornecido.");
+    }
+
+
+
+// Não esqueça de fechar a conexão (opcional com PDO)
+$conn = null;
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -91,91 +125,59 @@ include("./navbar.php");
            
             <div class="row">
             <div class="col-md-12">
-                <ul class="timeline">
-                  <li>
-                    <div class="timeline-badge">
-                      <i class="far fa-paper-plane"></i>
-                    </div>
-                    <div class="timeline-panel">
-                      <div class="timeline-heading">
-                        <h4 class="timeline-title">Mussum ipsum cacilds1</h4>
-                        <p>
-                          <small class="text-muted"
-                            ><i class="far fa-paper-plane"></i> 11 hours ago via
-                            Twitter</small
-                          >
-                        </p>
-                      </div>
-                      <div class="timeline-body">
-                        <p>
-                          Far far away, behind the word mountains, far from the
-                          countries Vokalia and Consonantia, there live the
-                          blind texts.
-                        </p>
-                      </div>
-                    </div>
-                  </li>
-                  <li class="timeline-inverted">
+    <ul class="timeline">
+        <?php foreach ($mensagens as $mensagem): ?>
+            <?php if ($mensagem['entidade'] == 'Admin'): ?>
+                <!-- Mensagem do Admin -->
+                <li class="timeline-inverted receptor">
                     <div class="timeline-badge warning">
-                      <i class="far fa-bell"></i>
+                        <i class="far fa-bell"></i>
                     </div>
                     <div class="timeline-panel">
-                      <div class="timeline-heading">
-                        <h4 class="timeline-title">Mussum ipsum cacilds2</h4>
-                      </div>
-                      <div class="timeline-body">
-                        <p>
-                          Far far away, behind the word mountains, far from the
-                          countries Vokalia and Consonantia, there live the
-                          blind texts.
-                        </p>
-                      </div>
-                    </div>
-                  </li>
-                 
-                </ul>
-                <div class="form-group">
-                          <div class="input-icon">
-                            <input
-                              type="text"
-                              class="form-control"
-                              placeholder="mensagem..."
-                            />
-                            <span class="input-icon-addon">
-                              <i class="far fa-paper-plane"></i>
-                            </span>
-                          </div>
+                        <div class="timeline-heading">
+                            <h4 class="timeline-title"><?php echo htmlspecialchars($mensagem['nome']); ?></h4>
                         </div>
-              </div>
-            </div>
+                        <div class="timeline-body">
+                            <p><?php echo htmlspecialchars($mensagem['mensagem']); ?></p>
+                        </div>
+                    </div>
+                </li>
+            <?php else: ?>
+                <!-- Mensagem do Cliente -->
+                <li class="emissor">
+                    <div class="timeline-badge">
+                        <i class="far fa-paper-plane"></i>
+                    </div>
+                    <div class="timeline-panel">
+                        <div class="timeline-heading">
+                            <h4 class="timeline-title"><?php echo htmlspecialchars($mensagem['nome']); ?></h4>
+                            <p>
+                                <small class="text-muted">
+                                    <i class="far fa-paper-plane"></i> <?php echo $mensagem['data_envio']; ?>
+                                </small>
+                            </p>
+                        </div>
+                        <div class="timeline-body">
+                            <p><?php echo htmlspecialchars($mensagem['mensagem']); ?></p>
+                        </div>
+                    </div>
+                </li>
+            <?php endif; ?>
+        <?php endforeach; ?>
+    </ul>
 
-        <footer class="footer">
-          <div class="container-fluid d-flex justify-content-between">
-            <nav class="pull-left">
-              <ul class="nav">
-                <li class="nav-item">
-                  <a class="nav-link" href="#">
-                    Empresa
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#"> ajuda </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#"> Licenças </a>
-                </li>
-              </ul>
-            </nav>
-            <div class="copyright">
-              2025, feito com <i class="fa fa-heart heart text-danger"></i> por
-              <a href="#">Empresa</a>
-            </div>
-            <div>
-              Distribuido por
-              <a target="_blank" href="#">empresa</a>.
-            </div>
-          </div>
-        </footer>
+    <!-- Input para enviar nova mensagem -->
+    <div class="form-group">
+        <div class="input-icon">
+            <input type="text" class="form-control" placeholder="mensagem..." />
+            <span class="input-icon-addon">
+                <i class="far fa-paper-plane"></i>
+            </span>
+        </div>
+    </div>
+</div>
+
+       
       </div>
     </div>
     <!--   Core JS Files   -->
