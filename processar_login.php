@@ -9,7 +9,7 @@ if (isset($_POST['btnLogin'])) {
         exit();
     } else {
         $email = $_POST['email'];
-        $passe =$_POST['passe'] ; // Use uma função de hash mais segura como password_hash()
+        $passe =md5($_POST['passe']); // Use uma função de hash mais segura como password_hash()
         $cmd = "SELECT * FROM tb_cliente WHERE email = '$email' AND passe = '$passe'";
         $loginExec = $conexao->query($cmd);
 

@@ -1,3 +1,9 @@
+<?php 
+
+
+    session_start();
+
+ ?>
 <!DOCTYPE html>
 <html lang="pt-pt">
 <head>
@@ -6,6 +12,7 @@
     <title>Itecma WebHost</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <style>
@@ -49,9 +56,9 @@
     </style>
 </head>
 <body>
-<?php
-include("header.php");
-?>
+    <?php
+        include("header.php");
+    ?>
     <section class="topo">
         <div class="container-fluid"></div>
     </section>
@@ -111,5 +118,6 @@ include("header.php");
     </section>
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

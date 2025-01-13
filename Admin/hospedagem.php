@@ -7,7 +7,7 @@ include("./conexao.php");
 <html lang="en">
   <head>
   <meta charset="utf-8">
-    <title>Vendas</title>
+    <title>Hospedagem</title>
     <meta
       content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
       name="viewport"
@@ -20,6 +20,7 @@ include("./conexao.php");
 
     <!-- Fonts and icons -->
     <script src="./assets/js/plugin/webfont/webfont.min.js"></script>
+    <script src="./assets/js/script_modal.js"></script>
     <script>
       WebFont.load({
         google: { families: ["Public Sans:300,400,500,600,700"] },
@@ -42,11 +43,18 @@ include("./conexao.php");
     <link rel="stylesheet" href="./assets/css/bootstrap.min.css" />
     <link rel="stylesheet" href="./assets/css/plugins.min.css" />
     <link rel="stylesheet" href="./assets/css/kaiadmin.min.css" />
+    <link rel="stylesheet" href="./assets/css/style_modal.css" />
 
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link rel="stylesheet" href="./assets/css/demo.css" />
   </head>
   <body>
+  <?php
+
+include("./modal_hospedagem.php");
+
+
+?>
     <div class="wrapper">
       <!-- Sidebar -->
       <?php
@@ -93,7 +101,7 @@ include("./navbar.php");
         <div class="container">
           <div class="page-inner">
             <div class="page-header">
-              <h3 class="fw-bold mb-3">Dominios</h3>
+              <h3 class="fw-bold mb-3">Hospedagem</h3>
               <ul class="breadcrumbs mb-3">
                 <li class="nav-home">
                   <a href="#">
@@ -118,77 +126,81 @@ include("./navbar.php");
               <div class="col-md-12">
                 <div class="card">
                   <div class="card-header">
-                    <h4 class="card-title">Dominio Comprados</h4>
+                    <h4 class="card-title">Hospedagem</h4>
+                   <!-- Botão que abre o modal -->
+                          <button id="openModal">+</button>
                   </div>
                   <div class="card-body">
                     <div class="table-responsive">
                     <?php
 
 // Consulta SQL para unir as tabelas
-$query = "
-    SELECT 
-        tb_dominio_comprado.dominio AS dominio_comprado,
-        CONCAT(tb_cliente.nome, ' ', tb_cliente.sobrenome) AS cliente,
-        tb_dominio.preco AS preco,
-        tb_dominio_comprado.data AS data_compra
-    FROM tb_dominio_comprado
-    JOIN tb_cliente ON tb_dominio_comprado.id_cliente = tb_cliente.id_cliente
-    JOIN tb_dominio ON tb_dominio_comprado.dominio = tb_dominio.dominio
-";
+$query = "SELECT id, nome_plano, preco_mensal, preco_anual, status, data_criacao FROM planos_hospedagem";
 $stmt = $conn->prepare($query);
 $stmt->execute();
 
 // Obter os resultados
-$dominios_comprados = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$hospedagens = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <table
-    id="basic-datatables"
+  id="basic-datatables"
     class="display table table-striped table-hover"
 >
     <thead>
         <tr>
-            <th>Dominio</th>
-            <th>Cliente</th>
-            <th>Preço</th>
+            <th>Plano</th>
+            <th>Preço Mensal</th>
+            <th>Preço Anual</th>
+            <th>Status</th>
             <th>Data</th>
+            <th>Ação</th>
         </tr>
     </thead>
     <tfoot>
         <tr>
-            <th>Dominio</th>
-            <th>Cliente</th>
-            <th>Preço</th>
+            <th>Plano</th>
+            <th>Preço Mensal</th>
+            <th>Preço Anual</th>
+            <th>Status</th>
             <th>Data</th>
+            <th>Ação</th>
         </tr>
     </tfoot>
     <tbody>
         <?php
         // Exibir os dados dinamicamente na tabela
-        if (!empty($dominios_comprados)) {
-            foreach ($dominios_comprados as $dominio) {
+        if (!empty($hospedagens)) {
+            foreach ($hospedagens as $hospedagem) {
                 echo "<tr>";
-                echo "<td>{$dominio['dominio_comprado']}</td>";
-                echo "<td>{$dominio['cliente']}</td>";
-                echo "<td>{$dominio['preco']}</td>";
-                echo "<td>{$dominio['data_compra']}</td>";
+                echo "<td>{$hospedagem['nome_plano']}</td>";
+                echo "<td>{$hospedagem['preco_mensal']}</td>";
+                echo "<td>{$hospedagem['preco_anual']}</td>";
+                echo "<td>{$hospedagem['status']}</td>";
+                echo "<td>{$hospedagem['data_criacao']}</td>";
+                echo '<td style="display:flex;width:70px; justify-content:space-around">
+        <a href="ver.php?id=' . $hospedagem['id'] . '"  aria-label="Ver Detalhes">
+            <i class="fa fa-eye"></i>
+        </a>
+        <a href="editar.php?id=' . $hospedagem['id'] . '"  aria-label="Editar">
+            <i class="fa fa-edit"></i>
+        </a>
+        <a href="eliminar.php?id=' . $hospedagem['id'] . '"  aria-label="Eliminar" onclick="return confirm(\'Tem certeza que deseja eliminar este item?\');">
+            <i class="fa fa-trash"></i>
+        </a>
+      </td>';
                 echo "</tr>";
             }
         } else {
-            echo "<tr><td colspan='4'>Nenhum domínio comprado encontrado</td></tr>";
+            echo "<tr><td colspan='6'>Nenhuma Hospedagem encontrada</td></tr>";
         }
         ?>
     </tbody>
 </table>
-
                     </div>
                   </div>
                 </div>
-              </div>
-
-             
-
-              
+              </div>       
             </div>
           </div>
         </div>
@@ -222,199 +234,41 @@ $dominios_comprados = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </footer>
       </div>
 
+
+<!-- Modal formulario -->
+      <div id="modalForm" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Cadastro de Plano de Hospedagem</h2>
+        <form id="formPlanoHospedagem">
+            <label for="nome_plano">Nome do Plano:</label><br>
+            <input type="text" id="nome_plano" name="nome_plano" required><br><br>
+
+            <label for="descricao">Descrição:</label><br>
+            <textarea id="descricao" name="descricao"></textarea><br><br>
+
+            <label for="preco_mensal">Preço Mensal:</label><br>
+            <input type="number" step="0.01" id="preco_mensal" name="preco_mensal" required><br><br>
+
+            <label for="preco_anual">Preço Anual:</label><br>
+            <input type="number" step="0.01" id="preco_anual" name="preco_anual"><br><br>
+
+            <label for="recursos">Recursos:</label><br>
+            <textarea id="recursos" name="recursos"></textarea><br><br>
+
+            <label for="status">Status:</label><br>
+            <select id="status" name="status" required>
+                <option value="ativo">Ativo</option>
+                <option value="inativo">Inativo</option>
+            </select><br><br>
+
+            <input type="submit" value="Salvar">
+        </form>
+    </div>
+</div>
+
       <!-- Custom template | don't include it in your project! -->
-      <div class="custom-template">
-        <div class="title">Settings</div>
-        <div class="custom-content">
-          <div class="switcher">
-            <div class="switch-block">
-              <h4>Logo Header</h4>
-              <div class="btnSwitch">
-                <button
-                  type="button"
-                  class="selected changeLogoHeaderColor"
-                  data-color="dark"
-                ></button>
-                <button
-                  type="button"
-                  class="selected changeLogoHeaderColor"
-                  data-color="blue"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="purple"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="light-blue"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="green"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="orange"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="red"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="white"
-                ></button>
-                <br />
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="dark2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="blue2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="purple2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="light-blue2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="green2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="orange2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeLogoHeaderColor"
-                  data-color="red2"
-                ></button>
-              </div>
-            </div>
-            <div class="switch-block">
-              <h4>Navbar Header</h4>
-              <div class="btnSwitch">
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="dark"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="blue"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="purple"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="light-blue"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="green"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="orange"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="red"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="white"
-                ></button>
-                <br />
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="dark2"
-                ></button>
-                <button
-                  type="button"
-                  class="selected changeTopBarColor"
-                  data-color="blue2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="purple2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="light-blue2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="green2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="orange2"
-                ></button>
-                <button
-                  type="button"
-                  class="changeTopBarColor"
-                  data-color="red2"
-                ></button>
-              </div>
-            </div>
-            <div class="switch-block">
-              <h4>Sidebar</h4>
-              <div class="btnSwitch">
-                <button
-                  type="button"
-                  class="selected changeSideBarColor"
-                  data-color="white"
-                ></button>
-                <button
-                  type="button"
-                  class="changeSideBarColor"
-                  data-color="dark"
-                ></button>
-                <button
-                  type="button"
-                  class="changeSideBarColor"
-                  data-color="dark2"
-                ></button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="custom-toggle">
-          <i class="icon-settings"></i>
-        </div>
-      </div>
+     
       <!-- End Custom template -->
     </div>
     <!--   Core JS Files   -->
@@ -430,6 +284,30 @@ $dominios_comprados = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <script src="./assets/js/kaiadmin.min.js"></script>
     <!-- Kaiadmin DEMO methods, don't include it in your project! -->
     <script src="./assets/js/setting-demo2.js"></script>
+    <!-- JavaScript para manipular o envio do formulário -->
+<script>
+    document.getElementById('formPlanoHospedagem').addEventListener('submit', function (e) {
+        e.preventDefault(); // Evita o reload da página
+
+        const formData = new FormData(this);
+
+        // Enviar os dados via fetch
+        fetch('processa_plano.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.text())
+        .then(data => {
+            alert('Plano salvo com sucesso!');
+            // Fechar o modal (você pode adicionar mais lógica aqui)
+            document.getElementById('modalForm').style.display = 'none';
+        })
+        .catch(error => {
+            console.error('Erro:', error);
+            alert('Ocorreu um erro ao salvar o plano.');
+        });
+    });
+</script>
     <script>
       $(document).ready(function () {
         $("#basic-datatables").DataTable({});
@@ -486,6 +364,54 @@ $dominios_comprados = $stmt->fetchAll(PDO::FETCH_ASSOC);
           $("#addRowModal").modal("hide");
         });
       });
+    </script>
+    <script>
+       // Abrir o modal
+ var modal = document.getElementById("modalForm");
+ var btn = document.getElementById("openModal");
+ var span = document.getElementsByClassName("close")[0];
+
+ btn.onclick = function() {
+     modal.style.display = "block";
+ }
+
+ // Fechar o modal quando clicar no 'x'
+ span.onclick = function() {
+     modal.style.display = "none";
+ }
+
+ // Fechar o modal quando clicar fora da janela
+ window.onclick = function(event) {
+     if (event.target == modal) {
+         modal.style.display = "none";
+     }
+ }
+
+ // Enviar o formulário (aqui você pode fazer uma requisição para o backend em PHP, por exemplo)
+ document.getElementById("formPlanoHospedagem").onsubmit = function(event) {
+     event.preventDefault(); // Evitar o reload da página
+
+     // Capturar os dados do formulário
+     var nome_plano = document.getElementById("nome_plano").value;
+     var descricao = document.getElementById("descricao").value;
+     var preco_mensal = document.getElementById("preco_mensal").value;
+     var preco_anual = document.getElementById("preco_anual").value;
+     var recursos = document.getElementById("recursos").value;
+     var status = document.getElementById("status").value;
+
+     // Aqui você pode fazer uma requisição AJAX ou fetch para salvar os dados no backend
+     console.log({
+         nome_plano,
+         descricao,
+         preco_mensal,
+         preco_anual,
+         recursos,
+         status
+     });
+
+     // Fechar o modal após salvar os dados
+     modal.style.display = "none";
+ }
     </script>
   </body>
 </html>

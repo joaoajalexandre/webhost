@@ -174,7 +174,7 @@
                             <h4>Usuario</h4>
                             <p class="text-muted">email@exemplo.com</p>
                             <a
-                              href="profile.html"
+                              href="perfil.php"
                               class="btn btn-xs btn-secondary btn-sm"
                               >Ver Perfil</a
                             >
@@ -183,7 +183,7 @@
                       </li>
                       <li>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Perfil</a>
+                        <a class="dropdown-item" href="perfil.php">Perfil</a>
                         
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="#">Definições da conta</a>

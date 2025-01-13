@@ -45,6 +45,11 @@
                       <span class="sub-item">Dashboard</span>
                     </a>
                     </li>
+                  <li>
+                    <a href="../">
+                      <span class="sub-item">Home Itecma</span>
+                    </a>
+                    </li>
                   </ul>
                 </div>
               </li>

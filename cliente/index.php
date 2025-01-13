@@ -1,9 +1,11 @@
 <?php
 session_start();
-include("conexao.php");
+include("../conexao.php");
 if (!isset($_SESSION['logado'])) {
   header("Location: ../login.php");
 }
+
+
 
 ?>
 <!DOCTYPE html>
@@ -54,7 +56,7 @@ if (!isset($_SESSION['logado'])) {
       <!-- Sidebar -->
       <?php
         include("sidebar.php");
-        ?>
+      ?>
       <!-- End Sidebar -->
 
       <div class="main-panel">
@@ -105,26 +107,30 @@ include("navbar.php");
               
             </div>
             <?php
-          
-            // Consultas SQL
-            
-            // 1. Total de Clientes
-            $queryClientes = "SELECT COUNT(*) AS total_clientes FROM tb_cliente";
-            $stmtClientes = $conn->prepare($queryClientes);
-            $stmtClientes->execute();
-            $totalClientes = $stmtClientes->fetch(PDO::FETCH_ASSOC)['total_clientes'];
-            
-            // 2. Total de Vendas
-            $queryVendas = "SELECT SUM(total_compra) AS total_vendas FROM tb_compra";
-            $stmtVendas = $conn->prepare($queryVendas);
-            $stmtVendas->execute();
-            $totalVendas = $stmtVendas->fetch(PDO::FETCH_ASSOC)['total_vendas'];
-            
-            // 3. Vendas de Hoje
-            $queryVendasHoje = "SELECT SUM(total_compra) AS vendas_hoje FROM tb_compra WHERE DATE(data) = CURDATE()";
-            $stmtVendasHoje = $conn->prepare($queryVendasHoje);
-            $stmtVendasHoje->execute();
-            $vendasHoje = $stmtVendasHoje->fetch(PDO::FETCH_ASSOC)['vendas_hoje'];
+              $id_cliente = $_SESSION['logado']['id_cliente'];
+
+              // Consultas SQL
+
+              
+              // 1. Total Fatura
+              $cmdCompra = "SELECT count(*) AS totalCompra FROM tb_compra WHERE id_cliente = '$id_cliente' ";
+              $resultCompra = $conexao->query($cmdCompra);
+              $rowCompra = $resultCompra->fetch_assoc();
+              $totalCompra = $rowCompra['totalCompra'];
+              
+              
+              // 2. Total de Dominio
+              $cmdDominio = "SELECT count(*) AS totalDominio FROM tb_dominio_comprado WHERE id_cliente = '$id_cliente' ";
+              $resultDominio = $conexao->query($cmdDominio);
+              $rowDominio = $resultDominio->fetch_assoc();
+              $totalDominio = $rowDominio['totalDominio'];
+              
+              // 3. Vendas de Hoje
+              $cmdCompra = "SELECT count(*) AS totalCompra FROM tb_compra WHERE id_cliente = '$id_cliente' ";
+              $result = $conexao->query($cmdCompra);
+              $row = $result->fetch_assoc();
+              $totalCompra = $row['totalCompra'];
+
             ?>
             
             <div class="row">
@@ -135,13 +141,13 @@ include("navbar.php");
                             <div class="row align-items-center">
                                 <div class="col-icon">
                                     <div class="icon-big text-center icon-primary bubble-shadow-small">
-                                        <i class="fas fa-users"></i>
+                                        <i class="fas fa-cogs"></i>
                                     </div>
                                 </div>
                                 <div class="col col-stats ms-3 ms-sm-0">
                                     <div class="numbers">
-                                        <p class="card-category">Clientes</p>
-                                        <h4 class="card-title"><?php echo $totalClientes; ?></h4>
+                                        <p class="card-category">Serviços</p>
+                                        <h4 class="card-title"><?php echo 0; ?></h4>
                                     </div>
                                 </div>
                             </div>
@@ -149,20 +155,41 @@ include("navbar.php");
                     </div>
                 </div>
             
-                <!-- Card 2: Vendas Totais -->
+                <!-- Card 3: dominios -->
                 <div class="col-sm-6 col-md-3">
                     <div class="card card-stats card-round">
                         <div class="card-body">
                             <div class="row align-items-center">
                                 <div class="col-icon">
                                     <div class="icon-big text-center icon-success bubble-shadow-small">
-                                        <i class="fas fa-luggage-cart"></i>
+                                        <i class="fas fa-globe"></i>
                                     </div>
                                 </div>
                                 <div class="col col-stats ms-3 ms-sm-0">
                                     <div class="numbers">
-                                        <p class="card-category">Vendas</p>
-                                        <h4 class="card-title">AOA <?php echo number_format($totalVendas, 0, ',', '.'); ?></h4>
+                                        <p class="card-category">Domínios</p>
+                                        <h4 class="card-title"> <?php echo $totalDominio; ?></h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2: Tickets -->
+                <div class="col-sm-6 col-md-3">
+                    <div class="card card-stats card-round">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-icon">
+                                    <div class="icon-big text-center icon-success bubble-shadow-small">
+                                        <i class="fa fa-ticket-alt"></i>
+                                    </div>
+                                </div>
+                                <div class="col col-stats ms-3 ms-sm-0">
+                                    <div class="numbers">
+                                        <p class="card-category">Tickets</p>
+                                        <h4 class="card-title"> <?php echo 0; ?></h4>
                                     </div>
                                 </div>
                             </div>
@@ -170,20 +197,20 @@ include("navbar.php");
                     </div>
                 </div>
             
-                <!-- Card 3: Vendas de Hoje -->
+                <!-- Card 4: Faturas -->
                 <div class="col-sm-6 col-md-3">
                     <div class="card card-stats card-round">
                         <div class="card-body">
                             <div class="row align-items-center">
                                 <div class="col-icon">
                                     <div class="icon-big text-center icon-secondary bubble-shadow-small">
-                                        <i class="fas fa-luggage-cart"></i>
+                                        <i class="fas fa-file-invoice"></i>
                                     </div>
                                 </div>
                                 <div class="col col-stats ms-3 ms-sm-0">
                                     <div class="numbers">
-                                        <p class="card-category">Vendas de Hoje</p>
-                                        <h4 class="card-title">AOA <?php echo number_format($vendasHoje, 0, ',', '.'); ?></h4>
+                                        <p class="card-category">Faturas</p>
+                                        <h4 class="card-title"><?php echo $totalCompra; ?></h4>
                                     </div>
                                 </div>
                             </div>
@@ -192,193 +219,62 @@ include("navbar.php");
                 </div>
             </div>
             
+            <!-----------------------Produtos e serviços activos-------------------->
             <div class="row">
-              <div class="col-md-13">
-                <div class="card card-round">
-                  <div class="card-header">
-                    <div class="card-head-row">
-                      <div class="card-title">Estatisticas</div>
-                      <div class="card-tools">
-                        <a
-                          href="#"
-                          class="btn btn-label-success btn-round btn-sm me-2"
-                        >
-                          <span class="btn-label">
-                            <i class="fa fa-pencil"></i>
-                          </span>
-                          Export
-                        </a>
-                        <a href="#" class="btn btn-label-info btn-round btn-sm">
-                          <span class="btn-label">
-                            <i class="fa fa-print"></i>
-                          </span>
-                          Print
-                        </a>
+              <div class="col-sm-12">
+
+                <div class="card p-2">
+                  <div class="card-title">Serviços de Dominio</div><hr>
+                    <?php 
+                        $queryServicoActivo = "SELECT * FROM tb_dominio_comprado WHERE id_cliente = $id_cliente";
+                        $resultServicoActivo = $conexao->query($queryServicoActivo) OR die("Erro ao Carregar os serviços activos");
+                        while($rowsServicoActivo = $resultServicoActivo->fetch_assoc()){
+                    ?>
+                    <div class="d-flex justify-content-between align-items-center container">
+                      <div>
+                        <h4><?php echo $rowsServicoActivo['dominio']; ?></h4>
+                        <span><?php echo"registrado: ".$rowsServicoActivo['data'] ?></span>
+                      </div>
+                      <div>
+                        <span class="estado_pas"><?php echo $rowsServicoActivo['estado_dominio'] ?></span>
+                        <button class="btn btn-primary">Ver detalhes</button>
                       </div>
                     </div>
-                  </div>
-                  <div class="card-body">
-                    <div class="chart-container">
-                      <canvas id="barChart"></canvas>
+                    <hr>
+                    <?php } ?>
+
+                    <button class="btn btn-primary">Ver mais</button>
+                </div>
+                
+                <!-------------------->
+                <div class="row ">
+                  <!-----------------------Tickets de Suporte Recentes-------------------->
+                  <div class="col-sm-6">
+                    <div class="card">
+                      <div class="card-title">Tickets de Suporte Recentes</div><hr>
                     </div>
                   </div>
+                  <!-----------------------Faturas por pagar-------------------->
+                  <div class="col-sm-6">
+                      <div class="card">
+                        <div class="card-title">Faturas por pagar</div><hr>
+                      </div>
+                    </div>
+                </div>
+
+                <!------------- Finalizar------------->
+
+
                 </div>
               </div>
             </div>
-           <!--
-            <div class="row">
-              <div class="col-md-4">
-                <div class="card card-round">
-                  <div class="card-body">
-                    <div class="card-head-row card-tools-still-right">
-                      <div class="card-title">New Customers</div>
-                      <div class="card-tools">
-                        <div class="dropdown">
-                          <button
-                            class="btn btn-icon btn-clean me-0"
-                            type="button"
-                            id="dropdownMenuButton"
-                            data-bs-toggle="dropdown"
-                            aria-haspopup="true"
-                            aria-expanded="false"
-                          >
-                            <i class="fas fa-ellipsis-h"></i>
-                          </button>
-                          <div
-                            class="dropdown-menu"
-                            aria-labelledby="dropdownMenuButton"
-                          >
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <a class="dropdown-item" href="#"
-                              >Something else here</a
-                            >
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="card-list py-4">
-                      <div class="item-list">
-                        <div class="avatar">
-                          <img
-                            src="assets/img/jm_denis.jpg"
-                            alt="..."
-                            class="avatar-img rounded-circle"
-                          />
-                        </div>
-                        <div class="info-user ms-3">
-                          <div class="username">Jimmy Denis</div>
-                          <div class="status">Graphic Designer</div>
-                        </div>
-                        <button class="btn btn-icon btn-link op-8 me-1">
-                          <i class="far fa-envelope"></i>
-                        </button>
-                        <button class="btn btn-icon btn-link btn-danger op-8">
-                          <i class="fas fa-ban"></i>
-                        </button>
-                      </div>
-                      <div class="item-list">
-                        <div class="avatar">
-                          <span
-                            class="avatar-title rounded-circle border border-white"
-                            >CF</span
-                          >
-                        </div>
-                        <div class="info-user ms-3">
-                          <div class="username">Chandra Felix</div>
-                          <div class="status">Sales Promotion</div>
-                        </div>
-                        <button class="btn btn-icon btn-link op-8 me-1">
-                          <i class="far fa-envelope"></i>
-                        </button>
-                        <button class="btn btn-icon btn-link btn-danger op-8">
-                          <i class="fas fa-ban"></i>
-                        </button>
-                      </div>
-                      <div class="item-list">
-                        <div class="avatar">
-                          <img
-                            src="assets/img/talha.jpg"
-                            alt="..."
-                            class="avatar-img rounded-circle"
-                          />
-                        </div>
-                        <div class="info-user ms-3">
-                          <div class="username">Talha</div>
-                          <div class="status">Front End Designer</div>
-                        </div>
-                        <button class="btn btn-icon btn-link op-8 me-1">
-                          <i class="far fa-envelope"></i>
-                        </button>
-                        <button class="btn btn-icon btn-link btn-danger op-8">
-                          <i class="fas fa-ban"></i>
-                        </button>
-                      </div>
-                      <div class="item-list">
-                        <div class="avatar">
-                          <img
-                            src="assets/img/chadengle.jpg"
-                            alt="..."
-                            class="avatar-img rounded-circle"
-                          />
-                        </div>
-                        <div class="info-user ms-3">
-                          <div class="username">Chad</div>
-                          <div class="status">CEO Zeleaf</div>
-                        </div>
-                        <button class="btn btn-icon btn-link op-8 me-1">
-                          <i class="far fa-envelope"></i>
-                        </button>
-                        <button class="btn btn-icon btn-link btn-danger op-8">
-                          <i class="fas fa-ban"></i>
-                        </button>
-                      </div>
-                      <div class="item-list">
-                        <div class="avatar">
-                          <span
-                            class="avatar-title rounded-circle border border-white bg-primary"
-                            >H</span
-                          >
-                        </div>
-                        <div class="info-user ms-3">
-                          <div class="username">Hizrian</div>
-                          <div class="status">Web Designer</div>
-                        </div>
-                        <button class="btn btn-icon btn-link op-8 me-1">
-                          <i class="far fa-envelope"></i>
-                        </button>
-                        <button class="btn btn-icon btn-link btn-danger op-8">
-                          <i class="fas fa-ban"></i>
-                        </button>
-                      </div>
-                      <div class="item-list">
-                        <div class="avatar">
-                          <span
-                            class="avatar-title rounded-circle border border-white bg-secondary"
-                            >F</span
-                          >
-                        </div>
-                        <div class="info-user ms-3">
-                          <div class="username">Farrah</div>
-                          <div class="status">Marketing</div>
-                        </div>
-                        <button class="btn btn-icon btn-link op-8 me-1">
-                          <i class="far fa-envelope"></i>
-                        </button>
-                        <button class="btn btn-icon btn-link btn-danger op-8">
-                          <i class="fas fa-ban"></i>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-            </div>
--->
+
+
+
+
+
           </div>
         </div>
-
         <footer class="footer">
           <div class="container-fluid d-flex justify-content-between">
             <nav class="pull-left">

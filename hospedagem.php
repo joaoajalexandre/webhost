@@ -1,3 +1,23 @@
+<?php session_start();
+include("conexao.php");
+
+if (isset($_GET['plano'])) {
+    $idPlanoHosp = (int) $_GET['plano'];
+    if (!isset($_SESSION['variable'])) {
+        $_SESSION['carrinho'] = array();
+    }
+    else{
+        if (isset($_SESSION['carrinho'][$idPlanoHosp])) {
+            echo "Esse plano já se encontra no carrinho!";
+        }
+        else{
+            $_SESSION['carrinho'][$idPlanoHosp] = array('id'=>$fetchPlano[$idPlanoHosp]);
+        }
+    }
+}
+
+
+ ?>
 <!DOCTYPE html>
 <html lang="pt-pt">
 <head>
@@ -63,62 +83,31 @@ include("header.php");
 <section class="py-5">
     <div class="container">
         <div class="row text-center">
-            <!-- Pacote Básico -->
-            <div class="col-md-4 mb-5">
-                <div class="card card-custom shadow-sm">
-                    <div class="card-header bg-primary text-white card-header-custom">
-                        Pacote Básico
-                    </div>
-                    <div class="card-body">
-                        <h2 class="pricing-card-title">5.000 Kz <small class="text-muted">/ mês</small></h2>
-                        <ul class="list-unstyled mt-3 mb-4">
-                            <li>1 Site</li>
-                            <li>10 GB de Armazenamento</li>
-                            <li>Suporte 24/7</li>
-                            <li>1 Banco de Dados</li>
-                        </ul>
-                        <a href="checkout.php?plano=basico" class="btn btn-primary btn-custom">Escolher Pacote</a>
-                    </div>
-                </div>
-            </div>
             
-            <!-- Pacote Intermediário -->
+            
+            <!-- Pacotes-->
+            <?php 
+                $planos_hospedagem = "SELECT * FROM planos_hospedagem";
+                $resultPlanoBasico = $conexao->query($planos_hospedagem);
+                
+
+                while ($fetchPlano = $resultPlanoBasico->fetch_assoc()) {
+             ?>
             <div class="col-md-4 mb-5">
                 <div class="card card-custom shadow-sm">
                     <div class="card-header bg-success text-white card-header-custom">
-                        Pacote Intermediário
+                        <?php echo $fetchPlano['nome_plano']; ?>
                     </div>
                     <div class="card-body">
-                        <h2 class="pricing-card-title">10.000 Kz <small class="text-muted">/ mês</small></h2>
+                        <h2 class="pricing-card-title"><?php echo $fetchPlano['preco_mensal']; ?> <small class="text-muted">/ mês</small></h2>
                         <ul class="list-unstyled mt-3 mb-4">
-                            <li>5 Sites</li>
-                            <li>50 GB de Armazenamento</li>
-                            <li>Suporte 24/7</li>
-                            <li>5 Bancos de Dados</li>
+                            <li><?php echo $fetchPlano['recursos']; ?></li>
                         </ul>
-                        <a href="checkout.php?plano=intermediario" class="btn btn-success btn-custom">Escolher Pacote</a>
+                        <a href="hospedagem.php?plano=<?php echo $fetchPlano['id']; ?>" class="btn btn-success btn-custom">Escolher Pacote</a>
                     </div>
                 </div>
             </div>
-            
-            <!-- Pacote Avançado -->
-            <div class="col-md-4 mb-5">
-                <div class="card card-custom shadow-sm">
-                    <div class="card-header bg-danger text-white card-header-custom">
-                        Pacote Avançado
-                    </div>
-                    <div class="card-body">
-                        <h2 class="pricing-card-title">20.000 Kz <small class="text-muted">/ mês</small></h2>
-                        <ul class="list-unstyled mt-3 mb-4">
-                            <li>Sites Ilimitados</li>
-                            <li>100 GB de Armazenamento</li>
-                            <li>Suporte 24/7</li>
-                            <li>Bancos de Dados Ilimitados</li>
-                        </ul>
-                        <a href="checkout.php?plano=avancado" class="btn btn-danger btn-custom">Escolher Pacote</a>
-                    </div>
-                </div>
-            </div>
+            <?php } ?>
         </div>
     </div>
 </section>

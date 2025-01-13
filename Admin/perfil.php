@@ -1,17 +1,6 @@
 <?php
 session_start();
 include("./conexao.php");
-
-
-// Buscar os dados da tabela tb_cliente
-$query = "SELECT id_cliente, nome, sobrenome, email, bi, nome_empresa, nif_empresa FROM tb_cliente";
-$stmt = $conn->prepare($query);
-$stmt->execute();
-
-// Verificar se existem resultados
-$clientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -102,100 +91,82 @@ include("./navbar.php");
 
         <div class="container">
           <div class="page-inner">
-            <div class="page-header">
-              <h3 class="fw-bold mb-3">Clientes</h3>
-              <ul class="breadcrumbs mb-3">
-                <li class="nav-home">
-                  <a href="#">
-                    <i class="icon-home"></i>
-                  </a>
-                </li>
-                <li class="separator">
-                  <i class="icon-arrow-right"></i>
-                </li>
-                <li class="nav-item">
-                  <a href="#"></a>
-                </li>
-                <li class="separator">
-                  <i class="icon-arrow-right"></i>
-                </li>
-                <li class="nav-item">
-                  <a href="#"></a>
-                </li>
-              </ul>
-            </div>
+           
             <div class="row">
-              <div class="col-md-12">
-                <div class="card">
-                  <div class="card-header">
-                    <h4 class="card-title">Clientes</h4>
+            <div class="col-md-13">
+                <div class="card card-profile">
+                  <div
+                    class="card-header"
+                    style="background-image: url('assets/img/blogpost.jpg')"
+                  >
+                    <div class="profile-picture">
+                      <div class="avatar avatar-xl">
+                        <img
+                          src="assets/img/profile.jpg"
+                          alt="..."
+                          class="avatar-img rounded-circle"
+                        />
+                      </div>
+                    </div>
                   </div>
                   <div class="card-body">
-                    <div class="table-responsive">
-
-<table
-    id="basic-datatables"
-    class="display table table-striped table-hover"
->
-    <thead>
-        <tr>
-            <th>Nome</th>
-            <th>Sobrenome</th>
-            <th>Email</th>
-            <th>BI</th>
-            <th>Nome da Empresa</th>
-            <th>NIF</th>
-            <th>Ação</th>
-        </tr>
-    </thead>
-    <tfoot>
-        <tr>
-            <th>Nome</th>
-            <th>Sobrenome</th>
-            <th>Email</th>
-            <th>BI</th>
-            <th>Nome da Empresa</th>
-            <th>NIF</th>
-            <th>Ação</th>
-        </tr>
-    </tfoot>
-    <tbody>
-        <?php
-        // Exibir os dados dinamicamente
-        if (!empty($clientes)) {
-            foreach ($clientes as $cliente) {
-              
-                echo "<tr>";
-                echo "<td>{$cliente['nome']}</td>";
-                echo "<td>{$cliente['sobrenome']}</td>";
-                echo "<td>{$cliente['email']}</td>";
-                echo "<td>{$cliente['bi']}</td>";
-                echo "<td>{$cliente['nome_empresa']}</td>";
-                echo "<td>{$cliente['nif_empresa']}</td>";
-                echo '<td style="display:flex;width:70px; justify-content:space-around">
-        <a href="ver.php?id=' . $cliente['id_cliente'] . '"  aria-label="Ver Detalhes">
-            <i class="fa fa-eye"></i>
-        </a>
-        <a href="editar.php?id=' . $cliente['id_cliente'] . '"  aria-label="Editar">
-            <i class="fa fa-edit"></i>
-        </a>
-        <a href="eliminar.php?id=' . $cliente['id_cliente'] . '"  aria-label="Eliminar" onclick="return confirm(\'Tem certeza que deseja eliminar este item?\');">
-            <i class="fa fa-trash"></i>
-        </a>
-      </td>';
-
-                echo "</tr>";
-            }
-        } else {
-            echo "<tr><td colspan='6'>Nenhum cliente encontrado</td></tr>";
-        }
-        ?>
-    </tbody>
-</table>
-
+                    <div class="user-profile text-center">
+                      <div class="name">Nome</div>
+                      <div class="job">Função</div>
+                      <div class="desc">email@gmail.com</div>
+                      <div class="social-media">
+                        <a
+                          class="btn btn-info btn-twitter btn-sm btn-link"
+                          href="#"
+                        >
+                          <span class="btn-label just-icon"
+                            ><i class="icon-social-twitter"></i>
+                          </span>
+                        </a>
+                        <a
+                          class="btn btn-primary btn-sm btn-link"
+                          rel="publisher"
+                          href="#"
+                        >
+                          <span class="btn-label just-icon"
+                            ><i class="icon-social-facebook"></i>
+                          </span>
+                        </a>
+                        <a
+                          class="btn btn-danger btn-sm btn-link"
+                          rel="publisher"
+                          href="#"
+                        >
+                          <span class="btn-label just-icon"
+                            ><i class="icon-social-instagram"></i>
+                          </span>
+                        </a>
+                      </div>
+                      <div class="view-profile">
+                        <a href="#" class="btn btn-secondary w-100"
+                          >Editar Perfil</a
+                        >
+                      </div>
+                    </div>
+                  </div>
+                  <div class="card-footer">
+                    <div class="row user-stats text-center">
+                      <div class="col">
+                        <div class="number">957354682</div>
+                        <div class="title">Telefone</div>
+                      </div>
+                      <div class="col">
+                        <div class="number">25</div>
+                        <div class="title">Idade</div>
+                      </div>
+                      <div class="col">
+                        <div class="number">Masculino</div>
+                        <div class="title">Genero</div>
+                      </div>
                     </div>
                   </div>
                 </div>
+              </div>
               </div>
 
              

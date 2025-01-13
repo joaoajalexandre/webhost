@@ -1,5 +1,5 @@
 <?php
-session_start();
+
 ?>
 <header>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -17,13 +17,13 @@ session_start();
                     <li class="nav-item"><a class="nav-link" href="contactos.php">Contato</a></li>
                 </ul>
                 <ul class="navbar-nav">
-                    <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-cart"></i></a></li>
+                    <li class="nav-item"><a class="nav-link" href="carrinho.php"><i class="bi bi-cart"></i></a></li>
 
                     <?php if (isset($_SESSION['logado'])): ?>
                         <!-- Se estiver logado, mostrar nome do usuário -->
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <img src="https://via.placeholder.com/30" alt="Avatar" class="rounded-circle me-2">
+                                <img src="img/user.png" alt="Avatar" class="rounded-circle me-2" width="25px">
                                 <?= $_SESSION['logado']['nome']; ?>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
