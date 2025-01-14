@@ -1,22 +1,22 @@
 <?php
 include("./conexao.php");
 
-// Verificar se o ID foi passado via GET
+
 if (isset($_GET['id'])) {
-    // Garantir que o ID seja um número inteiro
+
     $id = intval($_GET['id']);
 
-    // Verificar se o ID é válido
+ 
     if ($id > 0) {
         try {
-            // Preparar a instrução SQL usando PDO
-            $sql = "DELETE FROM servicos_email WHERE id = :id";
+     
+            $sql = "DELETE FROM usuario WHERE id = :id";
             $stmt = $conn->prepare($sql);
 
-            // Vincular o parâmetro
+  
             $stmt->bindParam(':id', $id, PDO::PARAM_INT);
 
-            // Executar a instrução SQL
+ 
             if ($stmt->execute()) {
                 
                 echo "Registro excluído com sucesso!";

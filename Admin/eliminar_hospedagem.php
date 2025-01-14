@@ -10,7 +10,7 @@ if (isset($_GET['id'])) {
     if ($id > 0) {
         try {
             // Preparar a instrução SQL usando PDO
-            $sql = "DELETE FROM servicos_email WHERE id = :id";
+            $sql = "DELETE FROM planos_hospedagem WHERE id = :id";
             $stmt = $conn->prepare($sql);
 
             // Vincular o parâmetro

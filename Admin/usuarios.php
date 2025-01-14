@@ -318,7 +318,7 @@ function abrirModal(id) {
     // Quando o usuário clicar no botão "Sim, Eliminar"
     document.getElementById('confirmarExclusao').onclick = function() {
         // Redirecionar para a página de eliminação
-        window.location.href = 'eliminar_email.php?id=' + id;
+        window.location.href = 'eliminar_usuario.php?id=' + id;
     };
 
     // Quando o usuário clicar no botão "Cancelar"
