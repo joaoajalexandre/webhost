@@ -173,16 +173,16 @@ include("./navbar.php");
                 echo "<td>{$cliente['nome_empresa']}</td>";
                 echo "<td>{$cliente['nif_empresa']}</td>";
                 echo '<td style="display:flex;width:70px; justify-content:space-around">
-        <a href="ver.php?id=' . $cliente['id_cliente'] . '"  aria-label="Ver Detalhes">
-            <i class="fa fa-eye"></i>
-        </a>
-        <a href="editar.php?id=' . $cliente['id_cliente'] . '"  aria-label="Editar">
-            <i class="fa fa-edit"></i>
-        </a>
-        <a href="eliminar.php?id=' . $cliente['id_cliente'] . '"  aria-label="Eliminar" onclick="return confirm(\'Tem certeza que deseja eliminar este item?\');">
-            <i class="fa fa-trash"></i>
-        </a>
-      </td>';
+                <a href="ver.php?id=' . $cliente['id_cliente'] . '"  aria-label="Ver Detalhes">
+                    <i class="fa fa-eye"></i>
+                </a>
+                <a href="editar.php?id=' . $cliente['id_cliente'] . '"  aria-label="Editar">
+                    <i class="fa fa-edit"></i>
+                </a>
+                <a href="javascript:void(0);" aria-label="Eliminar" onclick="abrirModal(' . $cliente['id_cliente'] . ');">
+                    <i class="fa fa-trash"></i>
+                </a>
+              </td>';
 
                 echo "</tr>";
             }
@@ -234,6 +234,71 @@ include("./navbar.php");
         </footer>
       </div>
     </div>
+
+
+    <!-- Modal de Confirmação -->
+<div id="modalConfirmar" class="modal2" style="display:none;">
+    <div class="modal-content">
+        <h2>Confirmar Exclusão</h2>
+        <p>Tem certeza que deseja eliminar este item?</p>
+        <button id="confirmarExclusao">Sim, Eliminar</button>
+        <button id="cancelarExclusao">Cancelar</button>
+    </div>
+</div>
+
+<!-- CSS para estilizar o modal -->
+<style>
+    .modal2 {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.4);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .modal-content {
+        background-color: white;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+
+    button {
+        margin: 5px;
+    }
+</style>
+<script>
+  // Função para abrir o modal de confirmação
+function abrirModal(id) {
+    const modal = document.getElementById('modalConfirmar');
+    modal.style.display = 'flex';
+
+    // Quando o usuário clicar no botão "Sim, Eliminar"
+    document.getElementById('confirmarExclusao').onclick = function() {
+        // Redirecionar para a página de eliminação
+        window.location.href = 'eliminar_email.php?id=' + id;
+    };
+
+    // Quando o usuário clicar no botão "Cancelar"
+    document.getElementById('cancelarExclusao').onclick = function() {
+        modal.style.display = 'none';
+    };
+}
+
+// Fechar o modal se clicar fora do conteúdo
+window.onclick = function(event) {
+    const modal = document.getElementById('modalConfirmar');
+    if (event.target == modal) {
+        modal.style.display = 'none';
+    }
+};
+
+</script>
+
     <!--   Core JS Files   -->
     <script src="./assets/js/core/jquery-3.7.1.min.js"></script>
     <script src="./assets/js/core/popper.min.js"></script>
