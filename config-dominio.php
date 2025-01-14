@@ -18,20 +18,21 @@
                 $nameserver1 = $_POST['nameserver1'];
                 $nameserver2 = $_POST['nameserver2'];
                 $nameserver3 = $_POST['nameserver3'];
+                $descricao = $_POST['pesquisarDominio'];
 
 
                 if (str_ends_with($_SESSION['tempDominio'], "it.ao")) {
                     if (!isset($_SESSION['carrinho'])) {
                         $_SESSION['carrinho'] = [];
                     }
-                    $_SESSION['carrinho'][] = ['dominio' => $_SESSION['tempDominio'], 'preco' => 5000, 'nameserver1' => $nameserver1, 'nameserver2' => $nameserver2, 'nameserver3' => $nameserver3,];
+                    $_SESSION['carrinho'][] = ['dominio' => $_SESSION['tempDominio'], 'preco' => 5000, 'tipo'=>'Dominio', 'descricao'=>$_SESSION['tempDominio'], 'nameserver1' => $nameserver1, 'nameserver2' => $nameserver2, 'nameserver3' => $nameserver3, 'ciclo'=>' 1 ano'];
                     header("Location: carrinho.php");
                 }
                 elseif (str_ends_with($_SESSION['tempDominio'], ".ao")) {
                     if (!isset($_SESSION['carrinho'])) {
                         $_SESSION['carrinho'] = [];
                     }
-                    $_SESSION['carrinho'][] = ['dominio' => $_SESSION['tempDominio'], 'preco' => 25000, 'nameserver1' => $nameserver1, 'nameserver2' => $nameserver2, 'nameserver3' => $nameserver3,];
+                    $_SESSION['carrinho'][] = ['dominio' => $_SESSION['tempDominio'], 'preco' => 25000, 'tipo'=>'Dominio', 'descricao'=>$_SESSION['tempDominio'], 'nameserver1' => $nameserver1, 'nameserver2' => $nameserver2, 'nameserver3' => $nameserver3, 'ciclo'=>' 1 ano'];
                     header("Location: carrinho.php");
                 } else {
                     echo "<script>alert('Extensão não disponível. Escolha uma extensão nacional.')</script>";

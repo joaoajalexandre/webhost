@@ -32,7 +32,7 @@
      var status = document.getElementById("status").value;
 
      // Aqui você pode fazer uma requisição AJAX ou fetch para salvar os dados no backend
-     console.log({
+         console.log({
          nome_plano,
          descricao,
          preco_mensal,

@@ -11,20 +11,29 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_SESSION['logado']['id_cliente'])) {
         // Se o usuário estiver logado, pega o ID do cliente da sessão
         $id_cliente = $_SESSION['logado']['id_cliente'];
-        $email = NULL; // Não é necessário armazenar o email, pois já está associado ao cliente
+
+        // Consulta o nome e o email do cliente na tabela clientes
+        $sql = "SELECT nome, email FROM tb_cliente WHERE id_cliente = ?";
+        $stmt = $conexao->prepare($sql);
+        $stmt->bind_param("i", $id_cliente);
+        $stmt->execute();
+        $stmt->bind_result($nome, $email);
+        $stmt->fetch();
+        $stmt->close();
     } else {
-        // Se não estiver logado, usa o email informado no formulário
+        // Se não estiver logado, usa o email e nome informados no formulário
         $id_cliente = NULL;
         $email = $_POST['email'];
+        $nome = $_POST['nome'];
     }
 
     // Insere os dados na tabela de mensagens
-    $cmd = "INSERT INTO tb_mensagens (id_cliente, motivo, email, mensagem) 
-            VALUES (?, ?, ?, ?)";
+    $cmd = "INSERT INTO tb_mensagens (id_cliente, motivo, nome, email, mensagem) 
+            VALUES (?, ?, ?, ?, ?)";
     $stmt = $conexao->prepare($cmd);
     
     // Bind dos parâmetros
-    $stmt->bind_param("isss", $id_cliente, $motivo, $email, $mensagem);
+    $stmt->bind_param("issss", $id_cliente, $motivo, $nome, $email, $mensagem);
 
     // Verifica se a inserção foi bem-sucedida
     if ($stmt->execute()) {

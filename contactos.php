@@ -47,6 +47,11 @@ include("header.php");
                 <label for="email" class="form-label">Seu Email</label>
                 <input type="email" class="form-control" id="email" name="email" placeholder="exemplo@dominio.com" required>
             </div>
+            <!-- Campo de Email (somente se não estiver logado) -->
+            <div class="mb-3">
+                <label for="nome" class="form-label">Seu Nome</label>
+                <input type="nome" class="form-control" id="nome" name="nome" placeholder="Primeiro e ultimo nome" required>
+            </div>
         <?php endif; ?>
         
         <!-- Campo de Mensagem -->

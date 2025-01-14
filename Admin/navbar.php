@@ -1,3 +1,57 @@
+<?php
+// Conectar ao banco de dados com PDO
+include("conexao.php");
+
+try {
+    // Consulta para pegar a última mensagem
+    $sql = "SELECT nome, mensagem, TIMESTAMPDIFF(MINUTE, data_envio, NOW()) AS minutos_atras 
+            FROM tb_mensagens 
+            ORDER BY data_envio DESC 
+            LIMIT 1";
+
+    // Preparar a consulta
+    $stmt = $conn->prepare($sql);
+
+    // Executar a consulta
+    $stmt->execute();
+
+    // Verificar se há resultados
+    if ($stmt->rowCount() > 0) {
+        // Se houver resultado, busca a última mensagem
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $nome = $row['nome'];
+        $mensagem = $row['mensagem'];
+        $minutos_atras = $row['minutos_atras'];
+    } else {
+        // Caso não haja mensagens
+        $nome = "N/A";
+        $mensagem = "Nenhuma mensagem recebida.";
+        $minutos_atras = 0;
+    }
+
+} catch (PDOException $e) {
+    // Caso haja erro na execução da consulta
+    echo "Erro: " . $e->getMessage();
+}
+?>
+<?php
+// Exemplo de valor para minutos_atras, que vem da consulta SQL
+$minutos_atras = 120; // Exemplo, substitua pelo valor real da consulta
+
+// Lógica para calcular o tempo
+if ($minutos_atras < 60) {
+    // Menos de uma hora
+    $tempo = $minutos_atras . " minutos atrás";
+} elseif ($minutos_atras >= 60 && $minutos_atras < 1440) {
+    // Menos de um dia (1440 minutos)
+    $horas = floor($minutos_atras / 60);
+    $tempo = $horas . " horas atrás";
+} else {
+    // Mais de um dia
+    $dias = floor($minutos_atras / 1440);
+    $tempo = $dias . " dias atrás";
+}
+?>
 <nav
             class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom">
             <div class="container-fluid">
@@ -79,17 +133,48 @@
                               />
                             </div>
                             <div class="notif-content">
-                              <span class="subject">Marcelino</span>
-                              <span class="block"> O que é dominio </span>
-                              <span class="time">5 minutos atrás</span>
-                            </div>
+  <span class="subject"><?php echo htmlspecialchars($nome); ?></span>
+  
+  <!-- Verifica se a mensagem é maior que 100 caracteres -->
+  <?php if (strlen($mensagem) > 20): ?>
+      <!-- Exibe a versão encurtada -->
+      <span class="block">
+          <?php echo htmlspecialchars(substr($mensagem, 0, 20)); ?>...
+          <span class="full-msg block" style="display: none;"><?php echo htmlspecialchars($mensagem); ?></span>
+          
+      </span>
+  <?php else: ?>
+      <!-- Exibe a mensagem completa se for pequena -->
+      <span class="block"><?php echo htmlspecialchars($mensagem); ?></span>
+  <?php endif; ?>
+  
+  <span class="time"><?php echo $tempo; ?></span>
+</div>
+
+<script>
+  function toggleMessage(link) {
+    const fullMsg = link.previousElementSibling.querySelector('.full-msg');
+    const shortMsg = link.previousElementSibling.querySelector('.short-msg');
+    
+    if (fullMsg.style.display === 'none') {
+      fullMsg.style.display = 'inline';
+      shortMsg.style.display = 'none';
+      link.textContent = 'Ler menos';
+    } else {
+      fullMsg.style.display = 'none';
+      shortMsg.style.display = 'inline';
+      link.textContent = 'Ler mais';
+    }
+  }
+</script>
+
                           </a>
                           
                         </div>
                       </div>
                     </li>
                     <li>
-                      <a class="see-all" href="javascript:void(0);"
+                      <a class="see-all" href="mensagens.php"
                         >Ver todas as mensagens<i class="fa fa-angle-right"></i>
                       </a>
                     </li>
@@ -148,11 +233,10 @@
                     aria-expanded="false"
                   >
                     <div class="avatar-sm">
-                      <img
-                        src="assets/img/profile.jpg"
-                        alt="..."
-                        class="avatar-img rounded-circle"
-                      />
+                    <span
+                            class="avatar-title rounded-circle border border-white"
+                            >ML</span
+                          >
                     </div>
                     <span class="profile-username">
                      
@@ -164,11 +248,10 @@
                       <li>
                         <div class="user-box">
                           <div class="avatar-lg">
-                            <img
-                              src="assets/img/profile.jpg"
-                              alt="image profile"
-                              class="avatar-img rounded"
-                            />
+                          <span
+                            class="avatar-title rounded-circle border border-white"
+                            >CF</span
+                          >
                           </div>
                           <div class="u-text">
                             <h4>Usuario</h4>

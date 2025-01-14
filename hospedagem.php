@@ -1,23 +1,42 @@
-<?php session_start();
+<?php 
+session_start();
 include("conexao.php");
 
 if (isset($_GET['plano'])) {
     $idPlanoHosp = (int) $_GET['plano'];
-    if (!isset($_SESSION['variable'])) {
-        $_SESSION['carrinho'] = array();
+
+    // Inicializa o carrinho se não existir
+    if (!isset($_SESSION['carrinho'])) {
+        $_SESSION['carrinho'] = [];
     }
-    else{
-        if (isset($_SESSION['carrinho'][$idPlanoHosp])) {
-            echo "Esse plano já se encontra no carrinho!";
-        }
-        else{
-            $_SESSION['carrinho'][$idPlanoHosp] = array('id'=>$fetchPlano[$idPlanoHosp]);
+
+    // Verifica se o plano já está no carrinho
+    if (isset($_SESSION['carrinho'][$idPlanoHosp])) {
+        echo "<script>alert('Esse plano já está no carrinho!');</script>";
+    } else {
+        // Busca detalhes do plano no banco de dados
+        $sqlPlano = "SELECT * FROM planos_hospedagem WHERE id = ?";
+        $stmt = $conexao->prepare($sqlPlano);
+        $stmt->bind_param("i", $idPlanoHosp);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows > 0) {
+            $plano = $result->fetch_assoc();
+            // Adiciona o plano ao carrinho
+            $_SESSION['carrinho'][$idPlanoHosp] = [
+                'id' => $plano['id'],
+                'nome' => $plano['nome_plano'],
+                'preco' => $plano['preco_mensal']
+            ];
+            echo "<script>alert('Plano adicionado ao carrinho com sucesso!');</script>";
+        } else {
+            echo "<script>alert('Plano não encontrado.');</script>";
         }
     }
 }
+?>
 
-
- ?>
 <!DOCTYPE html>
 <html lang="pt-pt">
 <head>
@@ -99,7 +118,8 @@ include("header.php");
                         <?php echo $fetchPlano['nome_plano']; ?>
                     </div>
                     <div class="card-body">
-                        <h2 class="pricing-card-title"><?php echo $fetchPlano['preco_mensal']; ?> <small class="text-muted">/ mês</small></h2>
+                        <h4 class="pricing-card-title"><?php echo number_format($fetchPlano['preco_mensal'], 2, ',', '.') ; ?> <small class="text-muted">/ mês</small></h4>
+                        <h3 class=""><?php echo number_format($fetchPlano['preco_anual'], 2, ',', '.') ; ?> <small class="text-muted">/ Anual</small></h3>
                         <ul class="list-unstyled mt-3 mb-4">
                             <li><?php echo $fetchPlano['recursos']; ?></li>
                         </ul>

@@ -21,7 +21,7 @@
             <h1 class="display-4">Criação de Websites Profissionais</h1>
             <p class="lead">Transforme sua presença online com um site moderno e responsivo. Entre em contato agora e
                 crie seu site conosco!</p>
-            <a href="contato.php" class="btn btn-light btn-lg">Solicite seu Orçamento</a>
+            <a href="contactos.php" class="btn btn-light btn-lg">Solicite seu Orçamento</a>
         </div>
     </section>
 
