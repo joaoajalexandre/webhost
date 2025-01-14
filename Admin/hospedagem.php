@@ -179,16 +179,16 @@ $hospedagens = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 echo "<td>{$hospedagem['status']}</td>";
                 echo "<td>{$hospedagem['data_criacao']}</td>";
                 echo '<td style="display:flex;width:70px; justify-content:space-around">
-        <a href="ver.php?id=' . $hospedagem['id'] . '"  aria-label="Ver Detalhes">
-            <i class="fa fa-eye"></i>
-        </a>
-        <a href="editar.php?id=' . $hospedagem['id'] . '"  aria-label="Editar">
-            <i class="fa fa-edit"></i>
-        </a>
-        <a href="eliminar.php?id=' . $hospedagem['id'] . '"  aria-label="Eliminar" onclick="return confirm(\'Tem certeza que deseja eliminar este item?\');">
-            <i class="fa fa-trash"></i>
-        </a>
-      </td>';
+                <a href="ver.php?id=' . $hospedagem['id'] . '"  aria-label="Ver Detalhes">
+                    <i class="fa fa-eye"></i>
+                </a>
+                <a href="editar.php?id=' . $hospedagem['id'] . '"  aria-label="Editar">
+                    <i class="fa fa-edit"></i>
+                </a>
+                <a href="javascript:void(0);" aria-label="Eliminar" onclick="abrirModal(' . $hospedagem['id'] . ');">
+                    <i class="fa fa-trash"></i>
+                </a>
+              </td>';
                 echo "</tr>";
             }
         } else {

@@ -173,13 +173,13 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 echo "<td>{$usuario['status']}</td>";
                 echo "<td>{$usuario['data_criacao']}</td>";
                 echo '<td style="display:flex;width:70px; justify-content:space-around">
-                <a href="ver.php?id=' . $usuario['id_cliente'] . '"  aria-label="Ver Detalhes">
+                <a href="ver.php?id=' . $usuario['id'] . '"  aria-label="Ver Detalhes">
                     <i class="fa fa-eye"></i>
                 </a>
-                <a href="editar.php?id=' . $usuario['id_cliente'] . '"  aria-label="Editar">
+                <a href="editar.php?id=' . $usuario['id'] . '"  aria-label="Editar">
                     <i class="fa fa-edit"></i>
                 </a>
-                <a href="eliminar.php?id=' . $usuario['id_cliente'] . '"  aria-label="Eliminar" onclick="return confirm(\'Tem certeza que deseja eliminar este item?\');">
+                <a href="javascript:void(0);" aria-label="Eliminar" onclick="abrirModal(' . $usuario['id'] . ');">
                     <i class="fa fa-trash"></i>
                 </a>
               </td>';
